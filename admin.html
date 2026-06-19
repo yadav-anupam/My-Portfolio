@@ -1025,6 +1025,28 @@ behavior:"smooth"
 
 });
 
+document.addEventListener(
+"click",
+function(e){
+
+const sidebar =
+document.querySelector(".sidebar");
+
+const menuBtn =
+document.getElementById("menuBtn");
+
+if(
+sidebar.classList.contains("active") &&
+!sidebar.contains(e.target) &&
+!menuBtn.contains(e.target)
+){
+
+sidebar.classList.remove("active");
+
+}
+
+});
+
 </script>
 </div>
 
