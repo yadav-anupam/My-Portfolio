@@ -99,7 +99,7 @@ document.querySelectorAll('.filter-btn').forEach(btn=>{
   });
 });
 
-// â”€â”€ STACKED CARD DECK (horizontal) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+//STACKED CARD DECK (horizontal)
 function initDeck(deckId, prevBtnId, nextBtnId, dotsId) {
   const deck = document.getElementById(deckId);
   if (!deck) return;
@@ -173,7 +173,7 @@ function initDeck(deckId, prevBtnId, nextBtnId, dotsId) {
 
 
 
-// CONTACT FORM â€” Web3Forms submit
+// CONTACT FORM Web3Forms submit
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
   contactForm.addEventListener('submit', async (e) => {
@@ -228,14 +228,14 @@ function closeCertModal(overlay){
 }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.cert-modal-overlay.open').forEach(m=>m.classList.remove('open')); });
 
-// â”€â”€ CURSOR GLOW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+//CURSOR GLOW
 const glow = document.getElementById('cursor-glow');
 document.addEventListener('mousemove', e => {
   glow.style.left = e.clientX + 'px';
   glow.style.top  = e.clientY + 'px';
 });
 
-// â”€â”€ THEME TOGGLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+//THEME TOGGLE
 const themeBtn = document.getElementById('theme-toggle');
 const savedTheme = localStorage.getItem('theme');
 const initialTheme = savedTheme || 'light';
