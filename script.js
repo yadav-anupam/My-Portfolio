@@ -230,48 +230,6 @@ themeBtn.addEventListener('click', () => {
   applyTheme(nextTheme);
 });
 
-// â”€â”€ VISITOR COUNTER (real, server-tracked via visitbadge.io) â”€â”€â”€â”€â”€â”€â”€
-(function(){
-  const el = document.getElementById('visit-count');
-  if(!el) return;
-  // unique id per portfolio â€” change this slug if you redeploy to a new URL
-  const slug = 'anupam-yadav-portfolio-ay9119';
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 5000);
-
-  fetch(`https://api.visitbadge.io/api/visitors?path=${slug}&label=&color=transparent`, { signal: controller.signal })
-    .then(r => r.text())
-    .then(svgText => {
-      clearTimeout(timeoutId);
-      const numbers = [...svgText.matchAll(/\d[\d,]*/g)]
-        .map(match => parseInt(match[0].replace(/,/g, ''), 10))
-        .filter(Number.isFinite);
-      const num = numbers.length ? Math.max(...numbers) : null;
-
-      if (num !== null) {
-        const formatter = new Intl.NumberFormat();
-        let cur = 0;
-        const step = () => {
-          if (cur < num) {
-            cur += Math.max(1, Math.ceil(num / 80));
-            if (cur > num) cur = num;
-            el.textContent = formatter.format(cur);
-            setTimeout(step, Math.max(12, 700 / Math.max(num, 1)));
-          } else {
-            el.textContent = formatter.format(num);
-          }
-        };
-        step();
-      } else {
-        el.textContent = '0';
-      }
-    })
-    .catch(() => {
-      clearTimeout(timeoutId);
-      el.textContent = '0';
-    });
-})();
-
 // â”€â”€ SECTION PROGRESS DOTS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const sections = ['hero','about','skills','projects','certifications','education','experience','testimonials','profiles','contact'];
 const sdots = document.querySelectorAll('.sdot');

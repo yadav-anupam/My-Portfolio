@@ -323,7 +323,6 @@ body.light-mode .social-icon{background:rgba(255,253,248,.8);border-color:rgba(1
 body.light-mode .filter-btn{background:rgba(255,253,248,.8);border-color:rgba(166,113,58,.16);color:#6B5D4D}
 body.light-mode .hero-tag{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.25);color:#059669}
 body.light-mode .hero-tag span{background:#059669}
-body.light-mode .visitor-counter{background:rgba(255,253,248,.8);border-color:rgba(166,113,58,.16)}
 body.light-mode #back-to-top{box-shadow:0 8px 22px rgba(166,113,58,.3)}
 body.light-mode .cert-issuer-badge{background:rgba(198,138,78,.1);border-color:rgba(198,138,78,.25)}
 body.light-mode .edu-year{background:rgba(166,113,58,.08);border-color:rgba(166,113,58,.22)}
@@ -359,10 +358,6 @@ body.light-mode #cursor-glow{background:radial-gradient(circle,rgba(166,113,58,.
 #otw-badge:hover{transform:scale(1.05);box-shadow:0 6px 28px rgba(16,185,129,.6)}
 @keyframes otw-pulse{0%,100%{box-shadow:0 4px 20px rgba(16,185,129,.4)}50%{box-shadow:0 4px 30px rgba(16,185,129,.7)}}
 .otw-dot{width:7px;height:7px;background:#fff;border-radius:50%;animation:pulse 2s infinite}
-
-/* â”€â”€ VISITOR COUNTER â”€â”€ */
-.visitor-counter{display:inline-flex;align-items:center;gap:.5rem;background:var(--glass);border:1px solid var(--border);border-radius:100px;padding:.35rem .9rem;font-size:.75rem;color:var(--muted);margin-top:.75rem;backdrop-filter:blur(10px)}
-.visitor-counter strong{min-width:2.5ch;color:#C68A4E;font-family:"JetBrains Mono",monospace;text-align:right}
 
 /* â”€â”€ TESTIMONIALS â”€â”€ */
 #testimonials{padding:6rem 0;background:linear-gradient(180deg,transparent,rgba(59,130,246,.03),transparent)}
