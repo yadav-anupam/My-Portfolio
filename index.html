@@ -636,26 +636,34 @@
 <button id="back-to-top" aria-label="Back to top"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" fill="currentColor"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg></span></button>
 
 <script src="script.js"></script>
+
+
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
+import {
+  getFirestore,
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCQoVoewyuS_WIGSJmVQzW-MThzxyIKvSg",
-    authDomain: "anupam-yadav-portfolio.firebaseapp.com",
-    projectId: "anupam-yadav-portfolio",
-    storageBucket: "anupam-yadav-portfolio.firebasestorage.app",
-    messagingSenderId: "46105414968",
-    appId: "1:46105414968:web:94a16631d4e852904085cd",
-    measurementId: "G-7N424T7HYK"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyCQoVoewyuS_WIGSJmVQzW-MThzxyIKvSg",
+  authDomain: "anupam-yadav-portfolio.firebaseapp.com",
+  projectId: "anupam-yadav-portfolio",
+  storageBucket: "anupam-yadav-portfolio.firebasestorage.app",
+  messagingSenderId: "46105414968",
+  appId: "1:46105414968:web:94a16631d4e852904085cd",
+  measurementId: "G-7N424T7HYK"
+};
 
-  const app = initializeApp(firebaseConfig);
-  getAnalytics(app);
+const app = initializeApp(firebaseConfig);
+getAnalytics(app);
 
-  console.log("Firebase Connected Successfully!");
+const db = getFirestore(app);
+
+console.log("Firebase Connected Successfully!");
 console.log(app);
-
 </script>
 </body>
 </html>
