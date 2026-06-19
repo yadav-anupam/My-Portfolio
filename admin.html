@@ -194,6 +194,103 @@ display:block;
 }
 }
 
+.portfolio-link{
+
+display:block;
+
+padding:12px;
+
+border-radius:10px;
+
+color:white !important;
+
+text-decoration:none;
+
+background:transparent;
+}
+
+.portfolio-link:hover{
+
+background:
+rgba(139,92,246,.15);
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+#scrollTopBtn{
+
+position:fixed;
+
+bottom:20px;
+right:20px;
+
+width:50px;
+height:50px;
+
+border:none;
+
+border-radius:50%;
+
+background:
+linear-gradient(
+135deg,
+#8b5cf6,
+#6366f1
+);
+
+color:white;
+
+font-size:20px;
+
+cursor:pointer;
+
+display:none;
+
+z-index:9999;
+
+box-shadow:
+0 10px 25px
+rgba(139,92,246,.4);
+
+transition:.3s;
+}
+
+#scrollTopBtn:hover{
+
+transform:translateY(-3px);
+
+}
+
+.checkbox-group{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+margin:20px 0;
+}
+
+.checkbox-group input{
+
+width:20px;
+height:20px;
+
+cursor:pointer;
+}
+
+.checkbox-group label{
+
+font-size:18px;
+
+color:white;
+
+cursor:pointer;
+}
+
 </style>
 
 </head>
@@ -207,10 +304,19 @@ display:block;
 ✖
 </button>
 
-<a href="#">🏠 Dashboard</a>
-<a href="#">🚀 Projects</a>
-<a href="#">🏆 Certificates</a>
-<a href="#">💡 Skills</a>
+<a href="#dashboard">🏠 Dashboard</a>
+<a href="#projectsSection">🚀 Projects</a>
+<a href="#certificatesSection">🏆 Certificates</a>
+<a href="#skillsSection">💡 Skills</a>
+
+<a
+  href="https://anupam-yadavv.vercel.app"
+  target="_blank"
+  class="portfolio-link">
+
+  🌐 View Portfolio
+
+</a>
 
 <button id="logoutBtn">
 Logout
@@ -227,7 +333,7 @@ Logout
 <button id="menuBtn">
 ☰ Menu
 </button>
-
+<div id="dashboard">
 <h1>Portfolio Admin Dashboard</h1>
 <br><br>
 
@@ -249,11 +355,11 @@ Logout
 </div>
 
 </div>
-
+</div>
 <!-- Project Section -->
 
 <div class="card">
-
+<div id="projectsSection">
 <h2>Add Project</h2>
 <br><br>
 <input
@@ -305,12 +411,17 @@ Logout
   placeholder="Python,NLP,AI">
 
   <br><br>
-<label>
+<div class="checkbox-group">
+
   <input
     type="checkbox"
     id="featured">
-  Featured Project
-</label>
+
+  <label for="featured">
+    Featured Project
+  </label>
+
+</div>
 
 <br><br>
 
@@ -323,11 +434,11 @@ Logout
 <hr>
 
 </div>
-
+</div>
 <!-- Certificate Section -->
 
 <div class="card">
-
+<div id="certificatesSection">
   <h2>Add Certificate</h2>
 
   <br><br>
@@ -363,11 +474,11 @@ Logout
 <div id="certificatesList"></div>
 
 </div>
-
+</div>
 <!-- Skill Section -->
 
 <div class="card">
-
+<div id="skillsSection">
 <h2>Add Skill</h2>
 <br><br>
 <input
@@ -385,6 +496,7 @@ Logout
 
 <div id="skillsList"></div>
 
+</div>
 </div>
 <br><br>
 <!-- JS Section -->
@@ -879,7 +991,46 @@ document
 
 });
 
+const scrollTopBtn =
+document.getElementById(
+"scrollTopBtn"
+);
+
+window.addEventListener(
+"scroll",
+() => {
+
+if(window.scrollY > 300){
+
+scrollTopBtn.style.display =
+"block";
+
+}else{
+
+scrollTopBtn.style.display =
+"none";
+
+}
+
+});
+
+scrollTopBtn.addEventListener(
+"click",
+() => {
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+});
+
 </script>
 </div>
+
+<button id="scrollTopBtn">
+⬆
+</button>
+
 </body>
 </html>
