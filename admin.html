@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <style>
+:root{
+  --bg:#0f172a;
+  --card:#111827;
+  --card2:#1e293b;
+  --border:#334155;
+  --primary:#8b5cf6;
+  --secondary:#6366f1;
+  --text:#f8fafc;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  display:flex;
+  min-height:100vh;
+}
+
+.sidebar{
+  width:260px;
+  background:#0b1220;
+  border-right:1px solid var(--border);
+  padding:30px;
+}
+.sidebar{
+  width:260px;
+  min-height:100vh;
+  position:sticky;
+  top:0;
+}
+
+.sidebar h2{
+  margin-bottom:30px;
+}
+
+.sidebar a{
+  display:block;
+  color:white;
+  text-decoration:none;
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+.sidebar a:hover{
+  background:rgba(139,92,246,.2);
+}
+
+.main{
+  flex:1;
+  padding:40px;
+  max-width:1400px;
+}
+
+
+.card{
+  background:rgba(17,24,39,.8);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:24px;
+  padding:24px;
+  margin-bottom:24px;
+  box-shadow:
+  0 10px 30px rgba(0,0,0,.25);
+}
+
+input,
+textarea{
+  width:100%;
+  background:var(--card2);
+  color:white;
+  border:1px solid var(--border);
+  padding:12px;
+  border-radius:10px;
+}
+
+button{
+  background:linear-gradient(
+    135deg,
+    #8b5cf6,
+    #6366f1
+  );
+  border:none;
+  color:white;
+  padding:12px 18px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:
+  repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  margin-bottom:30px;
+}
+
+.stat-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:20px;
+}
+
+.stat-card h3{
+  font-size:30px;
+  margin-top:10px;
+}
+</style>
+
+</head>
+<body>
+
+  <div class="sidebar">
+
+<h2>⚡ Admin</h2>
+
+<a href="#">🏠 Dashboard</a>
+<a href="#">🚀 Projects</a>
+<a href="#">🏆 Certificates</a>
+<a href="#">💡 Skills</a>
+
+<button id="logoutBtn">
+Logout
+</button>
+
+</div>
+
+<div class="main">
+
+  <p id="loginMessage"
+   style="color:green;font-weight:bold;">
+</p>
+
+<h1>Portfolio Admin Dashboard</h1>
+<br><br>
+
+<div class="stats">
+
+<div class="stat-card">
+<p>🚀 Projects</p>
+<h3 id="projectCount">0</h3>
+</div>
+
+<div class="stat-card">
+<p>🏆 Certificates</p>
+<h3 id="certificateCount">0</h3>
+</div>
+
+<div class="stat-card">
+<p>💡 Skills</p>
+<h3 id="skillCount">0</h3>
+</div>
+
+</div>
+
+<!-- Project Section -->
+
+<div class="card">
+
+<h2>Add Project</h2>
+<br><br>
+<input
+  type="text"
+  id="title"
+  placeholder="Project Title">
+
+<br><br>
+
+<textarea
+  id="description"
+  placeholder="Project Description">
+</textarea>
+
+<br><br>
+
+<input
+  type="text"
+  id="github"
+  placeholder="GitHub Link">
+
+<br><br>
+
+<input
+  type="text"
+  id="live"
+  placeholder="Live Demo Link">
+
+<br><br>
+
+<input
+  type="text"
+  id="category"
+  placeholder="Category (Python, AI, Web Dev)">
+
+<br><br>
+
+<input
+  type="text"
+  id="emoji"
+  placeholder="Emoji (🤖, 🎮, 📈)">
+
+<br><br>
+
+
+<input
+  type="text"
+  id="techs"
+  placeholder="Python,NLP,AI">
+
+  <br><br>
+<label>
+  <input
+    type="checkbox"
+    id="featured">
+  Featured Project
+</label>
+
+<br><br>
+
+<button id="saveBtn">
+  Add Project
+</button>
+<br><br>
+<h2>Projects</h2>
+<div id="projectsList"></div>
+<hr>
+
+</div>
+
+<!-- Certificate Section -->
+
+<div class="card">
+
+  <h2>Add Certificate</h2>
+
+  <br><br>
+
+<input type="text" id="certTitle" placeholder="Certificate Title">
+
+<br><br>
+
+<input type="text" id="certIssuer" placeholder="Issuer">
+
+<br><br>
+
+<input type="text" id="certYear" placeholder="Year">
+
+<br><br>
+
+<input type="text" id="certImage" placeholder="Image URL / Path">
+
+<br><br>
+
+<input type="text" id="certTags" placeholder="Tags (comma separated)">
+
+<br><br>
+
+<button id="saveCertificateBtn">
+  Save Certificate
+</button>
+
+<hr>
+<br><br>
+<h2>Certificates</h2>
+
+<div id="certificatesList"></div>
+
+</div>
+
+<!-- Skill Section -->
+
+<div class="card">
+
+<h2>Add Skill</h2>
+<br><br>
+<input
+  type="text"
+  id="skillName"
+  placeholder="Skill Name">
+
+<br><br>
+
+<button id="addSkill">
+  Add Skill
+</button>
+<br><br>
+<h2>Skills</h2>
+
+<div id="skillsList"></div>
+
+</div>
+<br><br>
+<!-- JS Section -->
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+import {
+  getAuth,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCQoVoewyuS_WIGSJmVQzW-MThzxyIKvSg",
+  authDomain: "anupam-yadav-portfolio.firebaseapp.com",
+  projectId: "anupam-yadav-portfolio",
+  storageBucket: "anupam-yadav-portfolio.firebasestorage.app",
+  messagingSenderId: "46105414968",
+  appId: "1:46105414968:web:94a16631d4e852904085cd",
+  measurementId: "G-7N424T7HYK"
+};
+
+const loginMessage =
+sessionStorage.getItem("loginMessage");
+
+if (loginMessage) {
+
+  document.getElementById(
+    "loginMessage"
+  ).innerText = loginMessage;
+
+  sessionStorage.removeItem(
+    "loginMessage"
+  );
+
+}
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, (user) => {
+
+  if (!user) {
+
+    window.location.href = "login.html";
+
+  }
+
+});
+
+function clearProjectForm() {
+
+  document.getElementById("title").value = "";
+  document.getElementById("description").value = "";
+  document.getElementById("github").value = "";
+  document.getElementById("live").value = "";
+  document.getElementById("category").value = "";
+  document.getElementById("emoji").value = "";
+  document.getElementById("techs").value = "";
+  document.getElementById("featured").checked = false;
+
+  window.editingProjectId = null;
+
+  console.log("Form Cleared");
+}
+
+const saveBtn = document.getElementById("saveBtn");
+
+saveBtn.addEventListener("click", async () => {
+
+  const title = document.getElementById("title").value;
+  const description = document.getElementById("description").value;
+
+  try {
+    const projectData = {
+  title,
+  description,
+  github: document.getElementById("github").value,
+  live: document.getElementById("live").value,
+  category: document.getElementById("category").value,
+  emoji: document.getElementById("emoji").value,
+  techs: document.getElementById("techs").value,
+  featured: document.getElementById("featured").checked
+};
+
+if (window.editingProjectId) {
+
+  await updateDoc(
+    doc(db, "projects", window.editingProjectId),
+    projectData
+  );
+
+  alert("Project Updated!");
+
+  clearProjectForm();
+
+} else {
+
+  await addDoc(
+    collection(db, "projects"),
+    projectData
+  );
+
+  alert("Project Added!");
+
+  clearProjectForm();
+
+}
+
+loadProjects();
+
+  } catch (error) {
+    console.error("Error:", error);
+  }
+
+});
+
+async function loadProjects() {
+
+  const container =
+  document.getElementById("projectsList");
+
+  container.innerHTML = "";
+
+  const snapshot =
+  await getDocs(collection(db, "projects"));
+
+  snapshot.forEach((project) => {
+
+    const data = project.data();
+
+    container.innerHTML += `
+      <div style="border:1px solid #ccc;padding:10px;margin:10px 0;">
+        <h3>${data.title}</h3>
+        <p>${data.description}</p>
+
+        <button onclick="editProject('${project.id}')">
+          Edit
+        </button>
+
+        <button onclick="deleteProject('${project.id}')">
+          Delete
+        </button>
+      </div>
+    `;
+  });
+}
+
+window.deleteProject = async function(id){
+
+  if(!confirm("Delete this project?")) return;
+
+  await deleteDoc(
+    doc(db,"projects",id)
+  );
+
+  await loadProjects();
+
+  alert("Project Deleted!");
+};
+
+  window.editProject = async function(id) {
+
+    const docRef = doc(db, "projects", id);
+
+    const snap = await getDoc(docRef);
+
+    const data = snap.data();
+
+    document.getElementById("title").value =
+      data.title || "";
+
+    document.getElementById("description").value =
+      data.description || "";
+
+    document.getElementById("github").value =
+      data.github || "";
+
+    document.getElementById("live").value =
+      data.live || "";
+
+    document.getElementById("category").value =
+      data.category || "";
+
+    document.getElementById("emoji").value =
+      data.emoji || "";
+
+    document.getElementById("techs").value =
+      data.techs || "";
+
+    document.getElementById("featured").checked =
+      data.featured || false;
+
+    window.editingProjectId = id;
+
+    window.scrollTo({
+  top: 0,
+  behavior: "smooth"
+});
+  };
+
+    loadProjects();
+
+    // Certificate Management
+
+const addCertificateBtn =
+document.getElementById("saveCertificateBtn");
+
+console.log(addCertificateBtn);
+
+addCertificateBtn.addEventListener(
+"click",
+async () => {
+
+  const title =
+document.getElementById("certTitle").value;
+
+const issuer =
+document.getElementById("certIssuer").value;
+
+const year =
+document.getElementById("certYear").value;
+
+const image =
+document.getElementById("certImage").value;
+
+const tags =
+document.getElementById("certTags").value;
+
+  if(window.editingCertificateId){
+
+  await updateDoc(
+    doc(
+      db,
+      "certificates",
+      window.editingCertificateId
+    ),
+    {
+      title,
+      issuer,
+      year,
+      image,
+      tags
+    }
+  );
+
+  alert("Certificate Updated!");
+
+  window.editingCertificateId = null;
+
+}else{
+
+  await addDoc(
+    collection(db,"certificates"),
+    {
+      title,
+      issuer,
+      year,
+      image,
+      tags
+    }
+  );
+
+    alert("Certificate Added Successfully!");
+
+}
+
+  loadCertificates();
+
+  document.getElementById("certTitle").value = "";
+  document.getElementById("certIssuer").value = "";
+  document.getElementById("certYear").value = "";
+  document.getElementById("certImage").value = "";
+  document.getElementById("certTags").value = "";
+
+});
+
+async function loadCertificates() {
+
+  const container =
+  document.getElementById("certificatesList");
+
+  container.innerHTML = "";
+
+  const snapshot =
+  await getDocs(
+    collection(db, "certificates")
+  );
+
+  snapshot.forEach((certificate) => {
+
+    const data = certificate.data();
+
+    container.innerHTML += `
+  <div style="border:1px solid #ccc;padding:10px;margin:10px 0;">
+
+  <h3>${data.title}</h3>
+
+  <p>Issuer: ${data.issuer}</p>
+
+  <p>Year: ${data.year}</p>
+
+  <p>Tags: ${data.tags}</p>
+
+  <button onclick="editCertificate('${certificate.id}')">
+  Edit
+  </button>
+
+  <button onclick="deleteCertificate('${certificate.id}')">
+  Delete
+  </button>
+  </div>
+  `;
+  });
+}
+
+window.deleteCertificate =
+async function(id){
+
+  await deleteDoc(
+    doc(db,"certificates",id)
+  );
+
+  loadCertificates();
+};
+
+window.editCertificate = async function(id){
+
+  const docRef =
+  doc(db,"certificates",id);
+
+  const snap =
+  await getDoc(docRef);
+
+  const data =
+  snap.data();
+
+  document.getElementById("certTitle").value =
+  data.title || "";
+
+  document.getElementById("certIssuer").value =
+  data.issuer || "";
+
+  document.getElementById("certYear").value =
+  data.year || "";
+
+  document.getElementById("certImage").value =
+  data.image || "";
+
+  document.getElementById("certTags").value =
+  data.tags || "";
+
+  window.editingCertificateId = id;
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+};
+
+loadCertificates();
+
+// Skill Management
+
+const addSkillBtn =
+document.getElementById("addSkill");
+
+addSkillBtn.addEventListener(
+"click",
+async () => {
+
+  const skill =
+  document.getElementById("skillName").value;
+
+  await addDoc(
+    collection(db, "skills"),
+    {
+      skill,
+      createdAt: new Date().toISOString()
+    }
+  );
+
+  alert("Skill Added Successfully!");
+
+  loadSkills();
+
+  document.getElementById("skillName").value = "";
+
+});
+
+async function loadSkills() {
+
+  const container =
+  document.getElementById("skillsList");
+
+  container.innerHTML = "";
+
+  const snapshot =
+  await getDocs(
+    collection(db, "skills")
+  );
+
+  snapshot.forEach((skillDoc) => {
+
+    const data = skillDoc.data();
+
+    container.innerHTML += `
+      <div style="border:1px solid #ccc;padding:10px;margin:10px 0;">
+
+        <h3>${data.skill}</h3>
+
+        <button onclick="deleteSkill('${skillDoc.id}')">
+          Delete
+        </button>
+
+      </div>
+    `;
+  });
+}
+
+window.deleteSkill =
+async function(id){
+
+  await deleteDoc(
+    doc(db,"skills",id)
+  );
+
+  loadSkills();
+};
+
+loadSkills();
+
+document
+.getElementById("logoutBtn")
+.addEventListener("click", async () => {
+
+  await signOut(auth);
+
+  sessionStorage.setItem(
+    "logoutMessage",
+    "You have been logged out successfully. Kindly login again."
+  );
+
+  window.location.href = "login.html";
+
+});
+
+</script>
+</div>
+</body>
+</html>
