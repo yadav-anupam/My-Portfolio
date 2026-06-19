@@ -137,10 +137,34 @@ border-radius:10px;
 margin-bottom:20px;
 }
 
+#closeMenu{
+
+display:none;
+
+position:absolute;
+
+top:20px;
+right:20px;
+
+background:none;
+
+border:none;
+
+color:white;
+
+font-size:24px;
+
+cursor:pointer;
+}
+
 @media(max-width:768px){
 
   #menuBtn{
   display:block;
+}
+
+#closeMenu{
+display:block;
 }
 
 .sidebar{
@@ -178,6 +202,10 @@ margin-bottom:20px;
   <div class="sidebar">
 
 <h2>⚡ Admin</h2>
+
+<button id="closeMenu">
+✖
+</button>
 
 <a href="#">🏠 Dashboard</a>
 <a href="#">🚀 Projects</a>
@@ -838,6 +866,16 @@ document
 document
 .querySelector(".sidebar")
 .classList.toggle("active");
+
+});
+
+document
+.getElementById("closeMenu")
+.addEventListener("click",()=>{
+
+document
+.querySelector(".sidebar")
+.classList.remove("active");
 
 });
 
