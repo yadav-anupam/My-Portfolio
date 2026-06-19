@@ -173,22 +173,49 @@ function initDeck(deckId, prevBtnId, nextBtnId, dotsId) {
 
 
 
-// CONTACT FORM â€” opens mailto
-document.getElementById('send-btn').addEventListener('click',()=>{
-  const name=document.getElementById('fname').value.trim();
-  const email=document.getElementById('femail').value.trim();
-  const subject=document.getElementById('fsubject').value.trim();
-  const msg=document.getElementById('fmsg').value.trim();
-  const fmsg=document.getElementById('form-msg');
-  if(!name||!email||!subject||!msg){
-    fmsg.className='error';fmsg.textContent='Please fill in all fields.';return;
-  }
-  const body=`Name: ${name}\nEmail: ${email}\n\nMessage:\n${msg}`;
-  const mailto=`mailto:yadavanupam9119@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  window.location.href=mailto;
-  fmsg.className='success';fmsg.textContent='âœ“ Opening your email client to send the message!';
-  setTimeout(()=>{fmsg.style.display='none';},5000);
-});
+// CONTACT FORM â€” Web3Forms submit
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fmsg = document.getElementById('form-msg');
+    const sendBtn = document.getElementById('send-btn');
+    const originalBtn = sendBtn.innerHTML;
+
+    sendBtn.disabled = true;
+    sendBtn.innerHTML = 'Sending...';
+    fmsg.style.display = 'block';
+    fmsg.className = '';
+    fmsg.textContent = 'Sending your message...';
+
+    try {
+      const formData = new FormData(contactForm);
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        fmsg.className = 'success';
+        fmsg.textContent = 'Message sent successfully. I will get back to you soon.';
+        contactForm.reset();
+      } else {
+        fmsg.className = 'error';
+        fmsg.textContent = 'Unable to send message right now. Please try again.';
+      }
+    } catch {
+      fmsg.className = 'error';
+      fmsg.textContent = 'Network error. Please try again in a moment.';
+    } finally {
+      sendBtn.disabled = false;
+      sendBtn.innerHTML = originalBtn;
+      setTimeout(() => {
+        fmsg.style.display = 'none';
+      }, 5000);
+    }
+  });
+}
 
 // CERT MODALS
 function openCertModal(id){
