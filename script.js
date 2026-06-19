@@ -210,9 +210,8 @@ document.addEventListener('mousemove', e => {
 
 // â”€â”€ THEME TOGGLE â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const themeBtn = document.getElementById('theme-toggle');
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 const savedTheme = localStorage.getItem('theme');
-const initialTheme = savedTheme || (prefersDark.matches ? 'dark' : 'light');
+const initialTheme = savedTheme || 'light';
 
 function applyTheme(theme) {
   const isLight = theme === 'light';
