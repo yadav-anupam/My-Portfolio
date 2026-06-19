@@ -29,7 +29,7 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;transition:background .3s,backdrop-filter .3s}
 nav.scrolled{background:rgba(15,23,42,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .nav-logo{font-family:var(--font-serif);font-style:italic;font-size:1.35rem;font-weight:600;background:linear-gradient(135deg,#C68A4E,#E0AE6E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:.01em}
-.nav-links{display:flex;gap:2rem;list-style:none;margin-right:4.5rem}
+.nav-links{display:flex;gap:2rem;list-style:none;margin-right:9rem}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .2s;position:relative}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:linear-gradient(90deg,#C68A4E,#E0AE6E);transition:width .3s}
 .nav-links a:hover{color:var(--text)}
