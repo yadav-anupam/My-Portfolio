@@ -120,6 +120,56 @@ button{
   font-size:30px;
   margin-top:10px;
 }
+
+#menuBtn{
+
+display:none;
+
+background:#8b5cf6;
+color:white;
+
+border:none;
+
+padding:12px 18px;
+
+border-radius:10px;
+
+margin-bottom:20px;
+}
+
+@media(max-width:768px){
+
+  #menuBtn{
+  display:block;
+}
+
+.sidebar{
+
+  position:fixed;
+
+  left:-280px;
+
+  top:0;
+
+  width:260px;
+
+  height:100vh;
+
+  z-index:1000;
+
+  transition:.3s;
+}
+
+.sidebar.active{
+  left:0;
+}
+
+.main{
+  width:100%;
+  padding:15px;
+}
+}
+
 </style>
 
 </head>
@@ -145,6 +195,10 @@ Logout
   <p id="loginMessage"
    style="color:green;font-weight:bold;">
 </p>
+
+<button id="menuBtn">
+☰ Menu
+</button>
 
 <h1>Portfolio Admin Dashboard</h1>
 <br><br>
@@ -444,6 +498,10 @@ async function loadProjects() {
   const snapshot =
   await getDocs(collection(db, "projects"));
 
+  document.getElementById(
+  "projectCount"
+).innerText = snapshot.size;
+
   snapshot.forEach((project) => {
 
     const data = project.data();
@@ -606,6 +664,10 @@ async function loadCertificates() {
     collection(db, "certificates")
   );
 
+  document.getElementById(
+  "certificateCount"
+).innerText = snapshot.size;
+
   snapshot.forEach((certificate) => {
 
     const data = certificate.data();
@@ -720,6 +782,10 @@ async function loadSkills() {
     collection(db, "skills")
   );
 
+  document.getElementById(
+  "skillCount"
+).innerText = snapshot.size;
+
   snapshot.forEach((skillDoc) => {
 
     const data = skillDoc.data();
@@ -762,6 +828,16 @@ document
   );
 
   window.location.href = "login.html";
+
+});
+
+document
+.getElementById("menuBtn")
+.addEventListener("click",()=>{
+
+document
+.querySelector(".sidebar")
+.classList.toggle("active");
 
 });
 
