@@ -1619,11 +1619,14 @@ body.terminal-fullscreen-active {
 
 
 /* ── COMPREHENSIVE MOBILE VIEW IMPROVEMENTS ── */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   /* Prevent Open to Work badge from overlapping content */
   #otw-badge {
     display: none !important;
   }
+}
+
+@media (max-width: 768px) {
 
   /* Ensure no horizontal scrolling */
   html, body {
