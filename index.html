@@ -292,6 +292,16 @@
 
     <!-- Interactive Solar System Viewport (Desktop & Tablet) -->
     <div class="tech-universe__stage-wrap fade-in">
+      <!-- Interactive Planet Quick Chips Selector (Mobile & Desktop) -->
+      <div class="tech-universe__planet-chips" id="tech-universe-chips" role="tablist" aria-label="Select Project Planet">
+        <button type="button" class="tech-universe__chip" data-planet="acadtrack">AcadTrack</button>
+        <button type="button" class="tech-universe__chip active" data-planet="kisan-setu">Kisan Setu</button>
+        <button type="button" class="tech-universe__chip" data-planet="webjugad-labs">WebJugad</button>
+        <button type="button" class="tech-universe__chip" data-planet="mykhata">MyKhata</button>
+        <button type="button" class="tech-universe__chip" data-planet="smart-vision-school">Smart Vision</button>
+      </div>
+
+      <!-- Interactive Solar System Viewport -->
       <div class="tech-universe__viewport" id="tech-universe-stage" role="region" aria-label="Interactive Project Solar System">
         <!-- SVG Elliptical Orbit Rings -->
         <svg class="tech-universe__svg-orbits" viewBox="0 0 1000 680" preserveAspectRatio="none" aria-hidden="true">
@@ -317,27 +327,24 @@
 
         <!-- Dynamic Planetary & Moon Layer -->
         <div class="tech-universe__planets-layer" id="tech-universe-planets"></div>
-
-        <!-- Glass Information Panel -->
-        <div class="tech-universe__panel" id="tech-universe-panel" aria-live="polite">
-          <div class="tech-universe__panel-header">
-            <div class="tech-universe__panel-sphere" id="panel-sphere"></div>
-            <div class="tech-universe__panel-title-wrap">
-              <div class="tech-universe__panel-badge" id="panel-badge">Featured Planet</div>
-              <h3 class="tech-universe__panel-title" id="panel-title">Kisan Setu</h3>
-            </div>
-          </div>
-          <p class="tech-universe__panel-desc" id="panel-desc">AI-powered agricultural procurement and queue management platform.</p>
-          <div class="tech-universe__panel-meta">
-            <span class="tech-universe__panel-count" id="panel-tech-count">10 Technologies Orbiting</span>
-          </div>
-          <div class="tech-universe__panel-techs" id="panel-techs"></div>
-          <div class="tech-universe__panel-hint">💡 Hover or click any technology moon to trace its cross-project galaxy network.</div>
-        </div>
       </div>
 
-      <!-- Mobile Cosmic Deck (Clean responsive stack) -->
-      <div class="tech-universe__mobile-deck" id="tech-universe-mobile-deck"></div>
+      <!-- Glass Information Panel -->
+      <div class="tech-universe__panel" id="tech-universe-panel" aria-live="polite">
+        <div class="tech-universe__panel-header">
+          <div class="tech-universe__panel-sphere" id="panel-sphere"></div>
+          <div class="tech-universe__panel-title-wrap">
+            <div class="tech-universe__panel-badge" id="panel-badge">Featured Planet</div>
+            <h3 class="tech-universe__panel-title" id="panel-title">Kisan Setu</h3>
+          </div>
+        </div>
+        <p class="tech-universe__panel-desc" id="panel-desc">AI-powered agricultural procurement and queue management platform.</p>
+        <div class="tech-universe__panel-meta">
+          <span class="tech-universe__panel-count" id="panel-tech-count">10 Technologies Orbiting</span>
+        </div>
+        <div class="tech-universe__panel-techs" id="panel-techs"></div>
+        <div class="tech-universe__panel-hint">💡 Tap any planet or technology moon to inspect its ecosystem connection.</div>
+      </div>
     </div>
 
     <!-- Interactive Cross-Tech Tooltip -->

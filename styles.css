@@ -889,99 +889,132 @@ body.light-mode #cursor-glow{background:radial-gradient(circle,rgba(166,113,58,.
   line-height: 1.4;
 }
 
-/* ── MOBILE DECK (RESPONSIVE STACK) ── */
-.tech-universe__mobile-deck {
-  display: none;
-}
-
+/* ── SOLAR SYSTEM MOBILE & RESPONSIVE ENGINE ── */
 @media (max-width: 900px) {
-  .tech-universe__viewport {
-    display: none;
+  .tech-universe {
+    padding: 3.5rem 0 4rem;
   }
 
-  .tech-universe__mobile-deck {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .tech-universe__mobile-sun {
-    background: radial-gradient(circle at 35% 35%, #F5DEB3 0%, #E0AE6E 30%, #C68A4E 65%, #7A4E24 100%);
-    border: 2px solid rgba(255, 248, 235, 0.6);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
+  .tech-universe__header {
     text-align: center;
-    box-shadow: 0 8px 30px rgba(198, 138, 78, 0.3);
+    margin-bottom: 1.25rem;
+  }
+
+  .tech-universe__subtitle {
+    font-size: 1.1rem;
     margin-bottom: 0.5rem;
   }
 
-  .tech-universe__mobile-card {
-    background: var(--glass);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    backdrop-filter: blur(12px);
-    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  .tech-universe__desc {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .tech-universe__mobile-card.tech-match {
-    border-color: var(--purple);
-    box-shadow: 0 0 20px rgba(224, 174, 110, 0.3);
-    transform: translateY(-2px);
+  /* 1. Show the Solar System on Mobile with optimized viewport */
+  .tech-universe__viewport {
+    display: block !important;
+    height: 420px !important;
+    min-height: 380px !important;
+    border-radius: 14px;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.75), 0 15px 40px rgba(0, 0, 0, 0.45);
+    touch-action: manipulation;
   }
 
-  .tech-universe__mobile-card-header {
+  /* 2. Scaled Sun for Mobile screens */
+  .tech-universe__sun {
+    width: 92px !important;
+    height: 92px !important;
+  }
+
+  .tech-universe__sun-aura {
+    inset: -16px !important;
+  }
+
+  .tech-universe__sun-corona {
+    inset: -8px !important;
+  }
+
+  .tech-universe__sun-core {
+    padding: 0.4rem !important;
+  }
+
+  .tech-universe__sun-title {
+    font-size: 0.58rem !important;
+    letter-spacing: 0.05em !important;
+  }
+
+  .tech-universe__sun-sub {
+    font-size: 0.44rem !important;
+    letter-spacing: 0.03em !important;
+    margin-top: 1px !important;
+  }
+
+  .tech-universe__sun-tag {
+    display: none !important;
+  }
+
+  /* 3. Scaled Planets for Mobile */
+  .tech-universe__planet {
+    width: calc(var(--planet-size, 48px) * 0.7) !important;
+    height: calc(var(--planet-size, 48px) * 0.7) !important;
+  }
+
+  .tech-universe__planet-label {
+    font-size: 0.64rem !important;
+    padding: 0.1rem 0.4rem !important;
+    margin-top: 3px !important;
+  }
+
+  /* 4. Scaled Technology Moons for Mobile */
+  .tech-universe__moon {
+    font-size: 0.52rem !important;
+    padding: 0.08rem 0.35rem !important;
+    border-radius: 6px !important;
+  }
+
+  /* 5. Glass Information Panel docked below viewport */
+  .tech-universe__panel {
+    position: relative !important;
+    bottom: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 1.25rem !important;
+    padding: 1.2rem !important;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  .tech-universe__panel-title {
+    font-size: 1.15rem !important;
+  }
+
+  .tech-universe__panel-desc {
+    font-size: 0.82rem !important;
+  }
+
+  /* 6. Planet Chips Quick Selector on Mobile */
+  .tech-universe__planet-chips {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .tech-universe__mobile-sphere {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.6);
-  }
-
-  .tech-universe__mobile-card-title {
-    font-family: var(--font-serif);
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .tech-universe__mobile-card-desc {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.55;
-    margin-bottom: 1rem;
-  }
-
-  .tech-universe__mobile-moons {
-    display: flex;
-    flex-wrap: wrap;
     gap: 0.4rem;
+    overflow-x: auto;
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.85rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
   }
 
-  .tech-universe__mobile-moon-pill {
-    font-size: 0.72rem;
-    font-weight: 600;
-    background: rgba(198, 138, 78, 0.08);
-    border: 1px solid rgba(198, 138, 78, 0.25);
-    color: #F2EDE4;
-    padding: 0.25rem 0.6rem;
-    border-radius: 100px;
-    cursor: pointer;
-    transition: all 0.2s ease;
+  .tech-universe__planet-chips::-webkit-scrollbar {
+    display: none;
   }
 
-  .tech-universe__mobile-moon-pill.active {
-    background: var(--blue);
-    color: #0D0D0D;
-    border-color: #FFF;
-    box-shadow: 0 0 10px rgba(198, 138, 78, 0.7);
+  .tech-universe__chip {
+    flex-shrink: 0;
+    font-size: 0.74rem;
+    padding: 0.32rem 0.75rem;
   }
 }
 
@@ -1583,7 +1616,72 @@ body.terminal-fullscreen-active {
   }
 }
 
-/* ── LIGHT MODE OVERRIDES ── */
+
+
+/* ── COMPREHENSIVE MOBILE VIEW IMPROVEMENTS ── */
+@media (max-width: 768px) {
+  /* Prevent Open to Work badge from overlapping content */
+  #otw-badge {
+    display: none !important;
+  }
+
+  /* Ensure no horizontal scrolling */
+  html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  /* Container padding */
+  .container {
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
+  }
+
+  /* Section Titles */
+  .section-title {
+    font-size: clamp(1.8rem, 7vw, 2.3rem);
+    line-height: 1.15;
+  }
+
+  /* Hero Section */
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-btns .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Back to Top button position on mobile */
+  #back-to-top {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 42px;
+    height: 42px;
+  }
+
+  /* Light mode chip support */
+  body.light-mode .tech-universe__chip {
+    background: rgba(166, 113, 58, 0.08);
+    border-color: rgba(166, 113, 58, 0.25);
+    color: #211B14;
+  }
+
+  body.light-mode .tech-universe__chip.active {
+    background: linear-gradient(135deg, #A6713A, #C68A4E);
+    color: #FFF;
+  }
+}
+
+
+/* ── LIGHT MODE TERMINAL OVERRIDES ── */
 body.light-mode .dev-terminal {
   background: rgba(255, 253, 248, 0.97);
   border-color: rgba(166, 113, 58, 0.28);
@@ -1666,8 +1764,7 @@ body.light-mode .dev-terminal__footer-hint kbd {
   color: #211B14;
 }
 
-
-/* ── HERO INTEGRATED TERMINAL ── */
+/* ── HERO TERMINAL CONTAINER ── */
 .hero-visual {
   display: flex;
   justify-content: center;
@@ -1691,11 +1788,6 @@ body.light-mode .dev-terminal__footer-hint kbd {
 }
 
 @media (max-width: 900px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-  
   .hero-visual .dev-terminal {
     max-width: 100%;
   }

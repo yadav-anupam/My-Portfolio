@@ -437,6 +437,29 @@ function initTechnologyUniverse() {
     }
   ];
 
+  // Wire up Planet Quick Selector Chips
+  const chipsContainer = document.getElementById('tech-universe-chips');
+  const chipButtons = chipsContainer ? chipsContainer.querySelectorAll('.tech-universe__chip') : [];
+
+  function updateChipActive(planetId) {
+    chipButtons.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.planet === planetId);
+    });
+  }
+
+  if (chipsContainer) {
+    chipsContainer.addEventListener('click', e => {
+      const chip = e.target.closest('.tech-universe__chip');
+      if (!chip) return;
+      const planetId = chip.dataset.planet;
+      selectedPlanetId = planetId;
+      highlightPlanet(planetId);
+      const proj = projectsData.find(p => p.id === planetId);
+      if (proj) updatePanel(proj);
+      updateChipActive(planetId);
+    });
+  }
+
   // Map technology name to all projects using it (for cross-project network highlighting)
   const techProjectMap = {};
   projectsData.forEach(p => {
@@ -782,6 +805,9 @@ function initTechnologyUniverse() {
         item.orbitPath.classList.toggle('active', isTarget);
       }
     });
+    if (typeof updateChipActive === 'function') {
+      updateChipActive(planetId);
+    }
   }
 
   function clearPlanetHighlights() {
@@ -864,12 +890,14 @@ function initTechnologyUniverse() {
       item.wrap.style.top = py + 'px';
 
       // Update Moons orbiting around this planet
+      const isMobile = stageRect.width <= 768;
+      const moonScale = isMobile ? 0.62 : 1;
       item.moons.forEach(m => {
         if (!isPaused) {
           m.angleOffset += m.speed * deltaTime;
         }
-        const mx = Math.cos(m.angleOffset) * m.orbitR;
-        const my = Math.sin(m.angleOffset) * (m.orbitR * 0.75); // slight elliptical squish for 3D orbital plane
+        const mx = Math.cos(m.angleOffset) * (m.orbitR * moonScale);
+        const my = Math.sin(m.angleOffset) * (m.orbitR * 0.75 * moonScale);
         m.el.style.transform = `translate(calc(-50% + ${mx}px), calc(-50% + ${my}px))`;
       });
     });
