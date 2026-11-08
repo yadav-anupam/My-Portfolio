@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 
-<link rel="stylesheet" href="styles.css"/>
+<link rel="stylesheet" href="styles.css?v=3.2.0"/>
 </head>
 <body>
 
@@ -80,6 +80,7 @@
 
 <!-- SCROLL PROGRESS -->
 <div id="scroll-progress"></div>
+<div id="scroll-section-badge" class="scroll-section-badge" aria-hidden="true">HOME</div>
 
 <!-- PARTICLES -->
 <canvas id="particles-canvas"></canvas>
@@ -371,7 +372,8 @@
       <button class="filter-btn" data-filter="ai">AI</button>
     </div>
     <div class="fade-in">
-      <div class="proj-deck-wrapper" id="proj-deck">
+      <div class="projects-horizontal-track" id="projects-horizontal-track">
+        <div class="proj-deck-wrapper" id="proj-deck">
         <div class="project-card card-spotlight" data-tags="python">
           <div class="project-thumb">
             <div class="project-thumb-mock">🎮</div>
@@ -434,6 +436,7 @@
               <a href="https://github.com/yadav-anupam/CodeAlpha_StockPortfolioTracker" target="_blank" rel="noopener noreferrer" class="project-link live">Live Demo</a>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -776,7 +779,7 @@
 <!-- BACK TO TOP -->
 <button id="back-to-top" aria-label="Back to top"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" fill="currentColor"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"/></svg></span></button>
 
-<script src="script.js"></script>
+<script src="script.js?v=3.2.0"></script>
 
 
 <script type="module">

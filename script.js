@@ -105,6 +105,7 @@ const backToTop = document.getElementById('back-to-top');
 const sections = ['hero','about','skills','technology-universe','projects','certifications','education','experience','testimonials','profiles','contact'];
 const sectionElements = sections.map(id => document.getElementById(id)).filter(Boolean);
 const sdots = document.querySelectorAll('.sdot');
+const scrollBadgeEl = document.getElementById('scroll-section-badge');
 const parallaxElements = document.querySelectorAll('[data-speed]');
 const heroCinematicContent = document.querySelector('.hero-content-cinematic');
 const heroCinematicTerminal = document.querySelector('.hero-terminal-cinematic');
