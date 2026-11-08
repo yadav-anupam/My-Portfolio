@@ -96,24 +96,64 @@ if (canvas) {
   }
 }
 
-// --- CONSOLIDATED HIGH-PERFORMANCE SCROLL HANDLER ---
+// ========================================================
+// --- MASTER CINEMATIC SCROLL & PARALLAX ENGINE ---
+// ========================================================
 const progressBar = document.getElementById('scroll-progress');
 const navbar = document.getElementById('navbar');
 const backToTop = document.getElementById('back-to-top');
 const sections = ['hero','about','skills','technology-universe','projects','certifications','education','experience','testimonials','profiles','contact'];
 const sectionElements = sections.map(id => document.getElementById(id)).filter(Boolean);
 const sdots = document.querySelectorAll('.sdot');
+const parallaxElements = document.querySelectorAll('[data-speed]');
+const heroCinematicContent = document.querySelector('.hero-content-cinematic');
+const heroCinematicTerminal = document.querySelector('.hero-terminal-cinematic');
+const eduTimeline = document.getElementById('edu-timeline');
+const eduLineActive = document.getElementById('edu-timeline-line-active');
+const eduItems = document.querySelectorAll('.edu-item');
+const techUniverseSec = document.getElementById('technology-universe');
 
+// Ambient lighting colors per section
+const sectionAmbientMap = {
+  'hero': 'rgba(198, 138, 78, 0.08)',
+  'about': 'rgba(185, 122, 74, 0.07)',
+  'skills': 'rgba(224, 174, 110, 0.06)',
+  'technology-universe': 'rgba(198, 138, 78, 0.12)',
+  'projects': 'rgba(185, 122, 74, 0.08)',
+  'certifications': 'rgba(224, 174, 110, 0.06)',
+  'education': 'rgba(198, 138, 78, 0.07)',
+  'experience': 'rgba(198, 138, 78, 0.08)',
+  'testimonials': 'rgba(185, 122, 74, 0.06)',
+  'profiles': 'rgba(224, 174, 110, 0.06)',
+  'contact': 'rgba(224, 174, 110, 0.13)'
+};
+
+let currentActiveSectionId = 'hero';
 let isScrollTicking = false;
+
+// Motion Debug HUD State
+const isDebugMotion = window.location.search.includes('motionDebug=true');
+let debugHudEl = null;
+let fpsFrames = 0;
+let lastFpsTime = performance.now();
+let currentFps = 60;
+
+if (isDebugMotion) {
+  debugHudEl = document.createElement('div');
+  debugHudEl.id = 'motion-debug-hud';
+  debugHudEl.innerHTML = '<span>⚡ CINEMATIC ENGINE ACTIVE</span>';
+  document.body.appendChild(debugHudEl);
+}
 
 function handleScrollUpdates() {
   const currentScrollY = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const vh = window.innerHeight;
+  const docHeight = document.documentElement.scrollHeight - vh;
+  const globalProgress = docHeight > 0 ? (currentScrollY / docHeight) : 0;
 
   // 1. Scroll Progress Bar
-  if (progressBar && docHeight > 0) {
-    const pct = (currentScrollY / docHeight) * 100;
-    progressBar.style.width = pct + '%';
+  if (progressBar) {
+    progressBar.style.width = (globalProgress * 100).toFixed(2) + '%';
   }
 
   // 2. Navbar & Back to Top Toggle
@@ -124,18 +164,95 @@ function handleScrollUpdates() {
     backToTop.classList.toggle('show', currentScrollY > 400);
   }
 
-  // 3. Section Indicator Dots
-  if (sdots.length > 0) {
-    const viewportMiddle = currentScrollY + window.innerHeight / 2;
-    for (let i = 0; i < sectionElements.length; i++) {
-      const el = sectionElements[i];
-      const top = el.offsetTop;
-      const bottom = top + el.offsetHeight;
-      if (viewportMiddle >= top && viewportMiddle < bottom) {
-        sdots.forEach((dot, dotIdx) => dot.classList.toggle('active', dotIdx === i));
-        break;
+  // 3. Section Indicator Dots & Ambient Background Transition
+  const viewportMiddle = currentScrollY + vh / 2;
+  for (let i = 0; i < sectionElements.length; i++) {
+    const el = sectionElements[i];
+    const top = el.offsetTop;
+    const bottom = top + el.offsetHeight;
+    if (viewportMiddle >= top && viewportMiddle < bottom) {
+      if (currentActiveSectionId !== el.id) {
+        currentActiveSectionId = el.id;
+        const ambientColor = sectionAmbientMap[el.id] || 'rgba(198, 138, 78, 0.08)';
+        document.documentElement.style.setProperty('--ambient-color', ambientColor);
+        document.documentElement.style.setProperty('--ambient-y', ((i / sectionElements.length) * 60 + 20) + '%');
+      }
+      sdots.forEach((dot, dotIdx) => dot.classList.toggle('active', dotIdx === i));
+      break;
+    }
+  }
+
+  if (!prefersReducedMotion) {
+    // 4. Hero Cinematic Scroll Transformation
+    if (currentScrollY <= vh) {
+      if (heroCinematicContent) {
+        const textOffset = (currentScrollY * 0.22).toFixed(1);
+        const textOpacity = Math.max(0.15, 1 - (currentScrollY / (vh * 0.85))).toFixed(2);
+        heroCinematicContent.style.transform = `translate3d(0, -${textOffset}px, 0)`;
+        heroCinematicContent.style.opacity = textOpacity;
+      }
+      if (heroCinematicTerminal) {
+        const termScale = (1 + Math.min(0.035, (currentScrollY / vh) * 0.035)).toFixed(3);
+        const termOffset = (currentScrollY * 0.08).toFixed(1);
+        heroCinematicTerminal.style.transform = `translate3d(0, ${termOffset}px, 0) scale(${termScale})`;
+      }
+    } else {
+      if (heroCinematicContent && heroCinematicContent.style.opacity !== '0') {
+        heroCinematicContent.style.opacity = '0';
       }
     }
+
+    // 5. Global Multi-Speed Parallax Elements
+    if (parallaxElements.length > 0) {
+      parallaxElements.forEach(el => {
+        if (el === heroCinematicContent || el === heroCinematicTerminal) return;
+        const rect = el.getBoundingClientRect();
+        if (rect.top < vh && rect.bottom > 0) {
+          const speed = parseFloat(el.dataset.speed) || 0.1;
+          const offset = ((vh / 2) - (rect.top + rect.height / 2)) * speed;
+          el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
+        }
+      });
+    }
+
+    // 6. Education Drawing Timeline Line & Dot Activations
+    if (eduTimeline && eduLineActive) {
+      const timeRect = eduTimeline.getBoundingClientRect();
+      if (timeRect.top < vh && timeRect.bottom > 0) {
+        const drawProgress = Math.min(1, Math.max(0, (vh * 0.7 - timeRect.top) / timeRect.height));
+        eduLineActive.style.height = (drawProgress * 100).toFixed(1) + '%';
+
+        const lineTipY = timeRect.top + (drawProgress * timeRect.height);
+        eduItems.forEach(item => {
+          const dot = item.querySelector('.edu-dot');
+          if (dot) {
+            const dotRect = dot.getBoundingClientRect();
+            item.classList.toggle('is-active', dotRect.top <= lineTipY + 10);
+          }
+        });
+      }
+    }
+
+    // 7. Technology Universe Scroll-Driven Progress
+    if (techUniverseSec) {
+      const uRect = techUniverseSec.getBoundingClientRect();
+      if (uRect.top < vh && uRect.bottom > 0) {
+        const uProgress = Math.min(1, Math.max(0, (vh - uRect.top) / (vh + uRect.height)));
+        techUniverseSec.style.setProperty('--galaxy-progress', uProgress.toFixed(2));
+      }
+    }
+  }
+
+  // 8. Motion Debug HUD Update
+  if (isDebugMotion && debugHudEl) {
+    fpsFrames++;
+    const now = performance.now();
+    if (now - lastFpsTime >= 500) {
+      currentFps = Math.round((fpsFrames * 1000) / (now - lastFpsTime));
+      fpsFrames = 0;
+      lastFpsTime = now;
+    }
+    debugHudEl.innerHTML = `<span>FPS: ${currentFps}</span> | <span>SEC: ${currentActiveSectionId.toUpperCase()}</span> | <span>SCROLL: ${(globalProgress * 100).toFixed(1)}%</span>`;
   }
 
   isScrollTicking = false;
@@ -147,6 +264,94 @@ window.addEventListener('scroll', () => {
     isScrollTicking = true;
   }
 }, { passive: true });
+
+
+// ========================================================
+// --- INTERACTIVE CARD SPOTLIGHT (SKIPER UI PATTERN) ---
+// ========================================================
+function initCardSpotlight() {
+  const spotlightTargets = document.querySelectorAll('.card-spotlight, .project-card, .stat-card, .profile-card, .testi-card');
+  spotlightTargets.forEach(card => {
+    card.addEventListener('pointermove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', x + 'px');
+      card.style.setProperty('--mouse-y', y + 'px');
+    }, { passive: true });
+  });
+}
+
+// ========================================================
+// --- STATS NUMBERS ONCE-ONLY COUNTER ANIMATION ---
+// ========================================================
+function initStatsCounter() {
+  const statNumbers = document.querySelectorAll('.stat-num[data-count]');
+  if (statNumbers.length === 0 || !('IntersectionObserver' in window)) return;
+
+  const statsObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const targetVal = parseInt(el.dataset.count, 10) || 0;
+        const duration = 1200;
+        const startTime = performance.now();
+
+        function updateCounter(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(1, elapsed / duration);
+          // Ease-out cubic
+          const easeOut = 1 - Math.pow(1 - progress, 3);
+          const currentVal = Math.round(targetVal * easeOut);
+          el.textContent = currentVal + '+';
+
+          if (progress < 1) {
+            requestAnimationFrame(updateCounter);
+          } else {
+            el.textContent = targetVal + '+';
+          }
+        }
+
+        requestAnimationFrame(updateCounter);
+        obs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  statNumbers.forEach(s => statsObserver.observe(s));
+}
+
+// ========================================================
+// --- SECTION HEADINGS CINEMATIC REVEAL ---
+// ========================================================
+function initHeadingReveals() {
+  const headingReveals = document.querySelectorAll('.section-heading-reveal');
+  if (headingReveals.length === 0 || !('IntersectionObserver' in window)) return;
+
+  const headingObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  headingReveals.forEach(h => headingObserver.observe(h));
+}
+
+// Run interactive subsystems
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    initCardSpotlight();
+    initStatsCounter();
+    initHeadingReveals();
+  });
+} else {
+  initCardSpotlight();
+  initStatsCounter();
+  initHeadingReveals();
+}
 
 // --- NAVIGATION & MOBILE MENU ---
 const hamburger = document.getElementById('hamburger');

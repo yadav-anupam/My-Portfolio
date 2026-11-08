@@ -47,6 +47,9 @@
 <!-- CURSOR GLOW -->
 <div id="cursor-glow"></div>
 
+<!-- AMBIENT SCROLL GLOW -->
+<div id="ambient-scroll-glow" aria-hidden="true"></div>
+
 <!-- SECTION PROGRESS DOTS -->
 <div id="section-dots">
   <a class="sdot" data-section="hero" title="Home"></a>
@@ -108,7 +111,7 @@
 <section id="hero">
   <div class="container">
     <div class="hero-grid">
-      <div class="fade-in">
+      <div class="fade-in hero-content-cinematic" data-speed="0.16">
         <div class="hero-tag"><span></span> Available for Internships</div>
         <h1 class="hero-name">Hi, I'm<br><span class="gradient-text">Anupam Yadav</span></h1>
         <div class="hero-typing"><span id="typing-text"></span><span class="cursor"></span></div>
@@ -119,7 +122,7 @@
           <a href="./Anupam%20resume.pdf" download="Anupam_Yadav_Resume.pdf" class="btn btn-outline"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5 12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64z"/></svg></span> Download Resume</a>
         </div>
       </div>
-      <div class="hero-visual fade-in" id="developer-terminal">
+      <div class="hero-visual fade-in hero-terminal-cinematic" id="developer-terminal" data-speed="0.08">
         <div class="dev-terminal" id="dev-terminal-window" role="region" aria-label="Interactive Developer Terminal">
           <!-- Terminal Header / Chrome -->
           <div class="dev-terminal__header">
@@ -208,14 +211,14 @@
           <div class="about-photo-badge">India</div>
         </div>
         <div class="stats-grid">
-          <div class="stat-card fade-in"><div class="stat-num">3+</div><div class="stat-label">Projects</div></div>
-          <div class="stat-card fade-in"><div class="stat-num">5+</div><div class="stat-label">Certifications</div></div>
-          <div class="stat-card fade-in"><div class="stat-num">3+</div><div class="stat-label">Technologies</div></div>
+          <div class="stat-card card-spotlight fade-in"><div class="stat-num" data-count="3">3+</div><div class="stat-label">Projects</div></div>
+          <div class="stat-card card-spotlight fade-in"><div class="stat-num" data-count="5">5+</div><div class="stat-label">Certifications</div></div>
+          <div class="stat-card card-spotlight fade-in"><div class="stat-num" data-count="3">3+</div><div class="stat-label">Technologies</div></div>
         </div>
       </div>
       <div class="fade-in">
         <div class="section-label">About Me</div>
-        <h2 class="section-title">Passionate About <span class="gradient-text">Technology</span></h2>
+        <h2 class="section-title section-heading-reveal">Passionate About <span class="gradient-text">Technology</span></h2>
         <div class="about-text">
           <p>I am a Computer Science Engineering student with a strong interest in IT technologies, artificial intelligence, and modern web technologies. I enjoy building practical applications that solve real-world problems and help improve user experiences.</p>
           <p>My learning journey includes Python programming, web development, AI fundamentals, and project-based problem solving. I am actively seeking opportunities to contribute to innovative teams while continuing to grow as a developer.</p>
@@ -237,7 +240,7 @@
   <div class="container">
     <div class="fade-in" style="text-align:center;margin-bottom:3rem">
       <div class="section-label">Technical Skills</div>
-      <h2 class="section-title">My <span class="gradient-text">Toolkit</span></h2>
+      <h2 class="section-title section-heading-reveal">My <span class="gradient-text">Toolkit</span></h2>
       <p class="section-sub" style="margin:0 auto">Skills I've built through hands-on projects and continuous self-learning.</p>
     </div>
     <div class="fade-in">
@@ -285,7 +288,7 @@
   <div class="container">
     <div class="fade-in tech-universe__header">
       <div class="section-label">Project Ecosystem</div>
-      <h2 class="section-title">The <span class="gradient-text">Technology Universe</span></h2>
+      <h2 class="section-title section-heading-reveal">The <span class="gradient-text">Technology Universe</span></h2>
       <p class="tech-universe__subtitle">Five projects. One ecosystem.</p>
       <p class="section-sub tech-universe__desc">
         Explore the technologies behind AcadTrack, Kisan Setu, WebJugad Labs, MyKhata, and Smart Vision School — each project orbiting a shared foundation of engineering, design, and experimentation.
@@ -359,7 +362,7 @@
   <div class="container">
     <div class="fade-in" style="margin-bottom:2rem">
       <div class="section-label">Work</div>
-      <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
+      <h2 class="section-title section-heading-reveal">Featured <span class="gradient-text">Projects</span></h2>
       <p class="section-sub">Real Python projects built with passion and problem-solving mindset.</p>
     </div>
     <div class="projects-filter fade-in">
@@ -369,7 +372,7 @@
     </div>
     <div class="fade-in">
       <div class="proj-deck-wrapper" id="proj-deck">
-        <div class="project-card" data-tags="python">
+        <div class="project-card card-spotlight" data-tags="python">
           <div class="project-thumb">
             <div class="project-thumb-mock">🎮</div>
             <span class="project-category-badge">Python</span>
@@ -390,7 +393,7 @@
             </div>
           </div>
         </div>
-        <div class="project-card" data-tags="python ai">
+        <div class="project-card card-spotlight" data-tags="python ai">
           <div class="project-thumb">
             <div class="project-thumb-mock" style="background:linear-gradient(135deg,#1e1b4b,#312e81)">🤖</div>
             <span class="project-category-badge">AI / Python</span>
@@ -411,7 +414,7 @@
             </div>
           </div>
         </div>
-        <div class="project-card" data-tags="python">
+        <div class="project-card card-spotlight" data-tags="python">
           <div class="project-thumb">
             <div class="project-thumb-mock" style="background:linear-gradient(135deg,#064e3b,#065f46)">📈</div>
             <span class="project-category-badge">Python</span>
@@ -442,7 +445,7 @@
   <div class="container">
     <div class="fade-in" style="text-align:center;margin-bottom:3rem">
       <div class="section-label">Credentials</div>
-      <h2 class="section-title">My <span class="gradient-text">Certifications</span></h2>
+      <h2 class="section-title section-heading-reveal">My <span class="gradient-text">Certifications</span></h2>
       <p class="section-sub" style="margin:0 auto">Verified knowledge and skills from industry programs.</p>
     </div>
     <div class="certs-grid">
@@ -534,9 +537,10 @@
   <div class="container">
     <div class="fade-in" style="margin-bottom:3rem">
       <div class="section-label">Learning Path</div>
-      <h2 class="section-title">My <span class="gradient-text">Education</span></h2>
+      <h2 class="section-title section-heading-reveal">My <span class="gradient-text">Education</span></h2>
     </div>
-    <div class="edu-timeline">
+    <div class="edu-timeline" id="edu-timeline">
+      <div class="edu-timeline-line-active" id="edu-timeline-line-active" aria-hidden="true"></div>
 
       <div class="edu-item fade-in">
         <div class="edu-dot"></div>
@@ -598,7 +602,7 @@
   <div class="container">
     <div class="fade-in" style="margin-bottom:3rem">
       <div class="section-label">Journey</div>
-      <h2 class="section-title">Academic <span class="gradient-text">Experience</span></h2>
+      <h2 class="section-title section-heading-reveal">Academic <span class="gradient-text">Experience</span></h2>
     </div>
     <div class="exp-card fade-in">
       <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap">
@@ -632,7 +636,7 @@
   <div class="container">
     <div class="fade-in" style="text-align:center;margin-bottom:3rem">
       <div class="section-label">Kind Words</div>
-      <h2 class="section-title">Recommendations & <span class="gradient-text">Testimonials</span></h2>
+      <h2 class="section-title section-heading-reveal">Recommendations & <span class="gradient-text">Testimonials</span></h2>
       <p class="section-sub" style="margin:0 auto">What my teachers and peers say about my work ethic and learning attitude.</p>
     </div>
     <div class="testimonials-grid">
@@ -669,7 +673,7 @@
   <div class="container">
     <div class="fade-in" style="text-align:center;margin-bottom:3rem">
       <div class="section-label">Find Me Online</div>
-      <h2 class="section-title">Coding <span class="gradient-text">Profiles</span></h2>
+      <h2 class="section-title section-heading-reveal">Coding <span class="gradient-text">Profiles</span></h2>
     </div>
     <div class="profiles-grid">
       <a href="https://github.com/yadav-anupam" target="_blank" rel="noopener noreferrer" class="profile-card gh-card fade-in">
@@ -699,7 +703,7 @@
   <div class="container">
     <div class="fade-in" style="margin-bottom:3rem">
       <div class="section-label">Get In Touch</div>
-      <h2 class="section-title">Let's <span class="gradient-text">Connect</span></h2>
+      <h2 class="section-title section-heading-reveal">Let's <span class="gradient-text">Connect</span></h2>
       <p class="section-sub">Open to internship opportunities, collaborations, and exciting projects.</p>
     </div>
     <div class="contact-grid">
@@ -816,7 +820,7 @@ async function loadProjects() {
       snapshot.forEach((project) => {
         const data = project.data();
         projectContainer.innerHTML += `
-<div class="project-card" data-tags="${data.category?.toLowerCase() || 'python'}">
+<div class="project-card card-spotlight" data-tags="${data.category?.toLowerCase() || 'python'}">
   <div class="project-thumb">
     <div class="project-thumb-mock">${data.emoji || "🚀"}</div>
     <span class="project-category-badge">${data.category || "Project"}</span>
