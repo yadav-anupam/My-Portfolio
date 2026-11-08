@@ -1690,13 +1690,20 @@ function initDeveloperTerminal() {
     });
   }
 
-  // Fullscreen Toggle
+  // Expand / Collapse In-Place Toggle (No navbar overlap & page never freezes)
   function toggleFullscreen() {
-    const isFull = terminalWindow.classList.toggle('is-fullscreen');
-    document.body.classList.toggle('terminal-fullscreen-active', isFull);
+    const isExpanded = terminalWindow.classList.toggle('is-expanded');
+    // Ensure full-screen modal classes and body scrolling locks are completely removed
+    terminalWindow.classList.remove('is-fullscreen');
+    document.body.classList.remove('terminal-fullscreen-active');
+    
     if (fullscreenBtn) {
       const label = fullscreenBtn.querySelector('.dev-terminal__btn-label');
-      if (label) label.textContent = isFull ? 'Restore' : 'Expand';
+      if (label) label.textContent = isExpanded ? 'Collapse' : 'Expand';
+      fullscreenBtn.setAttribute('title', isExpanded ? 'Collapse terminal' : 'Expand terminal');
+    }
+    if (isExpanded) {
+      terminalWindow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
     terminalInput.focus();
   }
@@ -1721,7 +1728,7 @@ function initDeveloperTerminal() {
 
   // Escape exits fullscreen
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && terminalWindow.classList.contains('is-fullscreen')) {
+    if (e.key === 'Escape' && (terminalWindow.classList.contains('is-expanded') || terminalWindow.classList.contains('is-fullscreen'))) {
       toggleFullscreen();
     }
     // Ctrl + ` shortcut to focus terminal input
