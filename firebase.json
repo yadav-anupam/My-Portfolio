@@ -1,4 +1,15 @@
 {
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "firestore.rules",
+      "firestore.indexes.json",
+      ".firebaserc",
+      ".git/**",
+      "anupam_portfolio.html"
+    ]
+  },
   "emulators": {
     "singleProjectMode": true,
     "dataconnect": {
