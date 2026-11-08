@@ -166,6 +166,18 @@ function handleScrollUpdates() {
   }
 
   // 3. Section Indicator Dots & Ambient Background Transition
+  // Developer Journey scroll-driven stage activation in #about
+  const aboutSec = document.getElementById('about');
+  if (aboutSec && !prefersReducedMotion) {
+    const aRect = aboutSec.getBoundingClientRect();
+    if (aRect.top < vh && aRect.bottom > 0) {
+      const aProgress = Math.min(1, Math.max(0, (vh * 0.6 - aRect.top) / aRect.height));
+      const targetStage = aProgress < 0.25 ? 0 : (aProgress < 0.5 ? 1 : (aProgress < 0.75 ? 2 : 3));
+      if (targetStage !== currentJourneyStage) {
+        setJourneyStage(targetStage);
+      }
+    }
+  }
   const viewportMiddle = currentScrollY + vh / 2;
   for (let i = 0; i < sectionElements.length; i++) {
     const el = sectionElements[i];
@@ -341,17 +353,559 @@ function initHeadingReveals() {
   headingReveals.forEach(h => headingObserver.observe(h));
 }
 
+// ========================================================
+// --- FEATURE 2: CENTRALIZED PORTFOLIO METADATA ---
+// ========================================================
+const portfolioMeta = {
+  version: "2.4",
+  lastUpdated: "2026-11-09",
+  lastUpdatedFormatted: "09 Nov 2026"
+};
+
+function initPortfolioMeta() {
+  const versionEl = document.getElementById('meta-version');
+  const updatedEl = document.getElementById('meta-updated');
+  if (versionEl) versionEl.textContent = 'Portfolio v' + portfolioMeta.version;
+  if (updatedEl) updatedEl.textContent = 'Last updated: ' + portfolioMeta.lastUpdatedFormatted;
+}
+
+// ========================================================
+// --- FEATURE 3: INTERACTIVE DEVELOPER JOURNEY (ABOUT) ---
+// ========================================================
+const journeyStagesData = [
+  {
+    stageNum: "01",
+    badge: "STAGE 01 — FOUNDATION",
+    title: "The Curious Student",
+    quote: '"Learning the fundamentals. Building the foundation."',
+    desc: "B.Tech Computer Science Engineering student at Kashi Institute of Technology. Diving deep into Data Structures, Algorithms, Python programming, and computer science principles that form the cornerstone of every reliable system.",
+    tags: ["DSA", "Python", "Logic Design", "Academic Rigor"],
+    nextPrompt: "Next Stage: Applied Software Logic →",
+    nextStage: 1
+  },
+  {
+    stageNum: "02",
+    badge: "STAGE 02 — CODE & LOGIC",
+    title: "The Python Developer",
+    quote: '"Turning ideas into working software."',
+    desc: "Transitioning theoretical knowledge into running software. Designing algorithmic tools, command-line applications, and web services. Actively experimenting with AI models, clean code architecture, and automation scripts.",
+    tags: ["Python CLI", "NLP Chatbots", "REST APIs", "Modern Web"],
+    nextPrompt: "Next Stage: Real Systems & Products →",
+    nextStage: 2
+  },
+  {
+    stageNum: "03",
+    badge: "STAGE 03 — ARCHITECTURE",
+    title: "The Systems Builder",
+    quote: '"Building real products around real problems."',
+    desc: "Architecting real-world applications including AcadTrack (Continuous Coursework Evaluation with Supabase), Kisan Setu (AI Agri-Tech Flagship), and MyKhata (Financial Ledger PWA). Integrating databases, real-time queues, and machine learning pipelines.",
+    tags: ["AcadTrack", "Kisan Setu", "MyKhata", "Full Stack", "PostgreSQL"],
+    nextPrompt: "Next Stage: Digital Ecosystem & Innovation →",
+    nextStage: 3
+  },
+  {
+    stageNum: "04",
+    badge: "STAGE 04 — ECOSYSTEM",
+    title: "The Technology Explorer",
+    quote: '"Building products, brands and opportunities."',
+    desc: "Pioneering WebJugad Labs — an incubator for high-impact web apps, automation frameworks, and generative AI prototypes. Connecting discrete tools into a coherent digital ecosystem of technology and engineering.",
+    tags: ["WebJugad Labs", "Digital Ecosystem", "AI Prototypes", "Open to Work"],
+    nextPrompt: "Explore Ecosystem in Technology Universe ↓",
+    nextStage: "universe"
+  }
+];
+
+let currentJourneyStage = 0;
+
+function setJourneyStage(index) {
+  if (index < 0 || index >= journeyStagesData.length) return;
+  currentJourneyStage = index;
+  const data = journeyStagesData[index];
+
+  // Update tabs
+  const tabs = document.querySelectorAll('.dev-journey__tab');
+  tabs.forEach((tab, idx) => {
+    const isActive = idx === index;
+    tab.classList.toggle('active', isActive);
+    tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+  });
+
+  // Update Visuals with cross-fade
+  const artItems = document.querySelectorAll('.dev-journey__art');
+  artItems.forEach((art, idx) => {
+    art.classList.toggle('active', idx === index);
+  });
+
+  // Update Narrative text
+  const badgeEl = document.getElementById('journey-badge');
+  const titleEl = document.getElementById('journey-title');
+  const quoteEl = document.getElementById('journey-quote');
+  const descEl = document.getElementById('journey-desc');
+  const tagsEl = document.getElementById('journey-tags');
+  const nextLinkEl = document.getElementById('journey-next-link');
+
+  if (badgeEl) badgeEl.textContent = data.badge;
+  if (titleEl) titleEl.textContent = data.title;
+  if (quoteEl) quoteEl.textContent = data.quote;
+  if (descEl) descEl.textContent = data.desc;
+
+  if (tagsEl) {
+    tagsEl.innerHTML = data.tags.map(t => `<span class="dev-journey__tag">${t}</span>`).join('');
+  }
+
+  if (nextLinkEl) {
+    nextLinkEl.textContent = data.nextPrompt;
+    if (data.nextStage === 'universe') {
+      nextLinkEl.href = '#technology-universe';
+      nextLinkEl.onclick = null;
+    } else {
+      nextLinkEl.href = '#dev-journey';
+      nextLinkEl.onclick = (e) => {
+        e.preventDefault();
+        setJourneyStage(data.nextStage);
+      };
+    }
+  }
+}
+
+function initDeveloperJourney() {
+  const tabsContainer = document.getElementById('dev-journey-tabs');
+  if (tabsContainer) {
+    tabsContainer.addEventListener('click', (e) => {
+      const tab = e.target.closest('.dev-journey__tab');
+      if (!tab) return;
+      const stageIdx = parseInt(tab.dataset.stage, 10);
+      setJourneyStage(stageIdx);
+    });
+  }
+}
+
+// ========================================================
+// --- FEATURE 1: ANUPAM AI PORTFOLIO ASSISTANT ---
+// ========================================================
+const portfolioKnowledge = {
+  identity: {
+    name: "Anupam Yadav",
+    role: "B.Tech Computer Science Engineering Student & Python Developer",
+    passion: "Artificial Intelligence, Modern Web Technologies, Practical Engineering",
+    location: "Varanasi, Uttar Pradesh, India",
+    institute: "Kashi Institute of Technology (KIT), Varanasi",
+    status: "Available for Internships & Entry-Level Software Roles"
+  },
+  skills: [
+    { category: "Languages", items: ["Python", "C", "JavaScript", "HTML5", "CSS3"] },
+    { category: "Frameworks & Backend", items: ["FastAPI", "Firebase", "Firestore", "Supabase", "PostgreSQL", "REST APIs"] },
+    { category: "AI & Modern Tech", items: ["Generative AI", "Prompt Engineering", "NLP Techniques", "Automation Tools"] },
+    { category: "Tools & DevOps", items: ["Git", "GitHub", "VS Code", "Vercel", "Linux"] }
+  ],
+  projects: [
+    {
+      id: "acadtrack",
+      name: "AcadTrack",
+      tagline: "Continuous Internal Assessment & Coursework Evaluation Platform",
+      techs: ["HTML5", "CSS3", "JavaScript", "Supabase", "PostgreSQL", "RLS", "Vercel"],
+      desc: "An automated coursework grading and rubric management engine featuring student performance intelligence and rubric analytics."
+    },
+    {
+      id: "kisan-setu",
+      name: "Kisan Setu",
+      tagline: "AI Agri-Tech Flagship & Mandi Queue Platform",
+      techs: ["React", "TypeScript", "Python", "FastAPI", "PostgreSQL", "Supabase", "Machine Learning"],
+      desc: "AI-driven procurement-center scheduling and queue optimization platform empowering farmers with dynamic timeslot booking and mandi throughput intelligence."
+    },
+    {
+      id: "webjugad-labs",
+      name: "WebJugad Labs",
+      tagline: "Creative Digital Technology Incubator",
+      techs: ["HTML", "CSS", "JavaScript", "Firebase", "Firestore", "Automation", "AI Prototypes"],
+      desc: "An innovation ecosystem focused on incubating practical web apps, utility tools, and generative AI prototypes."
+    },
+    {
+      id: "mykhata",
+      name: "MyKhata",
+      tagline: "Financial Ledger PWA",
+      techs: ["HTML", "CSS", "JavaScript", "Firebase", "Firestore", "PWA", "Offline-First"],
+      desc: "A progressive web app for tracking income, expenditure, and transaction audit trails with seamless offline-first synchronization."
+    },
+    {
+      id: "smart-vision-school",
+      name: "Smart Vision School",
+      tagline: "Edu-Tech Management System",
+      techs: ["HTML5", "CSS3", "JavaScript", "Firebase", "Authentication", "Responsive UI"],
+      desc: "Role-based school management portal featuring student profiles, attendance tracking, and administrative controls."
+    },
+    {
+      id: "hangman",
+      name: "Hangman Game",
+      tagline: "Interactive Command-Line Game",
+      techs: ["Python", "CLI", "Game Logic"],
+      desc: "Classic terminal game featuring dynamic vocabulary pools, visual health meters, and input validation."
+    },
+    {
+      id: "chatbot",
+      name: "Basic Chatbot",
+      tagline: "Rule-Based Conversational Flow Assistant",
+      techs: ["Python", "NLP", "AI Fundamentals"],
+      desc: "Conversational prototype simulating responsive dialog trees using natural language processing logic."
+    },
+    {
+      id: "stock-tracker",
+      name: "Stock Portfolio Tracker",
+      tagline: "Financial Analytics & P&L Tool",
+      techs: ["Python", "Finance", "Data Tracking"],
+      desc: "Investment tracking tool calculating real-time profit and loss distributions across stock portfolios."
+    }
+  ],
+  education: [
+    { degree: "B.Tech — Computer Science Engineering", institution: "Kashi Institute of Technology, Varanasi", years: "2025 — 2029" },
+    { degree: "12th (PCM)", institution: "Smart Vision School, Varanasi", years: "2025" },
+    { degree: "10th High School", institution: "Smart Vision School, Varanasi", years: "2023" }
+  ],
+  certifications: [
+    { title: "AI Skills Passport", issuer: "EY & Microsoft" },
+    { title: "Career Essentials in Generative AI", issuer: "Microsoft & LinkedIn" },
+    { title: "Generative AI Foundations", issuer: "Anthropic" },
+    { title: "GenAI-Powered Data Analytics Job Simulation", issuer: "TATA Forage" }
+  ],
+  contact: {
+    email: "yadavanupam9119@gmail.com",
+    github: "https://github.com/yadav-anupam",
+    linkedin: "https://www.linkedin.com/in/anupam-yadavv",
+    resume: "./Anupam%20resume.pdf"
+  }
+};
+
+// Process visitor queries with intent classification & factual knowledge lookup
+function processAIQuery(query) {
+  const q = (query || "").toLowerCase().trim();
+  if (!q) return { text: "How can I help you today? You can ask about Anupam's projects, technical skills, certifications, or how to contact him." };
+
+  // 1. Projects intent
+  if (q.includes("kisan setu") || q.includes("kisan")) {
+    const p = portfolioKnowledge.projects.find(x => x.id === "kisan-setu");
+    return {
+      text: "Kisan Setu is Anupam's AI Agri-Tech flagship project. It solves agricultural procurement congestion by offering dynamic queue booking, mandi throughput analytics, and automated slot scheduling for farmers and center officers.",
+      techs: p ? p.techs.join(", ") : "Python, FastAPI, React, ML",
+      actions: [{ label: "View Kisan Setu in Projects →", href: "#projects" }]
+    };
+  }
+
+  if (q.includes("acadtrack") || q.includes("acad track")) {
+    const p = portfolioKnowledge.projects.find(x => x.id === "acadtrack");
+    return {
+      text: "AcadTrack is an Evaluation Engine built with Supabase, PostgreSQL, and JavaScript. It provides automated rubric-based grading, student coursework tracking, and performance analytics for continuous internal assessments.",
+      actions: [{ label: "View AcadTrack →", href: "#projects" }]
+    };
+  }
+
+  if (q.includes("mykhata") || q.includes("my khata")) {
+    return {
+      text: "MyKhata is an offline-first Progressive Web App (PWA) built with Firebase and Firestore for tracking income, expenditure, and transaction ledger histories with offline synchronization.",
+      actions: [{ label: "View MyKhata →", href: "#projects" }]
+    };
+  }
+
+  if (q.includes("webjugad") || q.includes("web jugad")) {
+    return {
+      text: "WebJugad Labs is Anupam's creative tech and innovation umbrella where he prototypes practical web apps, generative AI workflows, and automation scripts.",
+      actions: [{ label: "Explore Technology Universe →", href: "#technology-universe" }]
+    };
+  }
+
+  if (q.includes("smart vision")) {
+    return {
+      text: "Smart Vision School is an Edu-Tech platform engineered with role-based authentication, student records, and administrative management tools.",
+      actions: [{ label: "View Projects →", href: "#projects" }]
+    };
+  }
+
+  if (q.includes("project") || q.includes("built") || q.includes("portfolio") || q.includes("apps") || q.includes("work")) {
+    return {
+      text: "Anupam has built five core digital ecosystem platforms: AcadTrack (Evaluation Engine), Kisan Setu (AI Agri-Tech Flagship), WebJugad Labs (Innovation Hub), MyKhata (Ledger PWA), and Smart Vision School (Edu-Tech), plus independent Python applications (Hangman Game, Basic Chatbot, and Stock Portfolio Tracker).",
+      actions: [
+        { label: "Explore Projects Section →", href: "#projects" },
+        { label: "View Technology Universe →", href: "#technology-universe" }
+      ]
+    };
+  }
+
+  // 2. Python & AI intent
+  if (q.includes("python")) {
+    return {
+      text: "Yes! Python is Anupam's primary programming language. He has used Python to develop command-line games, rule-based conversational chatbots, stock portfolio trackers, and backend APIs with FastAPI.",
+      actions: [{ label: "View Python Projects →", href: "#projects" }]
+    };
+  }
+
+  if (q.includes("ai") || q.includes("machine learning") || q.includes("ml") || q.includes("genai") || q.includes("generative")) {
+    return {
+      text: "Anupam is an active AI enthusiast with certified knowledge in Generative AI from EY & Microsoft, Microsoft & LinkedIn, Anthropic, and TATA Forage. He applies AI in projects like Kisan Setu and conversational NLP prototypes.",
+      actions: [
+        { label: "View Certifications →", href: "#certifications" },
+        { label: "Inspect Tech Universe →", href: "#technology-universe" }
+      ]
+    };
+  }
+
+  // 3. Technical Skills intent
+  if (q.includes("skill") || q.includes("tech") || q.includes("stack") || q.includes("language") || q.includes("code")) {
+    return {
+      text: "Anupam's technical toolkit includes:\n• Languages: Python, C, JavaScript, HTML5/CSS3\n• Backend & Databases: Firebase, Firestore, Supabase, PostgreSQL, REST APIs\n• AI & Tools: Generative AI, Prompt Engineering, Git, GitHub, VS Code, Linux, Vercel",
+      actions: [{ label: "Explore Technical Skills →", href: "#skills" }]
+    };
+  }
+
+  // 4. Education intent
+  if (q.includes("education") || q.includes("college") || q.includes("university") || q.includes("btech") || q.includes("b.tech") || q.includes("school") || q.includes("kit")) {
+    return {
+      text: "Anupam is currently pursuing his B.Tech in Computer Science Engineering (2025–2029) at Kashi Institute of Technology (KIT), Varanasi. He completed his 12th PCM and 10th High School at Smart Vision School, Varanasi.",
+      actions: [{ label: "View Education Timeline →", href: "#education" }]
+    };
+  }
+
+  // 5. Certifications intent
+  if (q.includes("cert") || q.includes("course") || q.includes("credential") || q.includes("license")) {
+    return {
+      text: "Anupam holds verified industry certifications:\n1. AI Skills Passport (EY & Microsoft)\n2. Career Essentials in Generative AI (Microsoft & LinkedIn)\n3. Generative AI Foundations (Anthropic)\n4. GenAI-Powered Data Analytics (TATA Forage)",
+      actions: [{ label: "View Certifications →", href: "#certifications" }]
+    };
+  }
+
+  // 6. Experience & Internship intent
+  if (q.includes("intern") || q.includes("experience") || q.includes("job") || q.includes("hire") || q.includes("fresher") || q.includes("available")) {
+    return {
+      text: "Anupam is a second-year B.Tech CSE student actively seeking internship opportunities in IT engineering, Python development, AI applications, or web development to apply his skills in production environments.",
+      actions: [
+        { label: "Contact Anupam for Roles →", href: "#contact" },
+        { label: "Download Resume (PDF) →", href: "./Anupam%20resume.pdf", isDownload: true }
+      ]
+    };
+  }
+
+  // 7. Contact & Resume intent
+  if (q.includes("contact") || q.includes("email") || q.includes("reach") || q.includes("message")) {
+    return {
+      text: "You can reach Anupam directly at yadavanupam9119@gmail.com or send a message through the contact form on this page.",
+      actions: [{ label: "Go to Contact Form →", href: "#contact" }]
+    };
+  }
+
+  if (q.includes("resume") || q.includes("cv")) {
+    return {
+      text: "Anupam's resume is available for immediate download in PDF format.",
+      actions: [{ label: "Download Anupam's Resume (PDF) →", href: "./Anupam%20resume.pdf", isDownload: true }]
+    };
+  }
+
+  if (q.includes("social") || q.includes("github") || q.includes("linkedin")) {
+    return {
+      text: "You can connect with Anupam on GitHub (@yadav-anupam) and LinkedIn (anupam-yadavv).",
+      actions: [
+        { label: "Open GitHub Profile →", href: "https://github.com/yadav-anupam", isExternal: true },
+        { label: "Open LinkedIn Profile →", href: "https://www.linkedin.com/in/anupam-yadavv", isExternal: true }
+      ]
+    };
+  }
+
+  if (q.includes("who is") || q.includes("who are you") || q.includes("about") || q.includes("introduce")) {
+    return {
+      text: "Anupam Yadav is a Computer Science Engineering student at Kashi Institute of Technology, Varanasi. He is a passionate Python developer and AI enthusiast focused on building practical web and automation solutions.",
+      actions: [
+        { label: "Read Full Bio in About →", href: "#about" },
+        { label: "Inspect Terminal Console →", href: "#developer-terminal" }
+      ]
+    };
+  }
+
+  // Default helpful response
+  return {
+    text: "I can answer questions regarding Anupam's technical skills, five core ecosystem projects (AcadTrack, Kisan Setu, MyKhata, WebJugad, Smart Vision), Python applications, certifications, education, and internship availability.",
+    actions: [
+      { label: "View Featured Projects →", href: "#projects" },
+      { label: "Contact Anupam →", href: "#contact" }
+    ]
+  };
+}
+
+// Anupam AI UI Controller
+function initAnupamAI() {
+  const triggerBtn = document.getElementById('anupam-ai-trigger');
+  const navBtn = document.getElementById('nav-ai-btn');
+  const panel = document.getElementById('anupam-ai-panel');
+  const closeBtn = document.getElementById('anupam-ai-close');
+  const clearBtn = document.getElementById('anupam-ai-clear');
+  const messagesContainer = document.getElementById('anupam-ai-messages');
+  const form = document.getElementById('anupam-ai-form');
+  const input = document.getElementById('anupam-ai-input');
+  const sendBtn = document.getElementById('anupam-ai-send');
+  const suggestions = document.getElementById('anupam-ai-suggestions');
+
+  if (!panel || !messagesContainer) return;
+
+  let isTyping = false;
+
+  function toggleAI(open) {
+    const shouldOpen = open !== undefined ? open : !panel.classList.contains('open');
+    panel.classList.toggle('open', shouldOpen);
+    panel.setAttribute('aria-hidden', shouldOpen ? 'false' : 'true');
+    if (triggerBtn) triggerBtn.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+
+    if (shouldOpen) {
+      if (messagesContainer.children.length === 0) {
+        appendAIMessage({
+          text: "Hi! I'm Anupam AI — your interactive portfolio assistant. Ask me anything about Anupam's projects, technical skills, education, or internship availability!"
+        });
+      }
+      setTimeout(() => {
+        if (input) input.focus();
+      }, 150);
+    }
+  }
+
+  function appendUserMessage(text) {
+    const msg = document.createElement('div');
+    msg.className = 'anupam-ai-msg anupam-ai-msg--user';
+    msg.textContent = text;
+    messagesContainer.appendChild(msg);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  function appendAIMessage(response) {
+    const msg = document.createElement('div');
+    msg.className = 'anupam-ai-msg anupam-ai-msg--ai';
+
+    const textP = document.createElement('div');
+    textP.style.whiteSpace = 'pre-line';
+    textP.textContent = response.text || "";
+    msg.appendChild(textP);
+
+    // Optional project / action buttons
+    if (response.actions && response.actions.length > 0) {
+      response.actions.forEach(act => {
+        const btn = document.createElement('a');
+        btn.className = 'anupam-ai-action-btn';
+        btn.textContent = act.label;
+        btn.href = act.href;
+        if (act.isExternal) {
+          btn.target = '_blank';
+          btn.rel = 'noopener noreferrer';
+        } else if (act.isDownload) {
+          btn.download = 'Anupam_Yadav_Resume.pdf';
+        } else {
+          btn.addEventListener('click', (e) => {
+            const targetEl = document.querySelector(act.href);
+            if (targetEl) {
+              e.preventDefault();
+              toggleAI(false);
+              targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        }
+        msg.appendChild(btn);
+      });
+    }
+
+    messagesContainer.appendChild(msg);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  function showTypingIndicator() {
+    const ind = document.createElement('div');
+    ind.className = 'anupam-ai-msg anupam-ai-msg--ai anupam-ai-typing-wrap';
+    ind.id = 'ai-typing-indicator';
+    ind.innerHTML = `<div class="anupam-ai-typing">
+      <span class="anupam-ai-dot"></span>
+      <span class="anupam-ai-dot"></span>
+      <span class="anupam-ai-dot"></span>
+    </div>`;
+    messagesContainer.appendChild(ind);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  function removeTypingIndicator() {
+    const ind = document.getElementById('ai-typing-indicator');
+    if (ind) ind.remove();
+  }
+
+  function handleSendQuery(userText) {
+    if (!userText || isTyping) return;
+    const cleanText = userText.trim();
+    if (!cleanText) return;
+
+    appendUserMessage(cleanText);
+    if (input) input.value = '';
+    isTyping = true;
+    if (sendBtn) sendBtn.disabled = true;
+
+    showTypingIndicator();
+
+    // Natural responsive delay
+    setTimeout(() => {
+      removeTypingIndicator();
+      const res = processAIQuery(cleanText);
+      appendAIMessage(res);
+      isTyping = false;
+      if (sendBtn) sendBtn.disabled = false;
+    }, 450);
+  }
+
+  // Trigger and close listeners
+  if (triggerBtn) triggerBtn.addEventListener('click', () => toggleAI());
+  if (navBtn) navBtn.addEventListener('click', (e) => { e.preventDefault(); toggleAI(true); });
+  if (closeBtn) closeBtn.addEventListener('click', () => toggleAI(false));
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      messagesContainer.innerHTML = '';
+      appendAIMessage({
+        text: "Conversation cleared. Feel free to ask another question about Anupam's engineering work!"
+      });
+    });
+  }
+
+  // Suggestion chips
+  if (suggestions) {
+    suggestions.addEventListener('click', (e) => {
+      const chip = e.target.closest('.anupam-ai-chip');
+      if (chip && chip.dataset.q) {
+        handleSendQuery(chip.dataset.q);
+      }
+    });
+  }
+
+  // Form submit
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (input) handleSendQuery(input.value);
+    });
+  }
+
+  // Keyboard escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) {
+      toggleAI(false);
+    }
+  });
+}
+
 // Run interactive subsystems
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     initCardSpotlight();
     initStatsCounter();
     initHeadingReveals();
+    initPortfolioMeta();
+    initDeveloperJourney();
+    initAnupamAI();
   });
 } else {
   initCardSpotlight();
   initStatsCounter();
   initHeadingReveals();
+  initPortfolioMeta();
+  initDeveloperJourney();
+  initAnupamAI();
 }
 
 // --- NAVIGATION & MOBILE MENU ---

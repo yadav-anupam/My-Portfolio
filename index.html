@@ -101,6 +101,9 @@
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-actions">
+    <button type="button" class="nav-ai-btn" id="nav-ai-btn" title="Open Anupam AI Assistant" aria-label="Open Anupam AI Assistant">
+      <span class="nav-ai-sparkle">✦</span> Ask AI
+    </button>
     <button id="theme-toggle" type="button" title="Toggle light/dark mode" aria-label="Toggle dark mode" aria-pressed="false">🌙</button>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
@@ -230,6 +233,127 @@
           <span class="tag">Problem Solver</span>
           <span class="tag">Quick Learner</span>
           <span class="tag">Team Player</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEVELOPER JOURNEY (ABOUT STORYTELLING LAYER) -->
+    <div class="dev-journey fade-in" id="dev-journey" aria-label="Anupam's Developer Journey Evolution">
+      <div class="dev-journey__header">
+        <div class="section-label">Evolution</div>
+        <h3 class="dev-journey__title">The <span class="gradient-text">Developer Journey</span></h3>
+        <p class="dev-journey__subtitle">From curious student to systems builder — four stages of continuous growth.</p>
+      </div>
+
+      <!-- Stage Navigation Tabs -->
+      <div class="dev-journey__tabs" id="dev-journey-tabs" role="tablist" aria-label="Journey Stages">
+        <button type="button" class="dev-journey__tab active" data-stage="0" role="tab" aria-selected="true">
+          <span class="tab-num">01</span> Student
+        </button>
+        <button type="button" class="dev-journey__tab" data-stage="1" role="tab" aria-selected="false">
+          <span class="tab-num">02</span> Developer
+        </button>
+        <button type="button" class="dev-journey__tab" data-stage="2" role="tab" aria-selected="false">
+          <span class="tab-num">03</span> Builder
+        </button>
+        <button type="button" class="dev-journey__tab" data-stage="3" role="tab" aria-selected="false">
+          <span class="tab-num">04</span> Entrepreneur
+        </button>
+      </div>
+
+      <!-- Interactive Stage Viewport -->
+      <div class="dev-journey__stage-card">
+        <!-- Visual Column -->
+        <div class="dev-journey__visual" id="dev-journey-visual" aria-hidden="true">
+          <!-- Stage 1 Visual: Student -->
+          <div class="dev-journey__art dev-journey__art--0 active">
+            <svg viewBox="0 0 320 260" class="dev-journey__svg">
+              <defs>
+                <linearGradient id="dj-grad-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#C68A4E"/>
+                  <stop offset="100%" stop-color="#E0AE6E"/>
+                </linearGradient>
+              </defs>
+              <circle cx="160" cy="130" r="95" fill="none" stroke="rgba(198,138,78,0.2)" stroke-dasharray="4 6"/>
+              <rect x="110" y="70" width="100" height="110" rx="16" fill="rgba(36,31,26,0.85)" stroke="var(--border)" stroke-width="1.5"/>
+              <!-- Book / Fundamentals Icon -->
+              <path d="M125 105 C140 100 155 108 160 114 C165 108 180 100 195 105 L195 150 C180 145 165 152 160 156 C155 152 140 145 125 150 Z" fill="none" stroke="url(#dj-grad-1)" stroke-width="2.5"/>
+              <line x1="160" y1="114" x2="160" y2="156" stroke="url(#dj-grad-1)" stroke-width="2"/>
+              <circle cx="95" cy="85" r="4" fill="#C68A4E"/>
+              <circle cx="225" cy="175" r="5" fill="#E0AE6E"/>
+              <text x="160" y="215" text-anchor="middle" fill="var(--muted)" font-family="JetBrains Mono" font-size="11">LEARNING FUNDAMENTALS</text>
+            </svg>
+          </div>
+
+          <!-- Stage 2 Visual: Developer -->
+          <div class="dev-journey__art dev-journey__art--1">
+            <svg viewBox="0 0 320 260" class="dev-journey__svg">
+              <circle cx="160" cy="130" r="95" fill="none" stroke="rgba(198,138,78,0.25)" stroke-dasharray="3 5"/>
+              <!-- Laptop / Code Interface -->
+              <rect x="90" y="80" width="140" height="88" rx="8" fill="rgba(27,23,20,0.92)" stroke="url(#dj-grad-1)" stroke-width="1.5"/>
+              <path d="M70 174 L250 174 L235 186 L85 186 Z" fill="rgba(36,31,26,0.95)" stroke="var(--border)"/>
+              <text x="105" y="108" fill="#E0AE6E" font-family="JetBrains Mono" font-size="10">&gt; python code.py</text>
+              <text x="105" y="126" fill="#34D399" font-family="JetBrains Mono" font-size="9">[OK] Building logic</text>
+              <text x="105" y="142" fill="var(--muted)" font-family="JetBrains Mono" font-size="9">while True: learn()</text>
+              <text x="160" y="215" text-anchor="middle" fill="var(--muted)" font-family="JetBrains Mono" font-size="11">APPLIED SOFTWARE LOGIC</text>
+            </svg>
+          </div>
+
+          <!-- Stage 3 Visual: Builder -->
+          <div class="dev-journey__art dev-journey__art--2">
+            <svg viewBox="0 0 320 260" class="dev-journey__svg">
+              <circle cx="160" cy="130" r="95" fill="none" stroke="rgba(198,138,78,0.3)"/>
+              <!-- Project Architecture Nodes -->
+              <rect x="135" y="70" width="50" height="40" rx="8" fill="rgba(36,31,26,0.9)" stroke="url(#dj-grad-1)"/>
+              <text x="160" y="94" text-anchor="middle" fill="#E0AE6E" font-family="JetBrains Mono" font-size="9">AI CORE</text>
+              <rect x="75" y="135" width="55" height="38" rx="8" fill="rgba(36,31,26,0.9)" stroke="var(--border)"/>
+              <text x="102" y="158" text-anchor="middle" fill="var(--text)" font-family="JetBrains Mono" font-size="8">FRONTEND</text>
+              <rect x="190" y="135" width="55" height="38" rx="8" fill="rgba(36,31,26,0.9)" stroke="var(--border)"/>
+              <text x="217" y="158" text-anchor="middle" fill="var(--text)" font-family="JetBrains Mono" font-size="8">BACKEND</text>
+              <line x1="160" y1="110" x2="102" y2="135" stroke="var(--purple)" stroke-width="1.5" stroke-dasharray="3 3"/>
+              <line x1="160" y1="110" x2="217" y2="135" stroke="var(--purple)" stroke-width="1.5" stroke-dasharray="3 3"/>
+              <text x="160" y="215" text-anchor="middle" fill="var(--muted)" font-family="JetBrains Mono" font-size="11">SYSTEMS &amp; PRODUCTS</text>
+            </svg>
+          </div>
+
+          <!-- Stage 4 Visual: Entrepreneur -->
+          <div class="dev-journey__art dev-journey__art--3">
+            <svg viewBox="0 0 320 260" class="dev-journey__svg">
+              <!-- Connected Constellation & WebJugad Labs -->
+              <circle cx="160" cy="120" r="30" fill="rgba(198,138,78,0.15)" stroke="url(#dj-grad-1)" stroke-width="2"/>
+              <text x="160" y="124" text-anchor="middle" fill="#F2EDE4" font-family="Space Grotesk" font-weight="700" font-size="9">WEBJUGAD</text>
+              <circle cx="90" cy="75" r="14" fill="rgba(36,31,26,0.9)" stroke="var(--border)"/>
+              <circle cx="230" cy="75" r="14" fill="rgba(36,31,26,0.9)" stroke="var(--border)"/>
+              <circle cx="90" cy="165" r="14" fill="rgba(36,31,26,0.9)" stroke="var(--border)"/>
+              <circle cx="230" cy="165" r="14" fill="rgba(36,31,26,0.9)" stroke="var(--border)"/>
+              <line x1="135" y1="105" x2="102" y2="85" stroke="var(--purple)" stroke-width="1.2"/>
+              <line x1="185" y1="105" x2="218" y2="85" stroke="var(--purple)" stroke-width="1.2"/>
+              <line x1="135" y1="135" x2="102" y2="155" stroke="var(--purple)" stroke-width="1.2"/>
+              <line x1="185" y1="135" x2="218" y2="155" stroke="var(--purple)" stroke-width="1.2"/>
+              <text x="160" y="215" text-anchor="middle" fill="var(--purple)" font-family="JetBrains Mono" font-size="11">DIGITAL ECOSYSTEM</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Narrative Details Column -->
+        <div class="dev-journey__narrative" id="dev-journey-narrative">
+          <div class="dev-journey__badge" id="journey-badge">STAGE 01 — FOUNDATION</div>
+          <h4 class="dev-journey__stage-title" id="journey-title">The Curious Student</h4>
+          <p class="dev-journey__quote" id="journey-quote">"Learning the fundamentals. Building the foundation."</p>
+          <p class="dev-journey__desc" id="journey-desc">
+            B.Tech Computer Science Engineering student at Kashi Institute of Technology. Diving deep into Data Structures, Algorithms, Python programming, and computer science principles that form the cornerstone of every reliable system.
+          </p>
+          <div class="dev-journey__focus-tags" id="journey-tags">
+            <span class="dev-journey__tag">DSA</span>
+            <span class="dev-journey__tag">Python</span>
+            <span class="dev-journey__tag">Logic Design</span>
+            <span class="dev-journey__tag">Academic Rigor</span>
+          </div>
+          <div class="dev-journey__prompt">
+            <a href="#technology-universe" class="dev-journey__next-link" id="journey-next-link">
+              Explore Ecosystem in Technology Universe ↓
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -772,6 +896,11 @@
         <a href="mailto:yadavanupam9119@gmail.com" class="social-icon"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/></svg></span></a>
       </div>
       <div class="footer-copy">Designed & Developed by <strong>Anupam Yadav</strong> · 2026</div>
+      <div class="footer-meta" id="portfolio-meta-display" title="This portfolio is actively maintained.">
+        <span class="footer-meta__version" id="meta-version">Portfolio v2.4</span>
+        <span class="footer-meta__sep">•</span>
+        <span class="footer-meta__updated" id="meta-updated">Last updated: 09 Nov 2026</span>
+      </div>
     </div>
   </div>
 </footer>
@@ -855,5 +984,73 @@ async function loadProjects() {
 loadProjects();
 
 </script>
+
+<!-- FLOATING ANUPAM AI BUTTON -->
+<button type="button" class="anupam-ai-trigger" id="anupam-ai-trigger" aria-label="Open Anupam AI Portfolio Assistant" aria-expanded="false" aria-controls="anupam-ai-panel">
+  <span class="anupam-ai-trigger__sparkle" aria-hidden="true">✦</span>
+  <span class="anupam-ai-trigger__text">Anupam AI</span>
+  <span class="anupam-ai-trigger__pulse" aria-hidden="true"></span>
+</button>
+
+<!-- ANUPAM AI CHAT PANEL -->
+<div class="anupam-ai-panel" id="anupam-ai-panel" role="dialog" aria-modal="true" aria-label="Anupam AI Assistant" aria-hidden="true">
+  <!-- AI Chat Header -->
+  <div class="anupam-ai-header">
+    <div class="anupam-ai-header__brand">
+      <div class="anupam-ai-header__avatar">
+        <span>✦</span>
+        <span class="anupam-ai-status-dot" aria-hidden="true"></span>
+      </div>
+      <div>
+        <div class="anupam-ai-header__title">Anupam AI</div>
+        <div class="anupam-ai-header__sub">Ask me anything about Anupam</div>
+      </div>
+    </div>
+    <div class="anupam-ai-header__actions">
+      <button type="button" class="anupam-ai-btn-icon" id="anupam-ai-clear" title="Clear conversation" aria-label="Clear conversation">
+        ↺
+      </button>
+      <button type="button" class="anupam-ai-btn-icon" id="anupam-ai-close" title="Close AI Assistant" aria-label="Close AI Assistant">
+        &times;
+      </button>
+    </div>
+  </div>
+
+  <!-- Quick Suggestions Strip -->
+  <div class="anupam-ai-suggestions" id="anupam-ai-suggestions" aria-label="Suggested Questions">
+    <button type="button" class="anupam-ai-chip" data-q="What projects has he built?">What projects has he built?</button>
+    <button type="button" class="anupam-ai-chip" data-q="What technologies does he know?">What technologies does he know?</button>
+    <button type="button" class="anupam-ai-chip" data-q="Tell me about Kisan Setu">Tell me about Kisan Setu</button>
+    <button type="button" class="anupam-ai-chip" data-q="Does he know Python?">Does he know Python?</button>
+    <button type="button" class="anupam-ai-chip" data-q="How can I contact him?">How can I contact him?</button>
+  </div>
+
+  <!-- Messages Scroll Area -->
+  <div class="anupam-ai-body" id="anupam-ai-messages" role="log" aria-live="polite">
+    <!-- Welcome message is rendered here -->
+  </div>
+
+  <!-- AI Input Area -->
+  <form class="anupam-ai-footer" id="anupam-ai-form" autocomplete="off">
+    <div class="anupam-ai-input-wrap">
+      <input
+        type="text"
+        id="anupam-ai-input"
+        class="anupam-ai-input"
+        placeholder="Ask about Anupam's projects, skills..."
+        autocomplete="off"
+        aria-label="Ask Anupam AI"
+        maxlength="240"
+      />
+      <button type="submit" class="anupam-ai-send" id="anupam-ai-send" aria-label="Send message">
+        ➤
+      </button>
+    </div>
+    <div class="anupam-ai-disclaimer">
+      Answers based strictly on verified portfolio records.
+    </div>
+  </form>
+</div>
+
 </body>
 </html>
