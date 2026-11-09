@@ -736,6 +736,86 @@ function setupProjectHandlers() {
 }
 
 // ========================================================
+// ========================================================
+// --- DEFAULT PORTFOLIO CONTENT (PUBLIC SITE PRESETS) ---
+// ========================================================
+const defaultPortfolioCertifications = [
+  {
+    title: "AI Skills Passport",
+    issuer: "EY & Microsoft",
+    date: "2026",
+    year: "2026",
+    credentialUrl: "https://www.credly.com",
+    imageUrl: "Certificate_EY_Microsoft.png",
+    description: "Verified foundational credentials in Artificial Intelligence principles, sustainable computing, and enterprise cloud applications certified jointly by Ernst & Young (EY) and Microsoft.",
+    tags: "AI Skills, Sustainability, Technology",
+    featured: true
+  },
+  {
+    title: "AI Fluency: Framework & Foundations",
+    issuer: "Anthropic",
+    date: "2026",
+    year: "2026",
+    credentialUrl: "https://anthropic.com",
+    imageUrl: "certificate_AI_Influency.png",
+    description: "Comprehensive training in frontier Large Language Model frameworks, prompt design principles, Claude model interactions, and responsible AI alignment certified by Anthropic.",
+    tags: "AI Fluency, LLMs, Foundations",
+    featured: true
+  },
+  {
+    title: "Career Essentials in Generative AI",
+    issuer: "LinkedIn & Microsoft",
+    date: "Jun 10, 2026",
+    year: "2026",
+    credentialUrl: "https://www.linkedin.com/learning/certificates",
+    imageUrl: "Certificate_Career Essentials in Generative AI by Microsoft and LinkedIn.png",
+    description: "Specialized professional credential spanning foundational Generative AI paradigms, Microsoft Copilot workflows, and ethical considerations for artificial intelligence in modern software development.",
+    tags: "Microsoft Copilot, Generative AI, Responsible AI",
+    featured: true
+  },
+  {
+    title: "GenAI Powered Data Analytics Job Simulation",
+    issuer: "TATA & Forage",
+    date: "Jun 8, 2026",
+    year: "2026",
+    credentialUrl: "https://www.theforage.com/simulations/tata",
+    imageUrl: "Certificate_GenAI_Powered_Data_Analytics_Job_Simulation.png",
+    description: "Completed an end-to-end practical job simulation with Tata Group via Forage, utilizing Generative AI and advanced data analytics to assess business risks, clean datasets, and derive strategic intelligence.",
+    tags: "Data Analytics, GenAI, Risk Profiling",
+    featured: true
+  }
+];
+
+const defaultPortfolioTestimonials = [
+  {
+    name: "Faculty - CSE Dept.",
+    role: "CSE Department",
+    organization: "Kashi Institute of Technology",
+    message: "Anupam is one of the most curious and dedicated students I have taught. His eagerness to learn new technologies and apply them practically sets him apart from his peers.",
+    imageUrl: "",
+    avatarEmoji: "👨‍🏫",
+    rating: 5
+  },
+  {
+    name: "Sushil Kushwaha Sir",
+    role: "Senior Student Mentor",
+    organization: "Computer Science Department",
+    message: "Anupam consistently goes beyond the syllabus. He completed multiple Python projects and AI certifications on his own - that kind of self-motivation is rare in first-year students.",
+    imageUrl: "",
+    avatarEmoji: "👨‍💻",
+    rating: 5
+  },
+  {
+    name: "Dr. Rupesh Kumar Singh",
+    role: "Head of Department",
+    organization: "CSE Department, KIT, Varanasi",
+    message: "A hardworking and sincere student who always strives to improve. His academic performance and participation in tech activities reflect his commitment to becoming a skilled engineer.",
+    imageUrl: "",
+    avatarEmoji: "🎓",
+    rating: 5
+  }
+];
+
 // --- CERTIFICATIONS CRUD ---
 // ========================================================
 async function loadCertifications() {
@@ -745,6 +825,23 @@ async function loadCertifications() {
     const snap = await getDocs(collection(db, "certifications"));
     liveCertifications = [];
     snap.forEach(d => liveCertifications.push({ id: d.id, ...d.data() }));
+
+    // Auto-seed existing portfolio certs if collection is empty
+    if (liveCertifications.length === 0) {
+      console.info("Certifications collection is empty. Auto-seeding existing portfolio certs...");
+      for (const cert of defaultPortfolioCertifications) {
+        try {
+          const docRef = await addDoc(collection(db, "certifications"), {
+            ...cert,
+            createdAt: new Date().toISOString()
+          });
+          liveCertifications.push({ id: docRef.id, ...cert });
+        } catch (seedErr) {
+          console.warn("Auto-seed cert failed:", seedErr.message);
+        }
+      }
+    }
+
     renderCertsList(liveCertifications);
     updateDashboardStats();
     updateAIHealth();
@@ -772,9 +869,10 @@ function renderCertsList(certs) {
 
     const thumbDiv = document.createElement("div");
     thumbDiv.className = "item-card__thumb";
-    if (c.imageUrl) {
+    const imgSrc = c.imageUrl || c.image;
+    if (imgSrc) {
       const img = document.createElement("img");
-      img.src = c.imageUrl;
+      img.src = imgSrc;
       img.alt = c.title || "Certificate";
       img.className = "item-card__img";
       thumbDiv.appendChild(img);
@@ -883,9 +981,10 @@ function openCertModal(cert = null) {
     dateInput.value = cert.date || cert.year || "";
     urlInput.value = cert.credentialUrl || "";
     descInput.value = cert.description || "";
-    imgUrlInput.value = cert.imageUrl || "";
-    if (cert.imageUrl) {
-      previewImg.src = cert.imageUrl;
+    const imgSrc = cert.imageUrl || cert.image || "";
+    imgUrlInput.value = imgSrc;
+    if (imgSrc) {
+      previewImg.src = imgSrc;
       previewWrap.style.display = "flex";
     } else {
       previewWrap.style.display = "none";
@@ -905,8 +1004,36 @@ function openCertModal(cert = null) {
   modal.classList.add("open");
 }
 
+
+async function seedPortfolioCerts() {
+  const btn = document.getElementById("btn-seed-certs");
+  if (btn) btn.disabled = true;
+  try {
+    showToast("Importing public site certifications...");
+    let added = 0;
+    for (const cert of defaultPortfolioCertifications) {
+      const exists = liveCertifications.some(c => c.title?.toLowerCase() === cert.title.toLowerCase());
+      if (!exists) {
+        await addDoc(collection(db, "certifications"), {
+          ...cert,
+          createdAt: new Date().toISOString()
+        });
+        added++;
+      }
+    }
+    showToast(`✓ Successfully imported ${added} certification(s)!`);
+    await loadCertifications();
+  } catch (err) {
+    showToast("Import failed: " + err.message, "error");
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
 function setupCertHandlers() {
   document.getElementById("btn-add-cert").addEventListener("click", () => openCertModal());
+  const seedBtn = document.getElementById("btn-seed-certs");
+  if (seedBtn) seedBtn.addEventListener("click", seedPortfolioCerts);
 
   const dropzone = document.getElementById("cert-dropzone");
   const fileInput = document.getElementById("cert-file-input");
@@ -992,6 +1119,23 @@ async function loadTestimonials() {
     const snap = await getDocs(collection(db, "testimonials"));
     liveTestimonials = [];
     snap.forEach(d => liveTestimonials.push({ id: d.id, ...d.data() }));
+
+    // Auto-seed existing portfolio testimonials if collection is empty
+    if (liveTestimonials.length === 0) {
+      console.info("Testimonials collection is empty. Auto-seeding existing portfolio testimonials...");
+      for (const item of defaultPortfolioTestimonials) {
+        try {
+          const docRef = await addDoc(collection(db, "testimonials"), {
+            ...item,
+            createdAt: new Date().toISOString()
+          });
+          liveTestimonials.push({ id: docRef.id, ...item });
+        } catch (seedErr) {
+          console.warn("Auto-seed testimonial failed:", seedErr.message);
+        }
+      }
+    }
+
     renderTestimonialsList(liveTestimonials);
     updateDashboardStats();
   } catch (err) {
@@ -1022,9 +1166,10 @@ function renderTestimonialsList(list) {
     headDiv.style.gap = "0.75rem";
     headDiv.style.marginBottom = "0.85rem";
 
-    if (t.imageUrl) {
+    const avatarSrc = t.imageUrl || t.image;
+    if (avatarSrc) {
       const avatar = document.createElement("img");
-      avatar.src = t.imageUrl;
+      avatar.src = avatarSrc;
       avatar.style.width = "42px";
       avatar.style.height = "42px";
       avatar.style.borderRadius = "50%";
@@ -1035,13 +1180,13 @@ function renderTestimonialsList(list) {
       ph.style.width = "42px";
       ph.style.height = "42px";
       ph.style.borderRadius = "50%";
-      ph.style.background = "var(--accent)";
+      ph.style.background = "linear-gradient(135deg, #C68A4E, #E0AE6E)";
       ph.style.color = "#14110E";
       ph.style.display = "flex";
       ph.style.alignItems = "center";
       ph.style.justifyContent = "center";
-      ph.style.fontWeight = "700";
-      ph.textContent = (t.name || "T")[0];
+      ph.style.fontSize = "1.2rem";
+      ph.textContent = t.avatarEmoji || (t.name ? t.name[0] : "👤");
       headDiv.appendChild(ph);
     }
 
@@ -1123,9 +1268,10 @@ function openTestimonialModal(t = null) {
     roleInput.value = t.role || "";
     orgInput.value = t.organization || "";
     msgInput.value = t.message || "";
-    urlInput.value = t.imageUrl || "";
-    if (t.imageUrl) {
-      previewImg.src = t.imageUrl;
+    const aSrc = t.imageUrl || t.image || "";
+    urlInput.value = aSrc;
+    if (aSrc) {
+      previewImg.src = aSrc;
       previewWrap.style.display = "flex";
     } else {
       previewWrap.style.display = "none";
@@ -1144,8 +1290,36 @@ function openTestimonialModal(t = null) {
   modal.classList.add("open");
 }
 
+
+async function seedPortfolioTestimonials() {
+  const btn = document.getElementById("btn-seed-testimonials");
+  if (btn) btn.disabled = true;
+  try {
+    showToast("Importing public site testimonials...");
+    let added = 0;
+    for (const item of defaultPortfolioTestimonials) {
+      const exists = liveTestimonials.some(t => t.name?.toLowerCase() === item.name.toLowerCase());
+      if (!exists) {
+        await addDoc(collection(db, "testimonials"), {
+          ...item,
+          createdAt: new Date().toISOString()
+        });
+        added++;
+      }
+    }
+    showToast(`✓ Successfully imported ${added} testimonial(s)!`);
+    await loadTestimonials();
+  } catch (err) {
+    showToast("Import failed: " + err.message, "error");
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
 function setupTestimonialHandlers() {
   document.getElementById("btn-add-testimonial").addEventListener("click", () => openTestimonialModal());
+  const seedBtn = document.getElementById("btn-seed-testimonials");
+  if (seedBtn) seedBtn.addEventListener("click", seedPortfolioTestimonials);
 
   const dropzone = document.getElementById("testi-dropzone");
   const fileInput = document.getElementById("testi-file-input");
