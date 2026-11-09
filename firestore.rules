@@ -2,13 +2,74 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Allow public read-only access to projects collection
-    match /projects/{project} {
-      allow read: if true;
-      allow write: if false;
+    
+    // Helper function to verify admin authorization
+    function isAdmin() {
+      return request.auth != null && (
+        (exists(/databases/$(database)/documents/admins/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == "ADMIN" &&
+         get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.active == true) ||
+        request.auth.token.email == "yadavanupam9119@gmail.com"
+      );
     }
 
-    // Default deny for all other documents
+    // Projects: Public read, Admin write
+    match /projects/{projectId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Certifications & legacy certificates: Public read, Admin write
+    match /certifications/{certificateId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+    match /certificates/{certificateId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Testimonials: Public read, Admin write
+    match /testimonials/{testimonialId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Messages: Public create (contact form submission), Admin read/update/delete
+    match /messages/{messageId} {
+      allow create: if request.resource.data.name is string &&
+                       request.resource.data.email is string &&
+                       request.resource.data.message is string &&
+                       request.resource.data.name.size() > 0 &&
+                       request.resource.data.email.size() > 0 &&
+                       request.resource.data.message.size() > 0;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Settings: Public read for portfolio config, Admin write
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Custom AI Knowledge: Public read for active knowledge, Admin full access
+    match /ai_knowledge/{knowledgeId} {
+      allow read: if resource.data.active == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // AI Feedback (Admin test feedback): Admin only
+    match /ai_feedback/{feedbackId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Admins registry: Admin can read their own or other admins
+    match /admins/{uid} {
+      allow read: if request.auth != null && (request.auth.uid == uid || isAdmin());
+      allow write: if isAdmin();
+    }
+
+    // Default deny all other documents
     match /{document=**} {
       allow read, write: if false;
     }

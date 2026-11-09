@@ -1,0 +1,55 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Check if user is authenticated admin
+    function isAdmin() {
+      return request.auth != null && (
+        firestore.exists(/databases/(default)/documents/admins/$(request.auth.uid)) &&
+        firestore.get(/databases/(default)/documents/admins/$(request.auth.uid)).data.role == "ADMIN" ||
+        request.auth.token.email == "yadavanupam9119@gmail.com"
+      );
+    }
+
+    // Validate safe image file uploads (JPEG, PNG, WEBP, GIF; reject executables, SVG, scripts)
+    function isSafeImage() {
+      return request.resource.size < 5 * 1024 * 1024 &&
+             request.resource.contentType.matches('image/(jpeg|png|webp|gif)');
+    }
+
+    // Projects storage folder: public read, admin write
+    match /projects/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() && isSafeImage();
+      allow delete: if isAdmin();
+    }
+
+    // Certifications storage folder: public read, admin write
+    match /certifications/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() && isSafeImage();
+      allow delete: if isAdmin();
+    }
+
+    // Testimonials storage folder: public read, admin write
+    match /testimonials/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() && isSafeImage();
+      allow delete: if isAdmin();
+    }
+
+    // Profile & Resume storage folder: public read, admin write
+    match /profile/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin() && (isSafeImage() || request.resource.contentType == 'application/pdf');
+      allow delete: if isAdmin();
+    }
+
+    // Default deny all other paths
+    match /{allPaths=**} {
+      allow read: if false;
+      allow write: if false;
+    }
+  }
+}

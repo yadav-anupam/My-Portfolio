@@ -1,1058 +1,823 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-
-    <style>
-:root{
-  --bg:#0f172a;
-  --card:#111827;
-  --card2:#1e293b;
-  --border:#334155;
-  --primary:#8b5cf6;
-  --secondary:#6366f1;
-  --text:#f8fafc;
-}
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Inter,sans-serif;
-}
-
-body{
-  background:var(--bg);
-  color:var(--text);
-  display:flex;
-  min-height:100vh;
-}
-
-.sidebar{
-  width:260px;
-  background:#0b1220;
-  border-right:1px solid var(--border);
-  padding:30px;
-}
-.sidebar{
-  width:260px;
-  min-height:100vh;
-  position:sticky;
-  top:0;
-}
-
-.sidebar h2{
-  margin-bottom:30px;
-}
-
-.sidebar a{
-  display:block;
-  color:white;
-  text-decoration:none;
-  padding:12px;
-  border-radius:10px;
-  margin-bottom:10px;
-}
-
-.sidebar a:hover{
-  background:rgba(139,92,246,.2);
-}
-
-.main{
-  flex:1;
-  padding:40px;
-  max-width:1400px;
-}
-
-
-.card{
-  background:rgba(17,24,39,.8);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:24px;
-  padding:24px;
-  margin-bottom:24px;
-  box-shadow:
-  0 10px 30px rgba(0,0,0,.25);
-}
-
-input,
-textarea{
-  width:100%;
-  background:var(--card2);
-  color:white;
-  border:1px solid var(--border);
-  padding:12px;
-  border-radius:10px;
-}
-
-button{
-  background:linear-gradient(
-    135deg,
-    #8b5cf6,
-    #6366f1
-  );
-  border:none;
-  color:white;
-  padding:12px 18px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:
-  repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-  margin-bottom:30px;
-}
-
-.stat-card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:20px;
-}
-
-.stat-card h3{
-  font-size:30px;
-  margin-top:10px;
-}
-
-#menuBtn{
-
-display:none;
-
-background:#8b5cf6;
-color:white;
-
-border:none;
-
-padding:12px 18px;
-
-border-radius:10px;
-
-margin-bottom:20px;
-}
-
-#closeMenu{
-
-display:none;
-
-position:absolute;
-
-top:20px;
-right:20px;
-
-background:none;
-
-border:none;
-
-color:white;
-
-font-size:24px;
-
-cursor:pointer;
-}
-
-@media(max-width:768px){
-
-  #menuBtn{
-  display:block;
-}
-
-#closeMenu{
-display:block;
-}
-
-.sidebar{
-
-  position:fixed;
-
-  left:-280px;
-
-  top:0;
-
-  width:260px;
-
-  height:100vh;
-
-  z-index:1000;
-
-  transition:.3s;
-}
-
-.sidebar.active{
-  left:0;
-}
-
-.main{
-  width:100%;
-  padding:15px;
-}
-}
-
-.portfolio-link{
-
-display:block;
-
-padding:12px;
-
-border-radius:10px;
-
-color:white !important;
-
-text-decoration:none;
-
-background:transparent;
-}
-
-.portfolio-link:hover{
-
-background:
-rgba(139,92,246,.15);
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-#scrollTopBtn{
-
-position:fixed;
-
-bottom:20px;
-right:20px;
-
-width:50px;
-height:50px;
-
-border:none;
-
-border-radius:50%;
-
-background:
-linear-gradient(
-135deg,
-#8b5cf6,
-#6366f1
-);
-
-color:white;
-
-font-size:20px;
-
-cursor:pointer;
-
-display:none;
-
-z-index:9999;
-
-box-shadow:
-0 10px 25px
-rgba(139,92,246,.4);
-
-transition:.3s;
-}
-
-#scrollTopBtn:hover{
-
-transform:translateY(-3px);
-
-}
-
-.checkbox-group{
-
-display:flex;
-
-align-items:center;
-
-gap:12px;
-
-margin:20px 0;
-}
-
-.checkbox-group input{
-
-width:20px;
-height:20px;
-
-cursor:pointer;
-}
-
-.checkbox-group label{
-
-font-size:18px;
-
-color:white;
-
-cursor:pointer;
-}
-
-</style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Control Center | Anupam Yadav Admin</title>
+
+  <!-- Typography matching Public Portfolio -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="admin.css">
 </head>
 <body>
 
-  <div class="sidebar">
-
-<h2>⚡ Admin</h2>
-
-<button id="closeMenu">
-✖
-</button>
-
-<a href="#dashboard">🏠 Dashboard</a>
-<a href="#projectsSection">🚀 Projects</a>
-<a href="#certificatesSection">🏆 Certificates</a>
-<a href="#skillsSection">💡 Skills</a>
-
-<a
-  href="https://anupam-yadavv.vercel.app"
-  target="_blank"
-  class="portfolio-link">
-
-  🌐 View Portfolio
-
-</a>
-
-<button id="logoutBtn">
-Logout
-</button>
-
-</div>
-
-<div class="main">
-
-  <p id="loginMessage"
-   style="color:green;font-weight:bold;">
-</p>
-
-<button id="menuBtn">
-☰ Menu
-</button>
-<div id="dashboard">
-<h1>Portfolio Admin Dashboard</h1>
-<br><br>
-
-<div class="stats">
-
-<div class="stat-card">
-<p>🚀 Projects</p>
-<h3 id="projectCount">0</h3>
-</div>
-
-<div class="stat-card">
-<p>🏆 Certificates</p>
-<h3 id="certificateCount">0</h3>
-</div>
-
-<div class="stat-card">
-<p>💡 Skills</p>
-<h3 id="skillCount">0</h3>
-</div>
-
-</div>
-</div>
-<!-- Project Section -->
-
-<div class="card">
-<div id="projectsSection">
-<h2>Add Project</h2>
-<br><br>
-<input
-  type="text"
-  id="title"
-  placeholder="Project Title">
-
-<br><br>
-
-<textarea
-  id="description"
-  placeholder="Project Description">
-</textarea>
-
-<br><br>
-
-<input
-  type="text"
-  id="github"
-  placeholder="GitHub Link">
-
-<br><br>
-
-<input
-  type="text"
-  id="live"
-  placeholder="Live Demo Link">
-
-<br><br>
-
-<input
-  type="text"
-  id="category"
-  placeholder="Category (Python, AI, Web Dev)">
-
-<br><br>
-
-<input
-  type="text"
-  id="emoji"
-  placeholder="Emoji (🤖, 🎮, 📈)">
-
-<br><br>
-
-
-<input
-  type="text"
-  id="techs"
-  placeholder="Python,NLP,AI">
-
-  <br><br>
-<div class="checkbox-group">
-
-  <input
-    type="checkbox"
-    id="featured">
-
-  <label for="featured">
-    Featured Project
-  </label>
-
-</div>
-
-<br><br>
-
-<button id="saveBtn">
-  Add Project
-</button>
-<br><br>
-<h2>Projects</h2>
-<div id="projectsList"></div>
-<hr>
-
-</div>
-</div>
-<!-- Certificate Section -->
-
-<div class="card">
-<div id="certificatesSection">
-  <h2>Add Certificate</h2>
-
-  <br><br>
-
-<input type="text" id="certTitle" placeholder="Certificate Title">
-
-<br><br>
-
-<input type="text" id="certIssuer" placeholder="Issuer">
-
-<br><br>
-
-<input type="text" id="certYear" placeholder="Year">
-
-<br><br>
-
-<input type="text" id="certImage" placeholder="Image URL / Path">
-
-<br><br>
-
-<input type="text" id="certTags" placeholder="Tags (comma separated)">
-
-<br><br>
-
-<button id="saveCertificateBtn">
-  Save Certificate
-</button>
-
-<hr>
-<br><br>
-<h2>Certificates</h2>
-
-<div id="certificatesList"></div>
-
-</div>
-</div>
-<!-- Skill Section -->
-
-<div class="card">
-<div id="skillsSection">
-<h2>Add Skill</h2>
-<br><br>
-<input
-  type="text"
-  id="skillName"
-  placeholder="Skill Name">
-
-<br><br>
-
-<button id="addSkill">
-  Add Skill
-</button>
-<br><br>
-<h2>Skills</h2>
-
-<div id="skillsList"></div>
-
-</div>
-</div>
-<br><br>
-<!-- JS Section -->
-
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-
-import {
-  getAuth,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
-
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc,
-  updateDoc,
-  getDoc
-} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCQoVoewyuS_WIGSJmVQzW-MThzxyIKvSg",
-  authDomain: "anupam-yadav-portfolio.firebaseapp.com",
-  projectId: "anupam-yadav-portfolio",
-  storageBucket: "anupam-yadav-portfolio.firebasestorage.app",
-  messagingSenderId: "46105414968",
-  appId: "1:46105414968:web:94a16631d4e852904085cd",
-  measurementId: "G-7N424T7HYK"
-};
-
-const loginMessage =
-sessionStorage.getItem("loginMessage");
-
-if (loginMessage) {
-
-  document.getElementById(
-    "loginMessage"
-  ).innerText = loginMessage;
-
-  sessionStorage.removeItem(
-    "loginMessage"
-  );
-
-}
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
-onAuthStateChanged(auth, (user) => {
-
-  if (!user) {
-
-    window.location.href = "login.html";
-
-  }
-
-});
-
-function clearProjectForm() {
-
-  document.getElementById("title").value = "";
-  document.getElementById("description").value = "";
-  document.getElementById("github").value = "";
-  document.getElementById("live").value = "";
-  document.getElementById("category").value = "";
-  document.getElementById("emoji").value = "";
-  document.getElementById("techs").value = "";
-  document.getElementById("featured").checked = false;
-
-  window.editingProjectId = null;
-
-  console.log("Form Cleared");
-}
-
-const saveBtn = document.getElementById("saveBtn");
-
-saveBtn.addEventListener("click", async () => {
-
-  const title = document.getElementById("title").value;
-  const description = document.getElementById("description").value;
-
-  try {
-    const projectData = {
-  title,
-  description,
-  github: document.getElementById("github").value,
-  live: document.getElementById("live").value,
-  category: document.getElementById("category").value,
-  emoji: document.getElementById("emoji").value,
-  techs: document.getElementById("techs").value,
-  featured: document.getElementById("featured").checked
-};
-
-if (window.editingProjectId) {
-
-  await updateDoc(
-    doc(db, "projects", window.editingProjectId),
-    projectData
-  );
-
-  alert("Project Updated!");
-
-  clearProjectForm();
-
-} else {
-
-  await addDoc(
-    collection(db, "projects"),
-    projectData
-  );
-
-  alert("Project Added!");
-
-  clearProjectForm();
-
-}
-
-loadProjects();
-
-  } catch (error) {
-    console.error("Error:", error);
-  }
-
-});
-
-async function loadProjects() {
-
-  const container =
-  document.getElementById("projectsList");
-
-  container.innerHTML = "";
-
-  const snapshot =
-  await getDocs(collection(db, "projects"));
-
-  document.getElementById(
-  "projectCount"
-).innerText = snapshot.size;
-
-  snapshot.forEach((project) => {
-
-    const data = project.data();
-
-    container.innerHTML += `
-      <div style="border:1px solid #ccc;padding:10px;margin:10px 0;">
-        <h3>${data.title}</h3>
-        <p>${data.description}</p>
-
-        <button onclick="editProject('${project.id}')">
-          Edit
-        </button>
-
-        <button onclick="deleteProject('${project.id}')">
-          Delete
+  <div class="admin-layout">
+    <!-- ════════════════════════════════════════════════════════
+         SIDEBAR NAVIGATION
+         ════════════════════════════════════════════════════════ -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">
+          <a href="#dashboard" class="sidebar-logo">Anupam</a>
+          <span class="sidebar-sub">Control Center</span>
+        </div>
+        <button type="button" class="sidebar-close-btn" id="sidebar-close-btn" aria-label="Close sidebar">✕</button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <!-- 1. Dashboard -->
+        <a class="nav-link active" data-view="dashboard" href="#dashboard">
+          <span class="nav-link__content">
+            <span class="nav-link__icon">📊</span> Dashboard
+          </span>
+        </a>
+
+        <!-- 2. Projects -->
+        <a class="nav-link" data-view="projects" href="#projects">
+          <span class="nav-link__content">
+            <span class="nav-link__icon">🚀</span> Projects
+          </span>
+          <span class="nav-badge" id="nav-badge-projects">0</span>
+        </a>
+
+        <!-- 3. Certifications -->
+        <a class="nav-link" data-view="certifications" href="#certifications">
+          <span class="nav-link__content">
+            <span class="nav-link__icon">🏆</span> Certifications
+          </span>
+          <span class="nav-badge" id="nav-badge-certs">0</span>
+        </a>
+
+        <!-- 4. Testimonials -->
+        <a class="nav-link" data-view="testimonials" href="#testimonials">
+          <span class="nav-link__content">
+            <span class="nav-link__icon">💬</span> Testimonials
+          </span>
+          <span class="nav-badge" id="nav-badge-testimonials">0</span>
+        </a>
+
+        <!-- 5. Messages -->
+        <a class="nav-link" data-view="messages" href="#messages">
+          <span class="nav-link__content">
+            <span class="nav-link__icon">✉️</span> Messages
+          </span>
+          <span class="nav-badge" id="nav-badge-messages" style="display:none;background:var(--accent);">0</span>
+        </a>
+
+        <!-- 6. AI Knowledge -->
+        <a class="nav-link" data-view="ai-knowledge" href="#ai-knowledge">
+          <span class="nav-link__content">
+            <span class="nav-link__icon">✦</span> AI Knowledge
+          </span>
+          <span class="nav-dot" title="AI Knowledge Ready & Synced"></span>
+        </a>
+
+        <!-- 7. Settings -->
+        <a class="nav-link" data-view="settings" href="#settings">
+          <span class="nav-link__content">
+            <span class="nav-link__icon">⚙️</span> Settings
+          </span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar" id="sidebar-avatar">A</div>
+          <div class="sidebar-user-info">
+            <span class="sidebar-user-name" id="sidebar-user-name">Anupam Yadav</span>
+            <span class="sidebar-user-email" id="sidebar-user-email">admin@portfolio</span>
+          </div>
+        </div>
+        <!-- 8. Logout -->
+        <button type="button" class="sidebar-logout-btn" id="logout-btn">
+          <span>🚪</span> Logout
         </button>
       </div>
-    `;
-  });
-}
+    </aside>
 
-window.deleteProject = async function(id){
+    <!-- ════════════════════════════════════════════════════════
+         MAIN CONTENT AREA
+         ════════════════════════════════════════════════════════ -->
+    <main class="admin-main">
+      <!-- Topbar Header -->
+      <header class="admin-topbar">
+        <div class="topbar-left">
+          <button type="button" class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open sidebar">☰</button>
+          <div class="topbar-title-wrap">
+            <h1 class="topbar-title" id="topbar-page-title">Dashboard Overview</h1>
+            <span class="topbar-sub" id="topbar-page-sub">Portfolio Management & Fact Control</span>
+          </div>
+        </div>
 
-  if(!confirm("Delete this project?")) return;
+        <div class="topbar-right">
+          <a href="index.html" target="_blank" rel="noopener noreferrer" class="topbar-link">
+            <span>🌐</span> Live Portfolio ↗
+          </a>
+        </div>
+      </header>
 
-  await deleteDoc(
-    doc(db,"projects",id)
-  );
+      <div class="admin-content-view">
+        <!-- ══════════════════════════════════════════════════════
+             VIEW 1: DASHBOARD
+             ══════════════════════════════════════════════════════ -->
+        <section class="admin-view active" id="view-dashboard">
+          <!-- Live System Status Banner -->
+          <div class="system-status-banner">
+            <div class="status-pill-item">
+              <div class="status-pill-icon">✦</div>
+              <div class="status-pill-details">
+                <span class="status-pill-title">AI Knowledge Status</span>
+                <span class="status-pill-val">
+                  <span class="status-dot-active"></span> Synced & Ready
+                </span>
+              </div>
+            </div>
 
-  await loadProjects();
+            <div class="status-pill-item">
+              <div class="status-pill-icon">🏷️</div>
+              <div class="status-pill-details">
+                <span class="status-pill-title">Portfolio Version</span>
+                <span class="status-pill-val" id="dash-version">v2.4</span>
+              </div>
+            </div>
 
-  alert("Project Deleted!");
-};
+            <div class="status-pill-item">
+              <div class="status-pill-icon">📅</div>
+              <div class="status-pill-details">
+                <span class="status-pill-title">Last Updated</span>
+                <span class="status-pill-val" id="dash-updated">09 Nov 2026</span>
+              </div>
+            </div>
 
-  window.editProject = async function(id) {
+            <div class="status-pill-item">
+              <div class="status-pill-icon">💼</div>
+              <div class="status-pill-details">
+                <span class="status-pill-title">Availability</span>
+                <span class="status-pill-val" id="dash-availability">Available for Internships</span>
+              </div>
+            </div>
+          </div>
 
-    const docRef = doc(db, "projects", id);
+          <!-- Stats Grid -->
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="stat-box__header">
+                <span class="stat-box__label">Total Projects</span>
+                <span class="stat-box__icon">🚀</span>
+              </div>
+              <div class="stat-box__num" id="stat-projects-count">0</div>
+              <span class="stat-box__sub" id="stat-featured-count">0 Featured</span>
+            </div>
 
-    const snap = await getDoc(docRef);
+            <div class="stat-box">
+              <div class="stat-box__header">
+                <span class="stat-box__label">Certifications</span>
+                <span class="stat-box__icon">🏆</span>
+              </div>
+              <div class="stat-box__num" id="stat-certs-count">0</div>
+              <span class="stat-box__sub">Verified Credentials</span>
+            </div>
 
-    const data = snap.data();
+            <div class="stat-box">
+              <div class="stat-box__header">
+                <span class="stat-box__label">Testimonials</span>
+                <span class="stat-box__icon">💬</span>
+              </div>
+              <div class="stat-box__num" id="stat-testimonials-count">0</div>
+              <span class="stat-box__sub">Peer & Mentor Reviews</span>
+            </div>
 
-    document.getElementById("title").value =
-      data.title || "";
+            <div class="stat-box">
+              <div class="stat-box__header">
+                <span class="stat-box__label">Unread Messages</span>
+                <span class="stat-box__icon">✉️</span>
+              </div>
+              <div class="stat-box__num" id="stat-messages-unread">0</div>
+              <span class="stat-box__sub" id="stat-messages-total">0 Total Received</span>
+            </div>
+          </div>
 
-    document.getElementById("description").value =
-      data.description || "";
+          <!-- Recent Messages Preview Card -->
+          <div class="admin-card">
+            <div class="admin-card__header">
+              <div>
+                <h3 class="admin-card__title">Recent Inquiries</h3>
+                <p class="admin-card__desc">Latest messages sent through the public contact form.</p>
+              </div>
+              <button type="button" class="btn-secondary btn-sm" id="dash-view-all-msgs">View All Messages →</button>
+            </div>
+            <div id="dash-recent-messages-list" class="messages-list">
+              <p style="color:var(--muted);font-size:0.84rem;">Loading recent messages...</p>
+            </div>
+          </div>
+        </section>
 
-    document.getElementById("github").value =
-      data.github || "";
+        <!-- ══════════════════════════════════════════════════════
+             VIEW 2: PROJECTS
+             ══════════════════════════════════════════════════════ -->
+        <section class="admin-view" id="view-projects">
+          <div class="admin-card__header">
+            <div>
+              <h3 class="admin-card__title">Project Management</h3>
+              <p class="admin-card__desc">Create and edit featured projects displayed on the portfolio and accessed by Anupam AI.</p>
+            </div>
+            <button type="button" class="btn-primary" id="btn-add-project">
+              <span>+</span> Add Project
+            </button>
+          </div>
 
-    document.getElementById("live").value =
-      data.live || "";
+          <div style="display:flex;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+            <input type="text" id="project-search-input" class="form-input" style="max-width:320px;" placeholder="Search projects by title or tech...">
+            <select id="project-category-filter" class="form-select" style="max-width:200px;">
+              <option value="all">All Categories</option>
+              <option value="Python">Python</option>
+              <option value="AI">AI / Machine Learning</option>
+              <option value="Web">Web Development</option>
+            </select>
+          </div>
 
-    document.getElementById("category").value =
-      data.category || "";
+          <div class="items-grid" id="projects-grid">
+            <p style="color:var(--muted);font-size:0.84rem;">Loading projects from Firestore...</p>
+          </div>
+        </section>
 
-    document.getElementById("emoji").value =
-      data.emoji || "";
+        <!-- ══════════════════════════════════════════════════════
+             VIEW 3: CERTIFICATIONS
+             ══════════════════════════════════════════════════════ -->
+        <section class="admin-view" id="view-certifications">
+          <div class="admin-card__header">
+            <div>
+              <h3 class="admin-card__title">Certifications & Credentials</h3>
+              <p class="admin-card__desc">Manage verified credentials, issuers, and certificates displayed on the public site.</p>
+            </div>
+            <button type="button" class="btn-primary" id="btn-add-cert">
+              <span>+</span> Add Certification
+            </button>
+          </div>
 
-    document.getElementById("techs").value =
-      data.techs || "";
+          <div class="items-grid" id="certs-grid">
+            <p style="color:var(--muted);font-size:0.84rem;">Loading certifications...</p>
+          </div>
+        </section>
 
-    document.getElementById("featured").checked =
-      data.featured || false;
+        <!-- ══════════════════════════════════════════════════════
+             VIEW 4: TESTIMONIALS
+             ══════════════════════════════════════════════════════ -->
+        <section class="admin-view" id="view-testimonials">
+          <div class="admin-card__header">
+            <div>
+              <h3 class="admin-card__title">Testimonials & Endorsements</h3>
+              <p class="admin-card__desc">Manage feedback, recommendations, and reviews from mentors and collaborators.</p>
+            </div>
+            <button type="button" class="btn-primary" id="btn-add-testimonial">
+              <span>+</span> Add Testimonial
+            </button>
+          </div>
 
-    window.editingProjectId = id;
+          <div class="items-grid" id="testimonials-grid">
+            <p style="color:var(--muted);font-size:0.84rem;">Loading testimonials...</p>
+          </div>
+        </section>
 
-    window.scrollTo({
-  top: 0,
-  behavior: "smooth"
-});
-  };
+        <!-- ══════════════════════════════════════════════════════
+             VIEW 5: MESSAGES
+             ══════════════════════════════════════════════════════ -->
+        <section class="admin-view" id="view-messages">
+          <div class="admin-card__header">
+            <div>
+              <h3 class="admin-card__title">Visitor Messages</h3>
+              <p class="admin-card__desc">Review inquiries and potential opportunities submitted through the public contact form.</p>
+            </div>
+          </div>
 
-    loadProjects();
+          <div class="messages-tabs">
+            <button type="button" class="msg-tab-btn active" data-filter="all">All Messages</button>
+            <button type="button" class="msg-tab-btn" data-filter="unread">Unread</button>
+            <button type="button" class="msg-tab-btn" data-filter="read">Read</button>
+          </div>
 
-    // Certificate Management
+          <div class="messages-list" id="messages-list">
+            <p style="color:var(--muted);font-size:0.84rem;">Loading messages...</p>
+          </div>
+        </section>
 
-const addCertificateBtn =
-document.getElementById("saveCertificateBtn");
+        <!-- ══════════════════════════════════════════════════════
+             VIEW 6: AI KNOWLEDGE CENTER
+             ══════════════════════════════════════════════════════ -->
+        <section class="admin-view" id="view-ai-knowledge">
+          <!-- AI Health & Completeness Meter -->
+          <div class="ai-health-meter">
+            <div class="ai-health-header">
+              <span class="ai-health-title">
+                <span class="status-dot-active"></span> AI Knowledge Health & Completeness
+              </span>
+              <span class="ai-health-pct" id="ai-health-pct">100%</span>
+            </div>
+            <div class="ai-progress-track">
+              <div class="ai-progress-bar" id="ai-health-bar" style="width: 100%;"></div>
+            </div>
+            <div class="ai-sources-chips">
+              <span class="ai-source-chip synced" id="chip-profile">Profile (100%)</span>
+              <span class="ai-source-chip synced" id="chip-skills">Skills (Active)</span>
+              <span class="ai-source-chip synced" id="chip-projects">Projects (<span id="chip-proj-count">0</span>)</span>
+              <span class="ai-source-chip synced" id="chip-education">Education (3 Records)</span>
+              <span class="ai-source-chip synced" id="chip-experience">Internships (Available)</span>
+              <span class="ai-source-chip synced" id="chip-certs">Certifications (<span id="chip-cert-count">0</span>)</span>
+              <span class="ai-source-chip synced" id="chip-contact">Contact & Socials</span>
+              <span class="ai-source-chip synced" id="chip-custom">Custom Knowledge (<span id="chip-custom-count">0</span>)</span>
+            </div>
+          </div>
 
-console.log(addCertificateBtn);
+          <!-- AI Sub-Navigation Tabs -->
+          <div class="ai-tabs">
+            <button type="button" class="ai-tab-btn active" data-sub="sources">Knowledge Sources</button>
+            <button type="button" class="ai-tab-btn" data-sub="custom">Custom Knowledge</button>
+            <button type="button" class="ai-tab-btn" data-sub="preview">Knowledge Preview & Search</button>
+            <button type="button" class="ai-tab-btn" data-sub="test">Test Anupam AI</button>
+          </div>
 
-addCertificateBtn.addEventListener(
-"click",
-async () => {
+          <!-- Sub-Tab 1: Sources -->
+          <div class="ai-tab-content active" id="ai-sub-sources">
+            <div class="admin-card">
+              <h4 class="admin-card__title">Single Source of Truth Architecture</h4>
+              <p class="admin-card__desc" style="margin-bottom:1rem;">
+                Anupam AI does NOT use a disconnected question/answer database. It dynamically retrieves verified facts from existing portfolio records in real-time.
+              </p>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;">
+                <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;">
+                  <strong style="color:var(--accent);">🚀 Projects</strong>
+                  <p style="font-size:0.8rem;color:var(--muted);margin-top:0.3rem;">
+                    Derived directly from the Projects database. Any title, description, or tech stack edit is immediately understood by the assistant.
+                  </p>
+                </div>
+                <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;">
+                  <strong style="color:var(--accent);">🏆 Certifications</strong>
+                  <p style="font-size:0.8rem;color:var(--muted);margin-top:0.3rem;">
+                    Derived from verified credentials (EY, Microsoft, Anthropic, TATA Forage). Anupam AI uses this to answer inquiries about verified skills.
+                  </p>
+                </div>
+                <div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;">
+                  <strong style="color:var(--accent);">⚙️ Settings & Contact</strong>
+                  <p style="font-size:0.8rem;color:var(--muted);margin-top:0.3rem;">
+                    Derived from public portfolio settings (email, GitHub, LinkedIn, Resume, Availability). Private admin data is strictly excluded.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-  const title =
-document.getElementById("certTitle").value;
+          <!-- Sub-Tab 2: Custom Knowledge -->
+          <div class="ai-tab-content" id="ai-sub-custom">
+            <div class="admin-card__header">
+              <div>
+                <h4 class="admin-card__title">Custom AI Knowledge</h4>
+                <p class="admin-card__desc">Add specialized knowledge items such as your development philosophy, current focus, or personal approach to engineering.</p>
+              </div>
+              <button type="button" class="btn-primary" id="btn-add-custom-knowledge">
+                <span>+</span> Add Custom Knowledge
+              </button>
+            </div>
+            <div id="custom-knowledge-list" class="items-grid">
+              <p style="color:var(--muted);font-size:0.84rem;">Loading custom knowledge entries...</p>
+            </div>
+          </div>
 
-const issuer =
-document.getElementById("certIssuer").value;
+          <!-- Sub-Tab 3: Preview & Search -->
+          <div class="ai-tab-content" id="ai-sub-preview">
+            <div class="admin-card">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.75rem;">
+                <input type="text" id="ai-search-input" class="form-input" style="max-width:380px;" placeholder="Search AI knowledge facts (e.g. Kisan Setu, Python)...">
+                <button type="button" class="btn-secondary btn-sm" id="btn-refresh-ai-preview">🔄 Refresh Live Preview</button>
+              </div>
+              <div id="ai-preview-content" style="background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.25rem;font-family:var(--font-mono);font-size:0.82rem;line-height:1.6;color:var(--text);max-height:480px;overflow-y:auto;white-space:pre-wrap;">
+                Loading live knowledge preview...
+              </div>
+            </div>
+          </div>
 
-const year =
-document.getElementById("certYear").value;
+          <!-- Sub-Tab 4: Test Anupam AI -->
+          <div class="ai-tab-content" id="ai-sub-test">
+            <div class="admin-card" style="margin-bottom:1rem;">
+              <p class="admin-card__desc" style="margin-bottom:0.65rem;">
+                <strong>Test Console:</strong> Simulates live visitor conversations using the exact same conversational engine and public knowledge context.
+              </p>
+              <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+                <button type="button" class="btn-secondary btn-sm test-chip" data-q="Does Anupam know Python?">Does he know Python?</button>
+                <button type="button" class="btn-secondary btn-sm test-chip" data-q="Tell me about Kisan Setu">Tell me about Kisan Setu</button>
+                <button type="button" class="btn-secondary btn-sm test-chip" data-q="what tech did it use?">what tech did it use?</button>
+                <button type="button" class="btn-secondary btn-sm test-chip" data-q="What projects has he built?">What projects has he built?</button>
+                <button type="button" class="btn-secondary btn-sm test-chip" data-q="How can I contact him?">How can I contact him?</button>
+                <button type="button" class="btn-secondary btn-sm test-chip" data-q="Compare Kisan Setu and AcadTrack">Compare Projects</button>
+              </div>
+            </div>
 
-const image =
-document.getElementById("certImage").value;
+            <div class="ai-test-wrap">
+              <!-- Chat Window -->
+              <div class="ai-chat-box">
+                <div class="ai-chat-messages" id="admin-ai-chat-messages">
+                  <div class="ai-chat-msg assistant">
+                    Hi Anupam! You can test the public assistant right here. Type a question or click a prompt above.
+                  </div>
+                </div>
+                <form class="ai-chat-input-row" id="admin-ai-chat-form">
+                  <input type="text" id="admin-ai-chat-input" class="form-input" placeholder="Ask Anupam AI a question..." autocomplete="off">
+                  <button type="submit" class="btn-primary" id="admin-ai-chat-send">Send</button>
+                </form>
+              </div>
 
-const tags =
-document.getElementById("certTags").value;
+              <!-- Admin Inspector -->
+              <div class="ai-debug-panel">
+                <h4 style="font-family:var(--font-mono);font-size:0.8rem;color:var(--text);border-bottom:1px solid var(--border);padding-bottom:0.4rem;">
+                  🔍 Retrieval Inspector
+                </h4>
+                <div class="debug-field">
+                  <span class="debug-label">Detected Intent</span>
+                  <span class="debug-val" id="debug-intent">—</span>
+                </div>
+                <div class="debug-field">
+                  <span class="debug-label">Active Entity / Context</span>
+                  <span class="debug-val" id="debug-entity">—</span>
+                </div>
+                <div class="debug-field">
+                  <span class="debug-label">Knowledge Source</span>
+                  <span class="debug-val" id="debug-source">—</span>
+                </div>
+                <div class="debug-field">
+                  <span class="debug-label">AI Quality Feedback</span>
+                  <div style="display:flex;gap:0.4rem;margin-top:0.3rem;">
+                    <button type="button" class="btn-secondary btn-sm" id="btn-feedback-good" style="color:var(--success);">✓ Good</button>
+                    <button type="button" class="btn-secondary btn-sm" id="btn-feedback-improve" style="color:var(--danger);">✕ Needs Improvement</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-  if(window.editingCertificateId){
+        <!-- ══════════════════════════════════════════════════════
+             VIEW 7: SETTINGS
+             ══════════════════════════════════════════════════════ -->
+        <section class="admin-view" id="view-settings">
+          <div class="admin-card">
+            <div class="admin-card__header">
+              <div>
+                <h3 class="admin-card__title">Portfolio Version & Metadata</h3>
+                <p class="admin-card__desc">Centralized version and release dates synced across the public site, footer, and AI context.</p>
+              </div>
+            </div>
 
-  await updateDoc(
-    doc(
-      db,
-      "certificates",
-      window.editingCertificateId
-    ),
-    {
-      title,
-      issuer,
-      year,
-      image,
-      tags
-    }
-  );
+            <form id="settings-form" class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="setting-version">Portfolio Version</label>
+                <input type="text" id="setting-version" class="form-input" placeholder="e.g. 2.4" required>
+              </div>
 
-  alert("Certificate Updated!");
+              <div class="form-group">
+                <label class="form-label" for="setting-updated">Last Updated Date</label>
+                <input type="text" id="setting-updated" class="form-input" placeholder="e.g. 09 Nov 2026" required>
+              </div>
 
-  window.editingCertificateId = null;
+              <div class="form-group full-width">
+                <label class="form-label" for="setting-availability">Availability Status Pill</label>
+                <input type="text" id="setting-availability" class="form-input" placeholder="e.g. Available for Internships" required>
+              </div>
 
-}else{
+              <div class="form-group">
+                <label class="form-label" for="setting-name">Display Name</label>
+                <input type="text" id="setting-name" class="form-input" placeholder="Anupam Yadav" required>
+              </div>
 
-  await addDoc(
-    collection(db,"certificates"),
-    {
-      title,
-      issuer,
-      year,
-      image,
-      tags
-    }
-  );
+              <div class="form-group">
+                <label class="form-label" for="setting-role">Hero Role / Tagline</label>
+                <input type="text" id="setting-role" class="form-input" placeholder="Computer Science Engineering Student & Python Developer" required>
+              </div>
 
-    alert("Certificate Added Successfully!");
+              <div class="form-group full-width">
+                <label class="form-label" for="setting-typewriter">Typewriter Roles (Comma-separated)</label>
+                <input type="text" id="setting-typewriter" class="form-input" placeholder="Python Developer, AI Enthusiast, Problem Solver, Future IT Engineer">
+              </div>
 
-}
+              <div class="form-group">
+                <label class="form-label" for="setting-email">Public Contact Email</label>
+                <input type="email" id="setting-email" class="form-input" placeholder="yadavanupam9119@gmail.com" required>
+              </div>
 
-  loadCertificates();
+              <div class="form-group">
+                <label class="form-label" for="setting-github">GitHub Profile URL</label>
+                <input type="url" id="setting-github" class="form-input" placeholder="https://github.com/yadav-anupam" required>
+              </div>
 
-  document.getElementById("certTitle").value = "";
-  document.getElementById("certIssuer").value = "";
-  document.getElementById("certYear").value = "";
-  document.getElementById("certImage").value = "";
-  document.getElementById("certTags").value = "";
+              <div class="form-group">
+                <label class="form-label" for="setting-linkedin">LinkedIn Profile URL</label>
+                <input type="url" id="setting-linkedin" class="form-input" placeholder="https://www.linkedin.com/in/anupam-yadavv" required>
+              </div>
 
-});
+              <div class="form-group">
+                <label class="form-label" for="setting-resume">Resume URL / Path</label>
+                <input type="text" id="setting-resume" class="form-input" placeholder="./Anupam%20resume.pdf" required>
+              </div>
 
-async function loadCertificates() {
-
-  const container =
-  document.getElementById("certificatesList");
-
-  container.innerHTML = "";
-
-  const snapshot =
-  await getDocs(
-    collection(db, "certificates")
-  );
-
-  document.getElementById(
-  "certificateCount"
-).innerText = snapshot.size;
-
-  snapshot.forEach((certificate) => {
-
-    const data = certificate.data();
-
-    container.innerHTML += `
-  <div style="border:1px solid #ccc;padding:10px;margin:10px 0;">
-
-  <h3>${data.title}</h3>
-
-  <p>Issuer: ${data.issuer}</p>
-
-  <p>Year: ${data.year}</p>
-
-  <p>Tags: ${data.tags}</p>
-
-  <button onclick="editCertificate('${certificate.id}')">
-  Edit
-  </button>
-
-  <button onclick="deleteCertificate('${certificate.id}')">
-  Delete
-  </button>
+              <div class="form-group full-width" style="margin-top:0.75rem;">
+                <button type="submit" class="btn-primary" id="btn-save-settings">
+                  Save All Settings & Sync Metadata
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
   </div>
-  `;
-  });
-}
 
-window.deleteCertificate =
-async function(id){
+  <!-- ════════════════════════════════════════════════════════
+       MODALS
+       ════════════════════════════════════════════════════════ -->
 
-  await deleteDoc(
-    doc(db,"certificates",id)
-  );
-
-  loadCertificates();
-};
-
-window.editCertificate = async function(id){
-
-  const docRef =
-  doc(db,"certificates",id);
-
-  const snap =
-  await getDoc(docRef);
-
-  const data =
-  snap.data();
-
-  document.getElementById("certTitle").value =
-  data.title || "";
-
-  document.getElementById("certIssuer").value =
-  data.issuer || "";
-
-  document.getElementById("certYear").value =
-  data.year || "";
-
-  document.getElementById("certImage").value =
-  data.image || "";
-
-  document.getElementById("certTags").value =
-  data.tags || "";
-
-  window.editingCertificateId = id;
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-};
-
-loadCertificates();
-
-// Skill Management
-
-const addSkillBtn =
-document.getElementById("addSkill");
-
-addSkillBtn.addEventListener(
-"click",
-async () => {
-
-  const skill =
-  document.getElementById("skillName").value;
-
-  await addDoc(
-    collection(db, "skills"),
-    {
-      skill,
-      createdAt: new Date().toISOString()
-    }
-  );
-
-  alert("Skill Added Successfully!");
-
-  loadSkills();
-
-  document.getElementById("skillName").value = "";
-
-});
-
-async function loadSkills() {
-
-  const container =
-  document.getElementById("skillsList");
-
-  container.innerHTML = "";
-
-  const snapshot =
-  await getDocs(
-    collection(db, "skills")
-  );
-
-  document.getElementById(
-  "skillCount"
-).innerText = snapshot.size;
-
-  snapshot.forEach((skillDoc) => {
-
-    const data = skillDoc.data();
-
-    container.innerHTML += `
-      <div style="border:1px solid #ccc;padding:10px;margin:10px 0;">
-
-        <h3>${data.skill}</h3>
-
-        <button onclick="deleteSkill('${skillDoc.id}')">
-          Delete
-        </button>
-
+  <!-- 1. Project Modal -->
+  <div class="admin-modal" id="modal-project" role="dialog" aria-modal="true">
+    <div class="admin-modal__card">
+      <div class="admin-card__header">
+        <h3 class="admin-card__title" id="project-modal-title">Add Project</h3>
+        <button type="button" class="btn-secondary btn-sm modal-close-btn">✕</button>
       </div>
-    `;
-  });
-}
+      <form id="project-form">
+        <input type="hidden" id="project-doc-id">
+        <div class="form-group">
+          <label class="form-label" for="proj-title">Project Title *</label>
+          <input type="text" id="proj-title" class="form-input" placeholder="e.g. Kisan Setu" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="proj-category">Category *</label>
+          <input type="text" id="proj-category" class="form-input" placeholder="e.g. AI Agri-Tech, Python, Web Dev" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="proj-desc">Description *</label>
+          <textarea id="proj-desc" class="form-textarea" placeholder="Detailed description of features and purpose..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="proj-techs">Technologies (Comma-separated) *</label>
+          <input type="text" id="proj-techs" class="form-input" placeholder="e.g. Python, FastAPI, React, PostgreSQL" required>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="proj-github">GitHub Repository URL</label>
+            <input type="url" id="proj-github" class="form-input" placeholder="https://github.com/...">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="proj-live">Live Demo URL</label>
+            <input type="url" id="proj-live" class="form-input" placeholder="https://...">
+          </div>
+        </div>
 
-window.deleteSkill =
-async function(id){
+        <!-- Project Image Upload (Drag & Drop + Storage) -->
+        <div class="form-group">
+          <label class="form-label">Project Image (Firebase Storage)</label>
+          <div class="upload-dropzone" id="proj-dropzone">
+            <span class="upload-dropzone__icon">📁</span>
+            <span class="upload-dropzone__text">Drag & drop image here or click to browse</span>
+            <span class="upload-dropzone__hint">Supports JPG, PNG, WEBP (Max 5MB)</span>
+            <input type="file" id="proj-file-input" accept="image/jpeg,image/png,image/webp" style="display:none;">
+          </div>
+          <div class="upload-preview-wrap" id="proj-preview-wrap" style="display:none;">
+            <img src="" alt="Preview" class="upload-preview-img" id="proj-preview-img">
+            <div style="flex:1;">
+              <span id="proj-filename" style="font-size:0.75rem;color:var(--text);display:block;margin-bottom:0.25rem;"></span>
+              <div class="upload-progress-bar" id="proj-progress-bar">
+                <div class="upload-progress-fill" id="proj-progress-fill"></div>
+              </div>
+            </div>
+            <button type="button" class="btn-danger btn-sm" id="btn-remove-proj-img">Remove</button>
+          </div>
+          <input type="hidden" id="proj-image-url">
+        </div>
 
-  await deleteDoc(
-    doc(db,"skills",id)
-  );
+        <div class="checkbox-wrap" style="margin: 1rem 0;">
+          <input type="checkbox" id="proj-featured">
+          <label class="checkbox-text" for="proj-featured">Feature this project prominently on the portfolio</label>
+        </div>
 
-  loadSkills();
-};
+        <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1.25rem;">
+          <button type="button" class="btn-secondary modal-close-btn">Cancel</button>
+          <button type="submit" class="btn-primary" id="btn-save-project-submit">Save Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-loadSkills();
+  <!-- 2. Certification Modal -->
+  <div class="admin-modal" id="modal-cert" role="dialog" aria-modal="true">
+    <div class="admin-modal__card">
+      <div class="admin-card__header">
+        <h3 class="admin-card__title" id="cert-modal-title">Add Certification</h3>
+        <button type="button" class="btn-secondary btn-sm modal-close-btn">✕</button>
+      </div>
+      <form id="cert-form">
+        <input type="hidden" id="cert-doc-id">
+        <div class="form-group">
+          <label class="form-label" for="cert-title">Certificate Name *</label>
+          <input type="text" id="cert-title" class="form-input" placeholder="e.g. AI Skills Passport" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cert-issuer">Issuing Organization *</label>
+          <input type="text" id="cert-issuer" class="form-input" placeholder="e.g. EY & Microsoft" required>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="cert-date">Issue Date / Year *</label>
+            <input type="text" id="cert-date" class="form-input" placeholder="e.g. 2025" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="cert-url">Credential URL</label>
+            <input type="url" id="cert-url" class="form-input" placeholder="https://...">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cert-desc">Description / Skills Covered</label>
+          <textarea id="cert-desc" class="form-textarea" placeholder="Key topics verified..."></textarea>
+        </div>
 
-document
-.getElementById("logoutBtn")
-.addEventListener("click", async () => {
+        <!-- Certificate Image Upload -->
+        <div class="form-group">
+          <label class="form-label">Certificate Image (Storage)</label>
+          <div class="upload-dropzone" id="cert-dropzone">
+            <span class="upload-dropzone__icon">📜</span>
+            <span class="upload-dropzone__text">Upload certificate image or badge</span>
+            <input type="file" id="cert-file-input" accept="image/jpeg,image/png,image/webp" style="display:none;">
+          </div>
+          <div class="upload-preview-wrap" id="cert-preview-wrap" style="display:none;">
+            <img src="" alt="Preview" class="upload-preview-img" id="cert-preview-img">
+            <span id="cert-filename" style="font-size:0.75rem;color:var(--text);flex:1;"></span>
+            <button type="button" class="btn-danger btn-sm" id="btn-remove-cert-img">Remove</button>
+          </div>
+          <input type="hidden" id="cert-image-url">
+        </div>
 
-  await signOut(auth);
+        <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1.25rem;">
+          <button type="button" class="btn-secondary modal-close-btn">Cancel</button>
+          <button type="submit" class="btn-primary" id="btn-save-cert-submit">Save Certification</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-  sessionStorage.setItem(
-    "logoutMessage",
-    "You have been logged out successfully. Kindly login again."
-  );
+  <!-- 3. Testimonial Modal -->
+  <div class="admin-modal" id="modal-testimonial" role="dialog" aria-modal="true">
+    <div class="admin-modal__card">
+      <div class="admin-card__header">
+        <h3 class="admin-card__title" id="testimonial-modal-title">Add Testimonial</h3>
+        <button type="button" class="btn-secondary btn-sm modal-close-btn">✕</button>
+      </div>
+      <form id="testimonial-form">
+        <input type="hidden" id="testimonial-doc-id">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="testi-name">Name *</label>
+            <input type="text" id="testi-name" class="form-input" placeholder="e.g. Dr. Rajesh Kumar" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="testi-role">Role / Position *</label>
+            <input type="text" id="testi-role" class="form-input" placeholder="e.g. Professor of Computer Science" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="testi-org">Organization / Institution</label>
+          <input type="text" id="testi-org" class="form-input" placeholder="e.g. Kashi Institute of Technology">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="testi-msg">Testimonial Message *</label>
+          <textarea id="testi-msg" class="form-textarea" placeholder="Recommendation quote..." required></textarea>
+        </div>
 
-  window.location.href = "login.html";
+        <!-- Profile Image Upload -->
+        <div class="form-group">
+          <label class="form-label">Profile Avatar (Storage)</label>
+          <div class="upload-dropzone" id="testi-dropzone">
+            <span class="upload-dropzone__icon">👤</span>
+            <span class="upload-dropzone__text">Upload avatar image (JPG, PNG)</span>
+            <input type="file" id="testi-file-input" accept="image/jpeg,image/png,image/webp" style="display:none;">
+          </div>
+          <div class="upload-preview-wrap" id="testi-preview-wrap" style="display:none;">
+            <img src="" alt="Preview" class="upload-preview-img" id="testi-preview-img">
+            <span id="testi-filename" style="font-size:0.75rem;color:var(--text);flex:1;"></span>
+            <button type="button" class="btn-danger btn-sm" id="btn-remove-testi-img">Remove</button>
+          </div>
+          <input type="hidden" id="testi-image-url">
+        </div>
 
-});
+        <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1.25rem;">
+          <button type="button" class="btn-secondary modal-close-btn">Cancel</button>
+          <button type="submit" class="btn-primary" id="btn-save-testi-submit">Save Testimonial</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-document
-.getElementById("menuBtn")
-.addEventListener("click",()=>{
+  <!-- 4. Custom Knowledge Modal -->
+  <div class="admin-modal" id="modal-custom-knowledge" role="dialog" aria-modal="true">
+    <div class="admin-modal__card">
+      <div class="admin-card__header">
+        <h3 class="admin-card__title" id="custom-k-modal-title">Add Custom Knowledge</h3>
+        <button type="button" class="btn-secondary btn-sm modal-close-btn">✕</button>
+      </div>
+      <form id="custom-knowledge-form">
+        <input type="hidden" id="custom-k-doc-id">
+        <div class="form-group">
+          <label class="form-label" for="ck-title">Knowledge Topic / Title *</label>
+          <input type="text" id="ck-title" class="form-input" placeholder="e.g. Development Philosophy, Hackathons" required>
+        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label" for="ck-category">Category *</label>
+            <select id="ck-category" class="form-select" required>
+              <option value="Philosophy">Engineering Philosophy</option>
+              <option value="Focus">Current Focus</option>
+              <option value="About">About Anupam</option>
+              <option value="Achievement">Achievement / Event</option>
+              <option value="General">General Knowledge</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ck-priority">Retrieval Priority</label>
+            <select id="ck-priority" class="form-select">
+              <option value="normal">Normal</option>
+              <option value="high">High (Preferred match)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="ck-content">Knowledge Content *</label>
+          <textarea id="ck-content" class="form-textarea" placeholder="Explain the facts clearly in plain text or Markdown..." style="min-height:120px;" required></textarea>
+        </div>
 
-document
-.querySelector(".sidebar")
-.classList.toggle("active");
+        <div class="checkbox-wrap" style="margin: 1rem 0;">
+          <input type="checkbox" id="ck-active" checked>
+          <label class="checkbox-text" for="ck-active">Active (Include in Anupam AI retrieval)</label>
+        </div>
 
-});
+        <!-- Security Warning Notice -->
+        <div id="ck-security-warning" style="display:none;background:var(--danger-bg);border:1px solid var(--danger);border-radius:var(--radius-sm);padding:0.75rem;margin-bottom:1rem;color:#FCA5A5;font-size:0.78rem;">
+          ⚠️ <strong>Security Alert:</strong> Content appears to contain sensitive keywords (password, key, secret). Private credentials must never be added to public AI knowledge.
+        </div>
 
-document
-.getElementById("closeMenu")
-.addEventListener("click",()=>{
+        <div style="display:flex;justify-content:flex-end;gap:0.75rem;margin-top:1.25rem;">
+          <button type="button" class="btn-secondary modal-close-btn">Cancel</button>
+          <button type="submit" class="btn-primary" id="btn-save-ck-submit">Save Knowledge</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-document
-.querySelector(".sidebar")
-.classList.remove("active");
+  <!-- 5. Message Detail Modal -->
+  <div class="admin-modal" id="modal-message" role="dialog" aria-modal="true">
+    <div class="admin-modal__card">
+      <div class="admin-card__header">
+        <h3 class="admin-card__title">Message Details</h3>
+        <button type="button" class="btn-secondary btn-sm modal-close-btn">✕</button>
+      </div>
+      <div style="margin-bottom:1rem;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">
+          <div>
+            <h4 id="msg-detail-sender" style="color:var(--text);font-size:1.1rem;font-weight:600;">Sender</h4>
+            <span id="msg-detail-email" style="font-family:var(--font-mono);font-size:0.8rem;color:var(--accent);">email@example.com</span>
+          </div>
+          <span id="msg-detail-date" style="font-family:var(--font-mono);font-size:0.72rem;color:var(--muted);">Date</span>
+        </div>
+        <div style="background:var(--bg-input);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem;font-size:0.88rem;color:var(--text);line-height:1.6;white-space:pre-wrap;" id="msg-detail-body">
+          Message text...
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1.25rem;border-top:1px solid var(--border);padding-top:1rem;">
+        <button type="button" class="btn-danger btn-sm" id="btn-delete-msg">Delete Message</button>
+        <div style="display:flex;gap:0.65rem;">
+          <button type="button" class="btn-secondary btn-sm" id="btn-toggle-msg-read">Mark as Read</button>
+          <a href="#" class="btn-primary btn-sm" id="btn-reply-msg">✉ Reply via Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-});
+  <!-- 6. Confirmation Modal -->
+  <div class="admin-modal" id="modal-confirm" role="dialog" aria-modal="true">
+    <div class="admin-modal__card" style="max-width:440px;">
+      <h3 class="admin-card__title" id="confirm-title">Are you sure?</h3>
+      <p id="confirm-message" style="color:var(--muted);font-size:0.85rem;margin:0.75rem 0 1.5rem;">
+        This action cannot be undone.
+      </p>
+      <div style="display:flex;justify-content:flex-end;gap:0.75rem;">
+        <button type="button" class="btn-secondary btn-sm" id="btn-confirm-cancel">Cancel</button>
+        <button type="button" class="btn-danger btn-sm" id="btn-confirm-proceed">Delete</button>
+      </div>
+    </div>
+  </div>
 
-const scrollTopBtn =
-document.getElementById(
-"scrollTopBtn"
-);
+  <!-- Toast Notifications Container -->
+  <div class="admin-toast-container" id="admin-toast-container" aria-live="polite"></div>
 
-window.addEventListener(
-"scroll",
-() => {
-
-if(window.scrollY > 300){
-
-scrollTopBtn.style.display =
-"block";
-
-}else{
-
-scrollTopBtn.style.display =
-"none";
-
-}
-
-});
-
-scrollTopBtn.addEventListener(
-"click",
-() => {
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-});
-
-document.addEventListener(
-"click",
-function(e){
-
-const sidebar =
-document.querySelector(".sidebar");
-
-const menuBtn =
-document.getElementById("menuBtn");
-
-if(
-sidebar.classList.contains("active") &&
-!sidebar.contains(e.target) &&
-!menuBtn.contains(e.target)
-){
-
-sidebar.classList.remove("active");
-
-}
-
-});
-
-</script>
-</div>
-
-<button id="scrollTopBtn">
-⬆
-</button>
+  <!-- Firebase Modular SDK & Admin Application Logic -->
+  <script type="module" src="admin.js"></script>
 
 </body>
 </html>

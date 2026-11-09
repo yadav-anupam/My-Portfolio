@@ -49,7 +49,7 @@ nav.scrolled{background:rgba(15,23,42,.85);backdrop-filter:blur(20px);border-bot
 }
 
 /* SECTION BASE */
-section{position:relative;z-index:1;scroll-margin-top:100px}
+section{position:relative;z-index:1;scroll-margin-top:130px}
 .container{max-width:1200px;margin:0 auto;padding:0 2rem}
 .section-label{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:#C68A4E;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem}
 .section-title{font-family:var(--font-serif);font-size:clamp(2rem,5vw,3rem);font-weight:600;line-height:1.1;margin-bottom:1rem;letter-spacing:-.01em}
@@ -359,7 +359,7 @@ body.light-mode #cursor-glow{background:radial-gradient(circle,rgba(166,113,58,.
 @media(max-width:768px){#section-dots{display:none}}
 
 /* â”€â”€ OPEN TO WORK BADGE â”€â”€ */
-#otw-badge{position:fixed;left:1.5rem;bottom:2rem;z-index:998;background:linear-gradient(135deg,#059669,#10B981);color:#fff;border-radius:100px;padding:.5rem 1rem;font-size:.75rem;font-weight:700;display:flex;align-items:center;gap:.4rem;box-shadow:0 4px 20px rgba(16,185,129,.4);cursor:pointer;text-decoration:none;animation:otw-pulse 3s ease-in-out infinite;letter-spacing:.04em}
+#otw-badge{display:none !important;position:fixed;left:1.5rem;bottom:2rem;z-index:998;background:linear-gradient(135deg,#059669,#10B981);color:#fff;border-radius:100px;padding:.5rem 1rem;font-size:.75rem;font-weight:700;display:flex;align-items:center;gap:.4rem;box-shadow:0 4px 20px rgba(16,185,129,.4);cursor:pointer;text-decoration:none;animation:otw-pulse 3s ease-in-out infinite;letter-spacing:.04em}
 #otw-badge:hover{transform:scale(1.05);box-shadow:0 6px 28px rgba(16,185,129,.6)}
 @keyframes otw-pulse{0%,100%{box-shadow:0 4px 20px rgba(16,185,129,.4)}50%{box-shadow:0 4px 30px rgba(16,185,129,.7)}}
 .otw-dot{width:7px;height:7px;background:#fff;border-radius:50%;animation:pulse 2s infinite}
@@ -1708,7 +1708,7 @@ body.light-mode #scroll-section-badge {
 #projects {
   padding: 6rem 0;
   position: relative;
-  scroll-margin-top: 100px;
+  scroll-margin-top: 130px;
 }
 
 .projects-horizontal-track {

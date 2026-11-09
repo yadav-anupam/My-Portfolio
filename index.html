@@ -914,13 +914,13 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-analytics.js";
-
-
 import {
   getFirestore,
   collection,
   addDoc,
-  getDocs
+  getDocs,
+  doc,
+  getDoc
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -935,12 +935,46 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 getAnalytics(app);
-
 const db = getFirestore(app);
 
-console.log("Firebase Connected Successfully!");
-console.log(app);
+window.portfolioApp = app;
+window.portfolioDb = db;
 
+// 1. Sync Portfolio Settings (Version, Last Updated, Availability)
+async function syncPortfolioSettings() {
+  try {
+    const settingsDoc = await getDoc(doc(db, "settings", "portfolio"));
+    if (settingsDoc && settingsDoc.exists()) {
+      const s = settingsDoc.data();
+      if (s.version) {
+        const vEl = document.getElementById("meta-version");
+        if (vEl) vEl.textContent = "Portfolio v" + s.version;
+        if (window.portfolioMeta) window.portfolioMeta.version = s.version;
+      }
+      if (s.lastUpdatedFormatted || s.lastUpdated) {
+        const uEl = document.getElementById("meta-updated");
+        const formatted = s.lastUpdatedFormatted || s.lastUpdated;
+        if (uEl) uEl.textContent = "Last updated: " + formatted;
+        if (window.portfolioMeta) window.portfolioMeta.lastUpdatedFormatted = formatted;
+      }
+      if (s.availabilityText) {
+        const hAvail = document.getElementById("hero-availability");
+        if (hAvail) {
+          hAvail.innerHTML = '<span class="status-dot"></span> ' + s.availabilityText;
+        }
+        const mStatus = document.getElementById("meta-status");
+        if (mStatus) {
+          mStatus.innerHTML = '<span class="status-dot"></span> ' + s.availabilityText;
+        }
+      }
+    }
+  } catch (err) {
+    console.info("Using default portfolio settings:", err.message);
+  }
+}
+syncPortfolioSettings();
+
+// 2. Load Dynamic Projects
 async function loadProjects() {
   const projectContainer = document.getElementById("proj-deck");
   if (!projectContainer) return;
@@ -951,10 +985,14 @@ async function loadProjects() {
       projectContainer.innerHTML = "";
       snapshot.forEach((project) => {
         const data = project.data();
+        const thumbContent = data.image 
+          ? `<img src="${data.image}" alt="${data.title}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">` 
+          : `<div class="project-thumb-mock">${data.emoji || "🚀"}</div>`;
+        
         projectContainer.innerHTML += `
-<div class="project-card card-spotlight" data-tags="${data.category?.toLowerCase() || 'python'}">
+<div class="project-card card-spotlight" data-tags="${(data.category || 'python').toLowerCase()}">
   <div class="project-thumb">
-    <div class="project-thumb-mock">${data.emoji || "🚀"}</div>
+    ${thumbContent}
     <span class="project-category-badge">${data.category || "Project"}</span>
     ${data.featured ? `<span class="project-featured-badge">⭐ Featured</span>` : ""}
   </div>
@@ -983,6 +1021,57 @@ async function loadProjects() {
 }
 loadProjects();
 
+// 3. Sync Dynamic Certifications
+async function loadCertifications() {
+  const container = document.getElementById("certs-container");
+  if (!container) return;
+  try {
+    let snapshot = await getDocs(collection(db, "certifications"));
+    if (!snapshot || snapshot.empty) {
+      snapshot = await getDocs(collection(db, "certificates"));
+    }
+    if (snapshot && !snapshot.empty) {
+      container.innerHTML = "";
+      snapshot.forEach((cert) => {
+        const d = cert.data();
+        const imgEl = d.image 
+          ? `<img src="${d.image}" alt="${d.title}" class="cert-img" loading="lazy">`
+          : `<div class="cert-placeholder">📜</div>`;
+        container.innerHTML += `
+<div class="cert-card">
+  ${imgEl}
+  <div class="cert-info">
+    <h3 class="cert-name">${d.title || d.name}</h3>
+    <p class="cert-issuer">${d.issuer || "Verified Issuer"} • ${d.year || d.date || "2026"}</p>
+    ${d.credentialUrl ? `<a href="${d.credentialUrl}" target="_blank" rel="noopener noreferrer" class="cert-verify-link">Verify Credential →</a>` : ""}
+  </div>
+</div>`;
+      });
+    }
+  } catch (err) {
+    console.info("Using default certificates:", err.message);
+  }
+}
+loadCertifications();
+
+// 4. Augment Anupam AI with dynamic custom knowledge
+async function syncAiKnowledge() {
+  try {
+    const snap = await getDocs(collection(db, "ai_knowledge"));
+    if (snap && !snap.empty && window.portfolioKnowledge) {
+      window.portfolioKnowledge.customEntries = [];
+      snap.forEach(doc => {
+        const item = doc.data();
+        if (item.active !== false) {
+          window.portfolioKnowledge.customEntries.push(item);
+        }
+      });
+    }
+  } catch (e) {
+    console.info("Using static AI knowledge:", e.message);
+  }
+}
+syncAiKnowledge();
 </script>
 
 <!-- FLOATING ANUPAM AI BUTTON -->

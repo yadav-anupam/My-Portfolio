@@ -628,8 +628,12 @@ const portfolioKnowledge = {
     linkedin: "https://www.linkedin.com/in/anupam-yadavv",
     resume: "./Anupam%20resume.pdf",
     location: "Varanasi, India"
-  }
+  },
+  customEntries: []
 };
+
+window.portfolioKnowledge = portfolioKnowledge;
+window.conversationState = conversationState;
 
 // Conversational Memory State
 const conversationState = {
@@ -899,6 +903,7 @@ function renderAIMarkdown(rawText) {
 }
 
 // Conversational Query Engine
+window.processAIQuery = processAIQuery;
 function processAIQuery(rawUserQuery) {
   const raw = (rawUserQuery || "").trim();
   if (!raw) {
@@ -933,6 +938,24 @@ function processAIQuery(rawUserQuery) {
 
   const qNorm = normalizeQuery(raw);
   const qLower = raw.toLowerCase();
+
+  // Custom AI Knowledge check (dynamic entries from Firestore)
+  if (portfolioKnowledge.customEntries && portfolioKnowledge.customEntries.length > 0) {
+    for (const item of portfolioKnowledge.customEntries) {
+      if (!item.title || !item.content) continue;
+      const tLower = item.title.toLowerCase();
+      if (qNorm.includes(tLower) || (item.category && qNorm.includes(item.category.toLowerCase()))) {
+        conversationState.currentTopic = item.category ? item.category.toLowerCase() : "custom";
+        return {
+          text: item.content,
+          followUps: [
+            { label: "What projects has he made?", query: "What projects has he made?" },
+            { label: "What skills does he know?", query: "What skills does he have?" }
+          ]
+        };
+      }
+    }
+  }
 
   // Multi-question detection
   if ((qNorm.includes(" and ") || qNorm.includes(" as well as ")) && (qNorm.includes("python") && (qNorm.includes("project") || qNorm.includes("built") || qNorm.includes("made")))) {
