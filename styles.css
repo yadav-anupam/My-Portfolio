@@ -1890,6 +1890,10 @@ body.light-mode #ambient-scroll-glow {
 }
 
 /* 2. Hero Cinematic Intro Sequence */
+.hero-content-cinematic {
+  opacity: 1 !important;
+}
+
 .hero-content-cinematic .hero-tag {
   animation: heroTagEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: 0.15s;

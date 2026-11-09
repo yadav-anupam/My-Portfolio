@@ -632,9 +632,6 @@ const portfolioKnowledge = {
   customEntries: []
 };
 
-window.portfolioKnowledge = portfolioKnowledge;
-window.conversationState = conversationState;
-
 // Conversational Memory State
 const conversationState = {
   messages: [],
@@ -643,6 +640,9 @@ const conversationState = {
   lastIntent: null,
   lastEntityName: null
 };
+
+window.portfolioKnowledge = portfolioKnowledge;
+window.conversationState = conversationState;
 
 // String Distance & Similarity
 function levenshteinDistance(s1, s2) {
