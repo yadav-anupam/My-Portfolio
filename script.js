@@ -481,253 +481,834 @@ function initDeveloperJourney() {
 }
 
 // ========================================================
-// --- FEATURE 1: ANUPAM AI PORTFOLIO ASSISTANT ---
+// --- FEATURE 1: ANUPAM AI — CONVERSATIONAL & SEMANTIC ENGINE ---
 // ========================================================
 const portfolioKnowledge = {
   identity: {
     name: "Anupam Yadav",
-    role: "B.Tech Computer Science Engineering Student & Python Developer",
-    passion: "Artificial Intelligence, Modern Web Technologies, Practical Engineering",
-    location: "Varanasi, Uttar Pradesh, India",
+    role: "Computer Science Engineering Student & Python Developer",
+    passion: "Artificial Intelligence, Practical IT Solutions, Web Engineering",
     institute: "Kashi Institute of Technology (KIT), Varanasi",
-    status: "Available for Internships & Entry-Level Software Roles"
+    degree: "B.Tech in Computer Science Engineering (2025–2029)",
+    location: "Varanasi, Uttar Pradesh, India",
+    status: "Actively seeking IT Engineering & Software Development Internships"
   },
-  skills: [
-    { category: "Languages", items: ["Python", "C", "JavaScript", "HTML5", "CSS3"] },
-    { category: "Frameworks & Backend", items: ["FastAPI", "Firebase", "Firestore", "Supabase", "PostgreSQL", "REST APIs"] },
-    { category: "AI & Modern Tech", items: ["Generative AI", "Prompt Engineering", "NLP Techniques", "Automation Tools"] },
-    { category: "Tools & DevOps", items: ["Git", "GitHub", "VS Code", "Vercel", "Linux"] }
-  ],
   projects: [
-    {
-      id: "acadtrack",
-      name: "AcadTrack",
-      tagline: "Continuous Internal Assessment & Coursework Evaluation Platform",
-      techs: ["HTML5", "CSS3", "JavaScript", "Supabase", "PostgreSQL", "RLS", "Vercel"],
-      desc: "An automated coursework grading and rubric management engine featuring student performance intelligence and rubric analytics."
-    },
     {
       id: "kisan-setu",
       name: "Kisan Setu",
-      tagline: "AI Agri-Tech Flagship & Mandi Queue Platform",
-      techs: ["React", "TypeScript", "Python", "FastAPI", "PostgreSQL", "Supabase", "Machine Learning"],
-      desc: "AI-driven procurement-center scheduling and queue optimization platform empowering farmers with dynamic timeslot booking and mandi throughput intelligence."
+      aliases: ["kisan setu", "kisn setu", "kissan setu", "kisan", "farmer", "farmers", "agriculture", "mandi", "procurement", "queue prediction", "agritech"],
+      tagline: "AI Agri-Tech Flagship & Mandi Queue Management Platform",
+      category: "AI Agri-Tech",
+      purpose: "Solves procurement congestion and lengthy queues at mandis, giving farmers predictable scheduling and officers real-time throughput metrics.",
+      technologies: ["Python", "FastAPI", "React", "TypeScript", "PostgreSQL", "Supabase", "Machine Learning"],
+      models: "Queue waiting-time prediction models and dynamic throughput forecasting based on historical arrival trends and center handling capacity.",
+      features: [
+        "Dynamic token generation & timeslot scheduling for farmers",
+        "Predictive wait-time estimates powered by ML",
+        "Center load balancing across local procurement hubs",
+        "Bilingual SMS/WhatsApp slot confirmations"
+      ],
+      link: "#projects",
+      universeTag: "AI & Logistical Optimization"
+    },
+    {
+      id: "acadtrack",
+      name: "AcadTrack",
+      aliases: ["acadtrack", "acad track", "acdatrack", "acad trak", "evaluation engine", "rubric", "coursework", "grading", "internal assessment", "student marks"],
+      tagline: "Continuous Internal Assessment & Coursework Evaluation Platform",
+      category: "EdTech & Performance Intelligence",
+      purpose: "Automates coursework scoring and continuous internal assessment analytics through customizable evaluation rubrics.",
+      technologies: ["HTML5", "CSS3", "JavaScript", "Supabase", "PostgreSQL", "Row-Level Security (RLS)", "Vercel"],
+      features: [
+        "Dynamic rubric builder with weighted criteria scoring",
+        "Automated total grade computation and moderation rules",
+        "Student performance intelligence & batch distribution analytics",
+        "Secure role-based faculty access with PostgreSQL RLS"
+      ],
+      link: "#projects",
+      universeTag: "Evaluation Engine"
     },
     {
       id: "webjugad-labs",
       name: "WebJugad Labs",
-      tagline: "Creative Digital Technology Incubator",
-      techs: ["HTML", "CSS", "JavaScript", "Firebase", "Firestore", "Automation", "AI Prototypes"],
-      desc: "An innovation ecosystem focused on incubating practical web apps, utility tools, and generative AI prototypes."
+      aliases: ["webjugad labs", "webjugad", "web jugad", "digital studio", "agency", "incubator", "prototyping"],
+      tagline: "Creative Digital Technology Incubator & Prototyping Lab",
+      category: "Digital Solutions",
+      purpose: "Serves as a production testbed for client web applications, utility tools, and generative AI workflow prototypes.",
+      technologies: ["HTML5", "CSS3", "JavaScript", "Firebase", "Firestore", "Automation", "REST APIs"],
+      features: [
+        "Rapid prototyping pipeline for modern web applications",
+        "Generative AI workflow experimentation",
+        "Custom IT solutions and client tool deployment"
+      ],
+      link: "#technology-universe"
     },
     {
       id: "mykhata",
       name: "MyKhata",
-      tagline: "Financial Ledger PWA",
-      techs: ["HTML", "CSS", "JavaScript", "Firebase", "Firestore", "PWA", "Offline-First"],
-      desc: "A progressive web app for tracking income, expenditure, and transaction audit trails with seamless offline-first synchronization."
+      aliases: ["mykhata", "my khata", "smart ledger", "ledger", "bookkeeping", "accounting", "financial tracker"],
+      tagline: "Smart Financial Ledger & Daily Bookkeeping PWA",
+      category: "Fintech Utility",
+      purpose: "Enables small business owners and individuals to track cash flow, credit/debit balances, and transaction audit trails offline.",
+      technologies: ["Progressive Web App (PWA)", "HTML5", "CSS3", "JavaScript", "Firebase", "Firestore", "IndexedDB"],
+      features: [
+        "Offline-first transaction logging with auto-sync on reconnect",
+        "Customer & supplier ledger separation",
+        "Net balance summaries and audit export"
+      ],
+      link: "#projects"
     },
     {
       id: "smart-vision-school",
       name: "Smart Vision School",
-      tagline: "Edu-Tech Management System",
-      techs: ["HTML5", "CSS3", "JavaScript", "Firebase", "Authentication", "Responsive UI"],
-      desc: "Role-based school management portal featuring student profiles, attendance tracking, and administrative controls."
+      aliases: ["smart vision school", "smart vision", "school portal", "edu portal", "school management"],
+      tagline: "Educational Institution Portal & Management System",
+      category: "Institutional EdTech",
+      purpose: "Provides a digital face and administrative portal for Smart Vision School, featuring student profiles and campus updates.",
+      technologies: ["HTML5", "CSS3", "JavaScript", "Firebase", "Authentication"],
+      features: [
+        "Student directory and academic record logging",
+        "Notice board and event publishing system",
+        "Mobile-optimized responsive institutional interface"
+      ],
+      link: "#projects"
     },
     {
       id: "hangman",
       name: "Hangman Game",
-      tagline: "Interactive Command-Line Game",
-      techs: ["Python", "CLI", "Game Logic"],
-      desc: "Classic terminal game featuring dynamic vocabulary pools, visual health meters, and input validation."
+      aliases: ["hangman", "hangman game", "word game", "cli game"],
+      tagline: "Interactive Command-Line Word Puzzle",
+      category: "Python CLI",
+      purpose: "Interactive game demonstrating algorithm design, string manipulation, and input validation in Python.",
+      technologies: ["Python", "CLI", "Game Logic"],
+      link: "https://github.com/yadav-anupam/CodeAlpha_HangmanGame"
     },
     {
       id: "chatbot",
       name: "Basic Chatbot",
+      aliases: ["basic chatbot", "chatbot", "nlp chatbot", "conversational chatbot"],
       tagline: "Rule-Based Conversational Flow Assistant",
-      techs: ["Python", "NLP", "AI Fundamentals"],
-      desc: "Conversational prototype simulating responsive dialog trees using natural language processing logic."
+      category: "Python NLP",
+      purpose: "Conversational prototype simulating dialog state management and intent routing using rule-based NLP techniques.",
+      technologies: ["Python", "NLP Fundamentals", "Pattern Matching"],
+      link: "https://github.com/yadav-anupam/CodeAlpha_BasicChatbot"
     },
     {
       id: "stock-tracker",
       name: "Stock Portfolio Tracker",
-      tagline: "Financial Analytics & P&L Tool",
-      techs: ["Python", "Finance", "Data Tracking"],
-      desc: "Investment tracking tool calculating real-time profit and loss distributions across stock portfolios."
+      aliases: ["stock tracker", "stock portfolio tracker", "portfolio tracker", "stocks"],
+      tagline: "Financial Analytics & Real-Time P&L Calculator",
+      category: "Python Finance",
+      purpose: "Portfolio tool calculating real-time profit and loss distributions across user equity holdings.",
+      technologies: ["Python", "Financial Calculations", "Data Tracking"],
+      link: "https://github.com/yadav-anupam/CodeAlpha_StockPortfolioTracker"
     }
   ],
-  education: [
-    { degree: "B.Tech — Computer Science Engineering", institution: "Kashi Institute of Technology, Varanasi", years: "2025 — 2029" },
-    { degree: "12th (PCM)", institution: "Smart Vision School, Varanasi", years: "2025" },
-    { degree: "10th High School", institution: "Smart Vision School, Varanasi", years: "2023" }
-  ],
+  skills: {
+    languages: ["Python", "C", "JavaScript", "HTML5", "CSS3"],
+    backend: ["Firebase", "Firestore", "Supabase", "PostgreSQL", "FastAPI", "REST APIs"],
+    ai_ml: ["Generative AI", "Prompt Engineering", "NLP Techniques", "Queue Modeling"],
+    tools: ["Git", "GitHub", "VS Code", "Vercel", "Linux", "npm"]
+  },
   certifications: [
-    { title: "AI Skills Passport", issuer: "EY & Microsoft" },
-    { title: "Career Essentials in Generative AI", issuer: "Microsoft & LinkedIn" },
-    { title: "Generative AI Foundations", issuer: "Anthropic" },
-    { title: "GenAI-Powered Data Analytics Job Simulation", issuer: "TATA Forage" }
+    { title: "AI Skills Passport", issuer: "EY & Microsoft", topic: "Artificial Intelligence & Professional Application" },
+    { title: "Career Essentials in Generative AI", issuer: "Microsoft & LinkedIn", topic: "Generative AI Systems & Prompt Fundamentals" },
+    { title: "Generative AI Foundations", issuer: "Anthropic", topic: "Large Language Models & Alignment Principles" },
+    { title: "GenAI-Powered Data Analytics Job Simulation", issuer: "TATA Forage", topic: "Applied Data Analysis with GenAI Tools" }
+  ],
+  education: [
+    { degree: "B.Tech in Computer Science Engineering", institution: "Kashi Institute of Technology (KIT), Varanasi", years: "2025 — 2029", status: "Currently in 2nd Year" },
+    { degree: "Senior Secondary (12th PCM)", institution: "Smart Vision School, Varanasi", year: "2025" },
+    { degree: "High School (10th)", institution: "Smart Vision School, Varanasi", year: "2023" }
   ],
   contact: {
     email: "yadavanupam9119@gmail.com",
     github: "https://github.com/yadav-anupam",
     linkedin: "https://www.linkedin.com/in/anupam-yadavv",
-    resume: "./Anupam%20resume.pdf"
+    resume: "./Anupam%20resume.pdf",
+    location: "Varanasi, India"
   }
 };
 
-// Process visitor queries with intent classification & factual knowledge lookup
-function processAIQuery(query) {
-  const q = (query || "").toLowerCase().trim();
-  if (!q) return { text: "How can I help you today? You can ask about Anupam's projects, technical skills, certifications, or how to contact him." };
+// Conversational Memory State
+const conversationState = {
+  messages: [],
+  currentTopic: null,
+  currentProject: null,
+  lastIntent: null,
+  lastEntityName: null
+};
 
-  // 1. Projects intent
-  if (q.includes("kisan setu") || q.includes("kisan")) {
-    const p = portfolioKnowledge.projects.find(x => x.id === "kisan-setu");
+// String Distance & Similarity
+function levenshteinDistance(s1, s2) {
+  const m = s1.length, n = s2.length;
+  if (m === 0) return n;
+  if (n === 0) return m;
+  const d = [];
+  for (let i = 0; i <= m; i++) d[i] = [i];
+  for (let j = 0; j <= n; j++) d[0][j] = j;
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(
+        d[i - 1][j] + 1,
+        d[i][j - 1] + 1,
+        d[i - 1][j - 1] + cost
+      );
+    }
+  }
+  return d[m][n];
+}
+
+function wordSimilarity(w1, w2) {
+  if (w1 === w2) return 1.0;
+  if (!w1 || !w2) return 0.0;
+  const maxLen = Math.max(w1.length, w2.length);
+  if (maxLen === 0) return 1.0;
+  const dist = levenshteinDistance(w1, w2);
+  return 1 - (dist / maxLen);
+}
+
+// Canonical word mapping
+const CANONICAL_WORDS = {
+  "pyhton": "python", "pythn": "python", "pytn": "python",
+  "javscript": "javascript", "javasript": "javascript", "js": "javascript", "jscript": "javascript",
+  "kisn": "kisan", "kissan": "kisan", "setu": "setu",
+  "acad": "acad", "acdatrack": "acadtrack", "acadtrak": "acadtrack", "acadtrk": "acadtrack",
+  "mykhata": "mykhata", "khata": "mykhata",
+  "webjugad": "webjugad", "jugad": "webjugad",
+  "cert": "certification", "certs": "certifications", "certifcate": "certification", "certifcates": "certifications", "courses": "certifications",
+  "intern": "internship", "interns": "internship", "intership": "internship", "job": "internship",
+  "enginering": "engineering", "btech": "btech", "colleg": "college", "universty": "university",
+  "generativ": "generative", "genai": "generative ai", "ml": "machine learning",
+  "gthub": "github", "git": "git", "linkdn": "linkedin", "linkdin": "linkedin",
+  "resum": "resume", "cv": "resume"
+};
+
+// Normalize input query
+function normalizeQuery(input) {
+  if (!input) return "";
+  let q = input.toLowerCase().trim();
+  
+  q = q.replace(/what's/g, "what is")
+       .replace(/he's/g, "he is")
+       .replace(/who's/g, "who is")
+       .replace(/how's/g, "how is")
+       .replace(/can't/g, "cannot")
+       .replace(/won't/g, "will not")
+       .replace(/i'm/g, "i am")
+       .replace(/i'd/g, "i would")
+       .replace(/there's/g, "there is");
+
+  q = q.replace(/-/g, " ");
+  q = q.replace(/[^\w\s\+\#]/g, " ");
+  
+  const rawTokens = q.split(/\s+/).filter(Boolean);
+  const normalizedTokens = rawTokens.map(tok => {
+    if (CANONICAL_WORDS[tok]) return CANONICAL_WORDS[tok];
+    if (tok.length >= 4) {
+      for (const [mis, fix] of Object.entries(CANONICAL_WORDS)) {
+        if (wordSimilarity(tok, mis) >= 0.8) {
+          return fix;
+        }
+      }
+    }
+    return tok;
+  });
+
+  return normalizedTokens.join(" ");
+}
+
+function findMatchingProject(normalizedText) {
+  for (const proj of portfolioKnowledge.projects) {
+    if (normalizedText.includes(proj.name.toLowerCase())) return proj;
+    for (const alias of proj.aliases) {
+      if (normalizedText.includes(alias.toLowerCase())) return proj;
+    }
+  }
+
+  for (const proj of portfolioKnowledge.projects) {
+    const words = normalizedText.split(/\s+/);
+    for (let i = 0; i < words.length; i++) {
+      if (wordSimilarity(words[i], "kisan") >= 0.8 && (words[i+1] && wordSimilarity(words[i+1], "setu") >= 0.8)) {
+        return portfolioKnowledge.projects.find(p => p.id === "kisan-setu");
+      }
+      if (wordSimilarity(words[i], "acadtrack") >= 0.75 || (words[i] === "acad" && words[i+1] && words[i+1].startsWith("tra"))) {
+        return portfolioKnowledge.projects.find(p => p.id === "acadtrack");
+      }
+      if (wordSimilarity(words[i], "mykhata") >= 0.8 || (words[i] === "my" && words[i+1] && wordSimilarity(words[i+1], "khata") >= 0.8)) {
+        return portfolioKnowledge.projects.find(p => p.id === "mykhata");
+      }
+      if (wordSimilarity(words[i], "webjugad") >= 0.8 || (words[i] === "web" && words[i+1] && wordSimilarity(words[i+1], "jugad") >= 0.8)) {
+        return portfolioKnowledge.projects.find(p => p.id === "webjugad-labs");
+      }
+    }
+  }
+
+  if (normalizedText.includes("farmer") || normalizedText.includes("agriculture") || normalizedText.includes("mandi") || normalizedText.includes("crop")) {
+    return portfolioKnowledge.projects.find(p => p.id === "kisan-setu");
+  }
+  if (normalizedText.includes("rubric") || normalizedText.includes("internal assessment") || normalizedText.includes("grading") || normalizedText.includes("coursework")) {
+    return portfolioKnowledge.projects.find(p => p.id === "acadtrack");
+  }
+  if (normalizedText.includes("ledger") || normalizedText.includes("bookkeeping") || normalizedText.includes("credit debit")) {
+    return portfolioKnowledge.projects.find(p => p.id === "mykhata");
+  }
+
+  return null;
+}
+
+function isContextualFollowUp(text) {
+  const t = text.toLowerCase();
+  const pronouns = [" it ", " its ", " this ", " that ", " the project ", " for it", " use for it", " about it", " with it", " this one", " that one"];
+  const padded = " " + t + " ";
+  for (const p of pronouns) {
+    if (padded.includes(p)) return true;
+  }
+  if (t === "what tech did he use?" || t === "what tech was used?" || t === "what technologies did he use?" || t === "what model?" || t === "who is it for?" || t === "does it use ai?" || t === "features?" || t === "how does it work?") {
+    return true;
+  }
+  return false;
+}
+
+function isSecurityViolation(text) {
+  const t = text.toLowerCase();
+  return (
+    t.includes("ignore all previous") ||
+    t.includes("ignore previous instructions") ||
+    t.includes("system prompt") ||
+    t.includes("credentials") ||
+    t.includes("firebase secret") ||
+    t.includes("admin password") ||
+    t.includes("api key") ||
+    t.includes("private key") ||
+    t.includes("leak") ||
+    t.includes("bypass")
+  );
+}
+
+function isGibberish(text) {
+  const clean = text.replace(/[^a-zA-Z]/g, "");
+  if (clean.length < 5) return false;
+  const vowels = clean.match(/[aeiou]/gi);
+  const vowelRatio = vowels ? vowels.length / clean.length : 0;
+  if (clean.length >= 7 && vowelRatio < 0.12) return true;
+  if (/([a-zA-Z])\1{4,}/.test(clean)) return true;
+  return false;
+}
+
+function generateFollowUps(topic, entity) {
+  if (topic === "project" && entity) {
+    if (entity.id === "kisan-setu") {
+      return [
+        { label: "What technologies were used?", query: "What technologies does Kisan Setu use?" },
+        { label: "How does the AI queue work?", query: "How does its AI work?" },
+        { label: "Compare with AcadTrack", query: "Compare Kisan Setu and AcadTrack" }
+      ];
+    } else if (entity.id === "acadtrack") {
+      return [
+        { label: "What tech stack was used?", query: "What tech stack does AcadTrack use?" },
+        { label: "Who is AcadTrack for?", query: "Who is AcadTrack for?" },
+        { label: "Explore Kisan Setu", query: "Tell me about Kisan Setu" }
+      ];
+    } else {
+      return [
+        { label: "What tech did he use?", query: `What technologies did he use for ${entity.name}?` },
+        { label: "View all projects", query: "What projects has he built?" },
+        { label: "Check Anupam's skills", query: "What technologies does Anupam know?" }
+      ];
+    }
+  }
+
+  if (topic === "skills") {
+    return [
+      { label: "Show Python projects", query: "Show me his Python projects" },
+      { label: "What AI skills does he have?", query: "What AI skills does Anupam have?" },
+      { label: "View certifications", query: "What certifications does he have?" }
+    ];
+  }
+
+  if (topic === "certifications") {
+    return [
+      { label: "Tell me about EY AI Passport", query: "Tell me about his EY certification" },
+      { label: "What projects has he built?", query: "What projects has he built?" },
+      { label: "How to contact him?", query: "How can I contact Anupam?" }
+    ];
+  }
+
+  if (topic === "education") {
+    return [
+      { label: "Is he open to internships?", query: "Is he looking for an internship?" },
+      { label: "View his certifications", query: "What certifications does he hold?" },
+      { label: "Download Resume (PDF)", query: "Can I see his resume?" }
+    ];
+  }
+
+  return [
+    { label: "What has he built?", query: "What projects has he made?" },
+    { label: "Does he know Python?", query: "Does he know Python?" },
+    { label: "Tell me about Kisan Setu", query: "Tell me about Kisan Setu" }
+  ];
+}
+
+// Markdown Formatter for Assistant Messages
+function renderAIMarkdown(rawText) {
+  if (!rawText) return "";
+  let safe = rawText
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  safe = safe.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  safe = safe.replace(/^###\s+(.+)$/gm, "<h4 class='ai-msg-h4'>$1</h4>");
+  safe = safe.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="ai-inline-link" target="_blank" rel="noopener noreferrer">$1</a>');
+
+  const lines = safe.split('\n');
+  let inList = false;
+  let out = [];
+
+  for (let line of lines) {
+    const trimmed = line.trim();
+    if (trimmed.startsWith('• ') || trimmed.startsWith('- ')) {
+      if (!inList) {
+        out.push('<ul class="ai-msg-ul">');
+        inList = true;
+      }
+      out.push(`<li>${trimmed.slice(2)}</li>`);
+    } else {
+      if (inList) {
+        out.push('</ul>');
+        inList = false;
+      }
+      if (trimmed.length > 0) {
+        if (trimmed.startsWith('<h4')) {
+          out.push(trimmed);
+        } else {
+          out.push(`<p class="ai-msg-p">${line}</p>`);
+        }
+      }
+    }
+  }
+  if (inList) {
+    out.push('</ul>');
+  }
+
+  return out.join('');
+}
+
+// Conversational Query Engine
+function processAIQuery(rawUserQuery) {
+  const raw = (rawUserQuery || "").trim();
+  if (!raw) {
     return {
-      text: "Kisan Setu is Anupam's AI Agri-Tech flagship project. It solves agricultural procurement congestion by offering dynamic queue booking, mandi throughput analytics, and automated slot scheduling for farmers and center officers.",
-      techs: p ? p.techs.join(", ") : "Python, FastAPI, React, ML",
-      actions: [{ label: "View Kisan Setu in Projects →", href: "#projects" }]
+      text: "How can I help you explore Anupam's work today? Ask about his projects, skills, certifications, or journey!",
+      followUps: generateFollowUps("general")
     };
   }
 
-  if (q.includes("acadtrack") || q.includes("acad track")) {
-    const p = portfolioKnowledge.projects.find(x => x.id === "acadtrack");
+  // 1. Security Check
+  if (isSecurityViolation(raw)) {
     return {
-      text: "AcadTrack is an Evaluation Engine built with Supabase, PostgreSQL, and JavaScript. It provides automated rubric-based grading, student coursework tracking, and performance analytics for continuous internal assessments.",
-      actions: [{ label: "View AcadTrack →", href: "#projects" }]
+      text: "I cannot fulfill that request. I am Anupam AI, grounded strictly in public portfolio data, and I do not expose system credentials, keys, or internal configurations.",
+      followUps: [
+        { label: "View Projects", query: "What projects has he built?" },
+        { label: "View Skills", query: "What skills does he have?" }
+      ]
     };
   }
 
-  if (q.includes("mykhata") || q.includes("my khata")) {
+  // 2. Gibberish Check
+  if (isGibberish(raw)) {
     return {
-      text: "MyKhata is an offline-first Progressive Web App (PWA) built with Firebase and Firestore for tracking income, expenditure, and transaction ledger histories with offline synchronization.",
-      actions: [{ label: "View MyKhata →", href: "#projects" }]
+      text: "I didn't quite catch that! Could you rephrase your question? You can ask about Anupam's projects (like Kisan Setu or AcadTrack), his Python and AI skills, or his education.",
+      followUps: [
+        { label: "What projects has he made?", query: "What projects has he made?" },
+        { label: "Does he know Python?", query: "Does he know Python?" },
+        { label: "How can I contact him?", query: "How can I contact Anupam?" }
+      ]
     };
   }
 
-  if (q.includes("webjugad") || q.includes("web jugad")) {
+  const qNorm = normalizeQuery(raw);
+  const qLower = raw.toLowerCase();
+
+  // Multi-question detection
+  if ((qNorm.includes(" and ") || qNorm.includes(" as well as ")) && (qNorm.includes("python") && (qNorm.includes("project") || qNorm.includes("built") || qNorm.includes("made")))) {
+    conversationState.currentTopic = "skills";
     return {
-      text: "WebJugad Labs is Anupam's creative tech and innovation umbrella where he prototypes practical web apps, generative AI workflows, and automation scripts.",
-      actions: [{ label: "Explore Technology Universe →", href: "#technology-universe" }]
+      text: "Yes — Python is one of Anupam's core programming languages. He has used Python to develop algorithmic tools, conversational NLP prototypes, and backend APIs with FastAPI.\n\nHe has also built several featured ecosystem and Python projects, including:\n• **Kisan Setu** — AI-powered Agri-Tech & mandi queue management platform\n• **AcadTrack** — Automated coursework grading and evaluation engine\n• **MyKhata** — Offline-first smart bookkeeping PWA\n• **Hangman Game**, **Basic Chatbot**, and **Stock Portfolio Tracker** (Python applications)",
+      actions: [
+        { label: "View Projects →", href: "#projects" },
+        { label: "Explore Tech Universe →", href: "#technology-universe" }
+      ],
+      followUps: [
+        { label: "Tell me about Kisan Setu", query: "Tell me about Kisan Setu" },
+        { label: "Tell me about AcadTrack", query: "Tell me about AcadTrack" },
+        { label: "What other skills does he have?", query: "What skills does he have?" }
+      ]
     };
   }
 
-  if (q.includes("smart vision")) {
+  // 3. Greetings Intent
+  const greetingWords = ["hi", "hello", "hey", "hey there", "good morning", "good afternoon", "good evening", "yo", "gm", "hii", "hiii", "helo", "greetings"];
+  const isGreeting = greetingWords.some(g => qLower === g || qLower.startsWith(g + " ") || qNorm === g || qNorm.startsWith(g + " "));
+  if (isGreeting && !qNorm.includes("project") && !qNorm.includes("skill") && !qNorm.includes("who is")) {
+    let greetingResponse = "Hello! 👋 I'm Anupam AI. How can I help you explore Anupam's projects, skills, or background today?";
+    if (qLower.includes("morning") || qNorm.includes("morning") || qLower === "gm") {
+      greetingResponse = "Good morning! 👋 How can I help you explore Anupam's work today?";
+    } else if (qLower.includes("afternoon")) {
+      greetingResponse = "Good afternoon! 👋 What would you like to know about Anupam's portfolio?";
+    } else if (qLower.includes("evening")) {
+      greetingResponse = "Good evening! 👋 Feel free to ask me anything about Anupam's engineering projects or skills.";
+    } else if (qLower.startsWith("hey")) {
+      greetingResponse = "Hey! 👋 I'm Anupam AI. You can ask me about his projects, skills, education, experience, or anything else related to his portfolio.";
+    }
+    conversationState.lastIntent = "greeting";
     return {
-      text: "Smart Vision School is an Edu-Tech platform engineered with role-based authentication, student records, and administrative management tools.",
-      actions: [{ label: "View Projects →", href: "#projects" }]
+      text: greetingResponse,
+      followUps: [
+        { label: "What projects has he made?", query: "What projects has he made?" },
+        { label: "What technologies does he know?", query: "What technologies does he know?" },
+        { label: "Tell me about Kisan Setu", query: "Tell me about Kisan Setu" }
+      ]
     };
   }
 
-  if (q.includes("project") || q.includes("built") || q.includes("portfolio") || q.includes("apps") || q.includes("work")) {
+  // 4. Casual Conversation
+  if (qLower.includes("how are you") || qLower.includes("how r u")) {
     return {
-      text: "Anupam has built five core digital ecosystem platforms: AcadTrack (Evaluation Engine), Kisan Setu (AI Agri-Tech Flagship), WebJugad Labs (Innovation Hub), MyKhata (Ledger PWA), and Smart Vision School (Edu-Tech), plus independent Python applications (Hangman Game, Basic Chatbot, and Stock Portfolio Tracker).",
+      text: "I'm doing great! 😊 I'm here to help you explore Anupam's portfolio. What would you like to know about his projects or skills?",
+      followUps: generateFollowUps("general")
+    };
+  }
+
+  if (qLower === "nice" || qLower === "cool" || qLower === "that's cool" || qLower === "thats cool" || qLower === "awesome" || qLower === "great" || qLower === "interesting") {
+    return {
+      text: "Glad you think so! 😄 If you're curious, **Kisan Setu** and **AcadTrack** are two great places to start exploring.",
+      followUps: [
+        { label: "Tell me about Kisan Setu", query: "Tell me about Kisan Setu" },
+        { label: "Tell me about AcadTrack", query: "Tell me about AcadTrack" },
+        { label: "What skills does he have?", query: "What skills does he have?" }
+      ]
+    };
+  }
+
+  // 5. Thanks Intent
+  if (qLower.includes("thanks") || qLower.includes("thank you") || qLower === "thx" || qLower === "ty") {
+    return {
+      text: "You're welcome! 😊 If you'd like, I can walk you through one of Anupam's projects or provide his contact details.",
+      followUps: [
+        { label: "Tell me about Kisan Setu", query: "Tell me about Kisan Setu" },
+        { label: "How to contact him?", query: "How can I contact Anupam?" }
+      ]
+    };
+  }
+
+  // 6. Farewell Intent
+  if (qLower.includes("bye") || qLower.includes("goodbye") || qLower.includes("see you") || qLower.includes("gotta go") || qLower.includes("cya")) {
+    return {
+      text: "You're welcome! 👋 Feel free to come back anytime if you want to explore more of Anupam's work or get in touch with him.",
+      followUps: [
+        { label: "Get in touch", query: "How can I contact Anupam?" }
+      ]
+    };
+  }
+
+  // 7. Identity Intent
+  if (qNorm.includes("who is anupam") || qNorm.includes("who are you") || qNorm.includes("about anupam") || qNorm.includes("introduce") || qNorm.includes("tell me about anupam")) {
+    conversationState.currentTopic = "identity";
+    return {
+      text: "Anupam Yadav is a Computer Science Engineering student (2025–2029) at Kashi Institute of Technology (KIT), Varanasi. He is a passionate Python developer, AI enthusiast, and practical solutions builder with experience in full-stack web applications, database architectures, and machine learning prototypes.",
+      actions: [
+        { label: "Read Developer Journey →", href: "#about" },
+        { label: "Contact Anupam →", href: "#contact" }
+      ],
+      followUps: [
+        { label: "What projects has he made?", query: "What projects has he made?" },
+        { label: "What technologies does he know?", query: "What technologies does he know?" },
+        { label: "Is he open to internships?", query: "Is he open to internships?" }
+      ]
+    };
+  }
+
+  // 8. Project Comparisons
+  if (qNorm.includes("compare") || (qNorm.includes("difference") && qNorm.includes("between"))) {
+    conversationState.currentTopic = "project";
+    return {
+      text: "Here is a side-by-side comparison of **Kisan Setu** and **AcadTrack**:\n\n• **Domain & Focus:**\n  - **Kisan Setu**: AI Agri-Tech & Mandi Queue Optimization for farmers and procurement officers.\n  - **AcadTrack**: Academic Coursework Assessment & Evaluation Engine for students and faculty.\n\n• **Core Purpose:**\n  - **Kisan Setu**: Eliminates mandi congestion through dynamic slot scheduling and queue forecasting.\n  - **AcadTrack**: Automates grading rubrics and generates student performance distribution analytics.\n\n• **Technology Stack:**\n  - **Kisan Setu**: React, TypeScript, Python, FastAPI, PostgreSQL, Supabase, ML.\n  - **AcadTrack**: HTML5, CSS3, JavaScript, Supabase, PostgreSQL (with Row-Level Security), Vercel.\n\n• **AI / Intelligence:**\n  - **Kisan Setu**: Wait-time prediction and throughput estimation models.\n  - **AcadTrack**: Automated weighted rubric scoring algorithms.",
+      actions: [
+        { label: "View Projects Section →", href: "#projects" },
+        { label: "Inspect Tech Universe →", href: "#technology-universe" }
+      ],
+      followUps: [
+        { label: "How does Kisan Setu AI work?", query: "How does its AI work?" },
+        { label: "What technologies does AcadTrack use?", query: "What technologies does AcadTrack use?" },
+        { label: "What other projects has he built?", query: "What projects has he made?" }
+      ]
+    };
+  }
+
+  // 9. Recommendation Intent
+  if (qNorm.includes("best project") || qNorm.includes("first project") || qNorm.includes("recommend a project") || qNorm.includes("which project should i look at") || qNorm.includes("where to start")) {
+    conversationState.currentTopic = "project";
+    return {
+      text: "That depends on what you are most interested in!\n\n• If you are interested in **AI and real-world logistics**, **Kisan Setu** is his flagship — it solves farmer mandi congestion using dynamic timeslot booking and queue prediction.\n• If you're interested in **educational workflows and rubric grading**, explore **AcadTrack**.\n• If you want to check out **daily utilities**, **MyKhata** is an offline-first bookkeeping PWA, and his **Python CLI tools** showcase clean algorithmic fundamentals.",
+      actions: [
+        { label: "Explore Kisan Setu →", href: "#projects" },
+        { label: "View Technology Universe →", href: "#technology-universe" }
+      ],
+      followUps: [
+        { label: "Tell me about Kisan Setu", query: "Tell me about Kisan Setu" },
+        { label: "Tell me about AcadTrack", query: "Tell me about AcadTrack" },
+        { label: "Does he know Python?", query: "Does he know Python?" }
+      ]
+    };
+  }
+
+  // 10. Explicit Project Detection OR Contextual Follow-Up
+  let matchedProject = findMatchingProject(qNorm);
+
+  if (!matchedProject && conversationState.currentProject && isContextualFollowUp(raw)) {
+    matchedProject = conversationState.currentProject;
+  }
+
+  if (matchedProject) {
+    conversationState.currentTopic = "project";
+    conversationState.currentProject = matchedProject;
+    conversationState.lastEntityName = matchedProject.name;
+
+    // A. Tech inquiry
+    if (qNorm.includes("tech") || qNorm.includes("stack") || qNorm.includes("language") || qNorm.includes("framework") || qNorm.includes("built with")) {
+      return {
+        text: `**${matchedProject.name}** is built using:\n• **Technologies:** ${matchedProject.technologies.join(", ")}\n• **Architecture & Purpose:** ${matchedProject.purpose}`,
+        actions: [{ label: `View ${matchedProject.name} →`, href: matchedProject.link }],
+        followUps: generateFollowUps("project", matchedProject)
+      };
+    }
+
+    // B. AI / Model inquiry
+    if (qNorm.includes("ai") || qNorm.includes("model") || qNorm.includes("machine learning") || qNorm.includes("algorithm") || qNorm.includes("predict")) {
+      if (matchedProject.id === "kisan-setu") {
+        return {
+          text: `**Kisan Setu** uses machine learning models and queue prediction algorithms to estimate mandi waiting times based on real-time vehicle arrival rates, center handling capacity, and crop verification metrics. It helps farmers schedule arrival slots without standing in overnight queues.`,
+          actions: [{ label: "View Kisan Setu in Projects →", href: "#projects" }],
+          followUps: [
+            { label: "What tech stack was used?", query: "What technologies did he use for it?" },
+            { label: "Who is it for?", query: "Who is it for?" },
+            { label: "Tell me about AcadTrack", query: "Tell me about AcadTrack" }
+          ]
+        };
+      } else if (matchedProject.id === "acadtrack") {
+        return {
+          text: `**AcadTrack** implements automated weighted rubric evaluation algorithms to compute internal assessment scores across continuous semester evaluations with performance distribution tracking.`,
+          actions: [{ label: "View AcadTrack →", href: "#projects" }],
+          followUps: generateFollowUps("project", matchedProject)
+        };
+      } else {
+        return {
+          text: `**${matchedProject.name}** is developed with ${matchedProject.technologies.join(", ")}. It focuses on ${matchedProject.purpose}`,
+          followUps: generateFollowUps("project", matchedProject)
+        };
+      }
+    }
+
+    // C. Features inquiry
+    if (qNorm.includes("feature") || qNorm.includes("who is it for") || qNorm.includes("how does it work") || qNorm.includes("what can it do") || qNorm.includes("problem")) {
+      const featList = matchedProject.features ? matchedProject.features.map(f => `• ${f}`).join("\n") : `• ${matchedProject.purpose}`;
+      return {
+        text: `**${matchedProject.name}**\n\n**Purpose:** ${matchedProject.purpose}\n\n**Key Features:**\n${featList}\n\n**Tech Stack:** ${matchedProject.technologies.join(", ")}`,
+        actions: [{ label: `Explore ${matchedProject.name} →`, href: matchedProject.link }],
+        followUps: generateFollowUps("project", matchedProject)
+      };
+    }
+
+    // D. Overview
+    const featList = matchedProject.features ? matchedProject.features.map(f => `• ${f}`).join("\n") : "";
+    return {
+      text: `### ${matchedProject.name}\n${matchedProject.tagline}\n\n${matchedProject.purpose}\n\n**Key Highlights:**\n${featList}\n\n**Tech Stack:** ${matchedProject.technologies.join(", ")}`,
+      actions: [{ label: `View ${matchedProject.name} →`, href: matchedProject.link }],
+      followUps: generateFollowUps("project", matchedProject)
+    };
+  }
+
+  // 11. General Projects Overview Intent
+  if (qNorm.includes("project") || qNorm.includes("built") || qNorm.includes("what has he made") || qNorm.includes("show me his work") || qNorm.includes("portfolio projects") || qNorm.includes("applications")) {
+    conversationState.currentTopic = "project";
+    conversationState.currentProject = null;
+    return {
+      text: "Anupam has engineered five core digital ecosystem platforms and several standalone Python applications:\n\n• **Kisan Setu** — AI-powered Agri-Tech flagship for mandi queue optimization & slot scheduling\n• **AcadTrack** — Continuous Internal Assessment & rubric evaluation engine\n• **WebJugad Labs** — Creative tech incubator for client solutions & AI prototypes\n• **MyKhata** — Offline-first smart bookkeeping PWA\n• **Smart Vision School** — Educational portal and administrative management system\n\nHe has also developed Python applications: **Hangman Game**, **Basic Chatbot**, and a **Stock Portfolio Tracker**.",
       actions: [
         { label: "Explore Projects Section →", href: "#projects" },
-        { label: "View Technology Universe →", href: "#technology-universe" }
+        { label: "Inspect Technology Universe →", href: "#technology-universe" }
+      ],
+      followUps: [
+        { label: "Tell me about Kisan Setu", query: "Tell me about Kisan Setu" },
+        { label: "Tell me about AcadTrack", query: "Tell me about AcadTrack" },
+        { label: "What is his best project?", query: "What's his best project?" }
       ]
     };
   }
 
-  // 2. Python & AI intent
-  if (q.includes("python")) {
+  // 12. Python & Specific Languages Intent
+  if (qNorm.includes("python") || qNorm.includes("pyhton")) {
+    conversationState.currentTopic = "skills";
     return {
-      text: "Yes! Python is Anupam's primary programming language. He has used Python to develop command-line games, rule-based conversational chatbots, stock portfolio trackers, and backend APIs with FastAPI.",
-      actions: [{ label: "View Python Projects →", href: "#projects" }]
-    };
-  }
-
-  if (q.includes("ai") || q.includes("machine learning") || q.includes("ml") || q.includes("genai") || q.includes("generative")) {
-    return {
-      text: "Anupam is an active AI enthusiast with certified knowledge in Generative AI from EY & Microsoft, Microsoft & LinkedIn, Anthropic, and TATA Forage. He applies AI in projects like Kisan Setu and conversational NLP prototypes.",
+      text: "Yes — Python is one of Anupam's primary programming skills. He has utilized Python for practical algorithm design, conversational NLP prototypes, stock portfolio tracking tools, and backend APIs using FastAPI.",
       actions: [
-        { label: "View Certifications →", href: "#certifications" },
-        { label: "Inspect Tech Universe →", href: "#technology-universe" }
+        { label: "View Python Projects →", href: "#projects" },
+        { label: "Inspect Developer Terminal →", href: "#developer-terminal" }
+      ],
+      followUps: [
+        { label: "Show me his Python projects", query: "Show me his Python projects" },
+        { label: "What AI skills does he have?", query: "What AI skills does he have?" },
+        { label: "What other languages does he know?", query: "What other languages does he know?" }
       ]
     };
   }
 
-  // 3. Technical Skills intent
-  if (q.includes("skill") || q.includes("tech") || q.includes("stack") || q.includes("language") || q.includes("code")) {
+  if (qNorm.includes("javascript") || qNorm.includes("js")) {
+    conversationState.currentTopic = "skills";
     return {
-      text: "Anupam's technical toolkit includes:\n• Languages: Python, C, JavaScript, HTML5/CSS3\n• Backend & Databases: Firebase, Firestore, Supabase, PostgreSQL, REST APIs\n• AI & Tools: Generative AI, Prompt Engineering, Git, GitHub, VS Code, Linux, Vercel",
-      actions: [{ label: "Explore Technical Skills →", href: "#skills" }]
+      text: "Yes, Anupam is proficient in JavaScript (ES6+). He utilizes JavaScript for building modern interactive web apps, Progressive Web Apps (like MyKhata), DOM orchestration, and full-stack integration with Supabase and Firebase.",
+      followUps: [
+        { label: "What projects use JavaScript?", query: "What projects use JavaScript?" },
+        { label: "What other languages does he know?", query: "What skills does he have?" }
+      ]
     };
   }
 
-  // 4. Education intent
-  if (q.includes("education") || q.includes("college") || q.includes("university") || q.includes("btech") || q.includes("b.tech") || q.includes("school") || q.includes("kit")) {
+  // 13. Version Control / Git Intent
+  if (qNorm.includes("version control") || qNorm.includes("git") || qNorm.includes("github")) {
+    conversationState.currentTopic = "skills";
     return {
-      text: "Anupam is currently pursuing his B.Tech in Computer Science Engineering (2025–2029) at Kashi Institute of Technology (KIT), Varanasi. He completed his 12th PCM and 10th High School at Smart Vision School, Varanasi.",
-      actions: [{ label: "View Education Timeline →", href: "#education" }]
+      text: "Anupam uses **Git** and **GitHub** for version control, branching, repository management, and code collaboration. You can explore his open-source work directly on GitHub (@yadav-anupam).",
+      actions: [{ label: "Open Anupam's GitHub →", href: portfolioKnowledge.contact.github, isExternal: true }],
+      followUps: [
+        { label: "What projects has he made?", query: "What projects has he made?" },
+        { label: "How to contact him?", query: "How can I contact Anupam?" }
+      ]
     };
   }
 
-  // 5. Certifications intent
-  if (q.includes("cert") || q.includes("course") || q.includes("credential") || q.includes("license")) {
+  // 14. AI & Machine Learning Skills Intent
+  if (qNorm.includes("ai") || qNorm.includes("machine learning") || qNorm.includes("generative") || qNorm.includes("prompt")) {
+    conversationState.currentTopic = "skills";
     return {
-      text: "Anupam holds verified industry certifications:\n1. AI Skills Passport (EY & Microsoft)\n2. Career Essentials in Generative AI (Microsoft & LinkedIn)\n3. Generative AI Foundations (Anthropic)\n4. GenAI-Powered Data Analytics (TATA Forage)",
-      actions: [{ label: "View Certifications →", href: "#certifications" }]
-    };
-  }
-
-  // 6. Experience & Internship intent
-  if (q.includes("intern") || q.includes("experience") || q.includes("job") || q.includes("hire") || q.includes("fresher") || q.includes("available")) {
-    return {
-      text: "Anupam is a second-year B.Tech CSE student actively seeking internship opportunities in IT engineering, Python development, AI applications, or web development to apply his skills in production environments.",
+      text: "Anupam is an active AI enthusiast with verified certifications from EY & Microsoft, Microsoft & LinkedIn, Anthropic, and TATA Forage. He applies Generative AI and prompt engineering to build real solutions like Kisan Setu and conversational prototypes.",
       actions: [
-        { label: "Contact Anupam for Roles →", href: "#contact" },
-        { label: "Download Resume (PDF) →", href: "./Anupam%20resume.pdf", isDownload: true }
+        { label: "View AI Certifications →", href: "#certifications" },
+        { label: "Explore Tech Universe →", href: "#technology-universe" }
+      ],
+      followUps: [
+        { label: "What certifications does he have?", query: "What certifications does he have?" },
+        { label: "Tell me about Kisan Setu AI", query: "How does Kisan Setu AI work?" }
       ]
     };
   }
 
-  // 7. Contact & Resume intent
-  if (q.includes("contact") || q.includes("email") || q.includes("reach") || q.includes("message")) {
+  // 15. General Skills Intent
+  if (qNorm.includes("skill") || qNorm.includes("tech stack") || qNorm.includes("technologies") || qNorm.includes("programming language") || qNorm.includes("what does he know")) {
+    conversationState.currentTopic = "skills";
     return {
-      text: "You can reach Anupam directly at yadavanupam9119@gmail.com or send a message through the contact form on this page.",
-      actions: [{ label: "Go to Contact Form →", href: "#contact" }]
+      text: `Anupam's technical skill set spans:\n\n• **Languages:** ${portfolioKnowledge.skills.languages.join(", ")}\n• **Backend & Databases:** ${portfolioKnowledge.skills.backend.join(", ")}\n• **AI & Emerging Tech:** ${portfolioKnowledge.skills.ai_ml.join(", ")}\n• **DevOps & Tools:** ${portfolioKnowledge.skills.tools.join(", ")}`,
+      actions: [{ label: "Explore Skills Section →", href: "#skills" }],
+      followUps: [
+        { label: "Does he know Python?", query: "Does he know Python?" },
+        { label: "What projects has he made?", query: "What projects has he made?" },
+        { label: "View Certifications", query: "What certifications does he have?" }
+      ]
     };
   }
 
-  if (q.includes("resume") || q.includes("cv")) {
+  // 16. Certifications Intent
+  if (qNorm.includes("certification") || qNorm.includes("credential") || qNorm.includes("course") || qNorm.includes("license")) {
+    conversationState.currentTopic = "certifications";
     return {
-      text: "Anupam's resume is available for immediate download in PDF format.",
-      actions: [{ label: "Download Anupam's Resume (PDF) →", href: "./Anupam%20resume.pdf", isDownload: true }]
+      text: "Anupam holds four verified industry certifications:\n\n1. **AI Skills Passport** — EY & Microsoft\n2. **Career Essentials in Generative AI** — Microsoft & LinkedIn\n3. **Generative AI Foundations** — Anthropic\n4. **GenAI-Powered Data Analytics Job Simulation** — TATA Forage",
+      actions: [{ label: "View Certificates →", href: "#certifications" }],
+      followUps: [
+        { label: "What projects has he made?", query: "What projects has he made?" },
+        { label: "What is his education?", query: "What is his education?" },
+        { label: "Download Resume", query: "Can I see his resume?" }
+      ]
     };
   }
 
-  if (q.includes("social") || q.includes("github") || q.includes("linkedin")) {
+  // 17. Education Intent
+  if (qNorm.includes("education") || qNorm.includes("college") || qNorm.includes("university") || qNorm.includes("btech") || qNorm.includes("kit") || qNorm.includes("school") || qNorm.includes("study") || qNorm.includes("degree")) {
+    conversationState.currentTopic = "education";
     return {
-      text: "You can connect with Anupam on GitHub (@yadav-anupam) and LinkedIn (anupam-yadavv).",
+      text: "Anupam is currently pursuing his **B.Tech in Computer Science Engineering (2025–2029)** at **Kashi Institute of Technology (KIT), Varanasi**, where he is currently in his 2nd year. Prior to this, he completed his 12th (PCM) and 10th High School at Smart Vision School, Varanasi.",
+      actions: [{ label: "View Education Timeline →", href: "#education" }],
+      followUps: [
+        { label: "What certifications does he have?", query: "What certifications does he have?" },
+        { label: "Is he open to internships?", query: "Is he open to internships?" },
+        { label: "What projects has he built?", query: "What projects has he made?" }
+      ]
+    };
+  }
+
+  // 18. Experience & Internship Availability Intent
+  if (qNorm.includes("internship") || qNorm.includes("experience") || qNorm.includes("job") || qNorm.includes("hire") || qNorm.includes("available") || qNorm.includes("work with")) {
+    conversationState.currentTopic = "experience";
+    return {
+      text: "Anupam is actively available for **internship opportunities** in Python development, AI applications, web engineering, and IT solutions. He brings strong fundamentals, project experience in building full-stack and AI systems, and verified certifications.",
       actions: [
-        { label: "Open GitHub Profile →", href: "https://github.com/yadav-anupam", isExternal: true },
-        { label: "Open LinkedIn Profile →", href: "https://www.linkedin.com/in/anupam-yadavv", isExternal: true }
+        { label: "Contact for Opportunities →", href: "#contact" },
+        { label: "Download Resume (PDF) →", href: portfolioKnowledge.contact.resume, isDownload: true }
+      ],
+      followUps: [
+        { label: "How can I contact him?", query: "How can I contact Anupam?" },
+        { label: "Can I see his resume?", query: "Can I see his resume?" },
+        { label: "What projects has he made?", query: "What projects has he made?" }
       ]
     };
   }
 
-  if (q.includes("who is") || q.includes("who are you") || q.includes("about") || q.includes("introduce")) {
+  // 19. Contact & Socials Intent
+  if (qNorm.includes("contact") || qNorm.includes("email") || qNorm.includes("reach") || qNorm.includes("message") || qNorm.includes("hire him") || qNorm.includes("connect")) {
+    conversationState.currentTopic = "contact";
     return {
-      text: "Anupam Yadav is a Computer Science Engineering student at Kashi Institute of Technology, Varanasi. He is a passionate Python developer and AI enthusiast focused on building practical web and automation solutions.",
-      actions: [
-        { label: "Read Full Bio in About →", href: "#about" },
-        { label: "Inspect Terminal Console →", href: "#developer-terminal" }
+      text: `You can reach Anupam directly through:\n• **Email:** [yadavanupam9119@gmail.com](mailto:yadavanupam9119@gmail.com)\n• **LinkedIn:** [linkedin.com/in/anupam-yadavv](${portfolioKnowledge.contact.linkedin})\n• **GitHub:** [github.com/yadav-anupam](${portfolioKnowledge.contact.github})\n• Or submit a message via the contact form on this page!`,
+      actions: [{ label: "Go to Contact Form →", href: "#contact" }],
+      followUps: [
+        { label: "Download Resume (PDF)", query: "Can I see his resume?" },
+        { label: "What projects has he made?", query: "What projects has he made?" }
       ]
     };
   }
 
-  // Default helpful response
+  // 20. Resume / CV Intent
+  if (qNorm.includes("resume") || qNorm.includes("cv")) {
+    conversationState.currentTopic = "contact";
+    return {
+      text: "Anupam's resume is up to date and available for instant download in PDF format.",
+      actions: [
+        { label: "Download Resume (PDF) →", href: portfolioKnowledge.contact.resume, isDownload: true }
+      ],
+      followUps: [
+        { label: "What projects has he made?", query: "What projects has he made?" },
+        { label: "How can I contact him?", query: "How can I contact Anupam?" }
+      ]
+    };
+  }
+
+  // 21. Unknown / General Fallback
   return {
-    text: "I can answer questions regarding Anupam's technical skills, five core ecosystem projects (AcadTrack, Kisan Setu, MyKhata, WebJugad, Smart Vision), Python applications, certifications, education, and internship availability.",
-    actions: [
-      { label: "View Featured Projects →", href: "#projects" },
-      { label: "Contact Anupam →", href: "#contact" }
+    text: "I'm mainly here to help you explore Anupam Yadav's public portfolio — his engineering projects, Python and AI skills, certifications, education, and internship availability. What would you like to explore?",
+    followUps: [
+      { label: "What projects has he made?", query: "What projects has he made?" },
+      { label: "Does he know Python?", query: "Does he know Python?" },
+      { label: "Tell me about Kisan Setu", query: "Tell me about Kisan Setu" }
     ]
   };
 }
 
-// Anupam AI UI Controller
+// ========================================================
+// --- ANUPAM AI UI CONTROLLER ---
+// ========================================================
 function initAnupamAI() {
   const triggerBtn = document.getElementById('anupam-ai-trigger');
   const navBtn = document.getElementById('nav-ai-btn');
@@ -744,6 +1325,19 @@ function initAnupamAI() {
 
   let isTyping = false;
 
+  function renderSuggestions(chips) {
+    if (!suggestions || !chips || chips.length === 0) return;
+    suggestions.innerHTML = '';
+    chips.forEach(chip => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'anupam-ai-chip';
+      btn.textContent = chip.label;
+      btn.dataset.q = chip.query;
+      suggestions.appendChild(btn);
+    });
+  }
+
   function toggleAI(open) {
     const shouldOpen = open !== undefined ? open : !panel.classList.contains('open');
     panel.classList.toggle('open', shouldOpen);
@@ -753,7 +1347,8 @@ function initAnupamAI() {
     if (shouldOpen) {
       if (messagesContainer.children.length === 0) {
         appendAIMessage({
-          text: "Hi! I'm Anupam AI — your interactive portfolio assistant. Ask me anything about Anupam's projects, technical skills, education, or internship availability!"
+          text: "Hi! I'm **Anupam AI** — your interactive, conversational portfolio assistant.\nAsk me anything about Anupam's projects (like Kisan Setu or AcadTrack), his Python and AI skills, certifications, or internship availability!",
+          followUps: generateFollowUps("general")
         });
       }
       setTimeout(() => {
@@ -762,25 +1357,82 @@ function initAnupamAI() {
     }
   }
 
+  function copyToClipboard(buttonEl, textToCopy) {
+    if (!textToCopy) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        buttonEl.textContent = '✓ Copied';
+        setTimeout(() => { buttonEl.textContent = '📋 Copy'; }, 1800);
+      }).catch(() => fallbackCopy(buttonEl, textToCopy));
+    } else {
+      fallbackCopy(buttonEl, textToCopy);
+    }
+  }
+
+  function fallbackCopy(buttonEl, textToCopy) {
+    const ta = document.createElement('textarea');
+    ta.value = textToCopy;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      buttonEl.textContent = '✓ Copied';
+      setTimeout(() => { buttonEl.textContent = '📋 Copy'; }, 1800);
+    } catch (e) {
+      buttonEl.textContent = 'Failed';
+    }
+    document.body.removeChild(ta);
+  }
+
   function appendUserMessage(text) {
     const msg = document.createElement('div');
     msg.className = 'anupam-ai-msg anupam-ai-msg--user';
     msg.textContent = text;
     messagesContainer.appendChild(msg);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    // Track in state
+    conversationState.messages.push({ role: 'user', text, timestamp: Date.now() });
+    if (conversationState.messages.length > 20) {
+      conversationState.messages.shift();
+    }
   }
 
   function appendAIMessage(response) {
     const msg = document.createElement('div');
     msg.className = 'anupam-ai-msg anupam-ai-msg--ai';
 
-    const textP = document.createElement('div');
-    textP.style.whiteSpace = 'pre-line';
-    textP.textContent = response.text || "";
-    msg.appendChild(textP);
+    // Header bar with sender and copy button
+    const headerBar = document.createElement('div');
+    headerBar.className = 'anupam-ai-msg-header';
+    
+    const senderSpan = document.createElement('span');
+    senderSpan.className = 'anupam-ai-msg-sender';
+    senderSpan.innerHTML = '✦ Anupam AI';
+    headerBar.appendChild(senderSpan);
 
-    // Optional project / action buttons
+    const copyBtn = document.createElement('button');
+    copyBtn.type = 'button';
+    copyBtn.className = 'anupam-ai-copy-btn';
+    copyBtn.textContent = '📋 Copy';
+    copyBtn.title = 'Copy response to clipboard';
+    copyBtn.addEventListener('click', () => copyToClipboard(copyBtn, response.text || ''));
+    headerBar.appendChild(copyBtn);
+
+    msg.appendChild(headerBar);
+
+    // Formatted markdown content container
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'anupam-ai-content';
+    contentDiv.innerHTML = renderAIMarkdown(response.text || "");
+    msg.appendChild(contentDiv);
+
+    // Optional Action Buttons
     if (response.actions && response.actions.length > 0) {
+      const actionsWrap = document.createElement('div');
+      actionsWrap.className = 'anupam-ai-actions-wrap';
       response.actions.forEach(act => {
         const btn = document.createElement('a');
         btn.className = 'anupam-ai-action-btn';
@@ -801,12 +1453,44 @@ function initAnupamAI() {
             }
           });
         }
-        msg.appendChild(btn);
+        actionsWrap.appendChild(btn);
       });
+      msg.appendChild(actionsWrap);
+    }
+
+    // Dynamic Inline Follow-Up Chips
+    if (response.followUps && response.followUps.length > 0) {
+      const followUpWrap = document.createElement('div');
+      followUpWrap.className = 'anupam-ai-inline-followups';
+      
+      const label = document.createElement('span');
+      label.className = 'anupam-ai-inline-label';
+      label.textContent = 'Follow-up:';
+      followUpWrap.appendChild(label);
+
+      response.followUps.forEach(f => {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'anupam-ai-inline-chip';
+        chip.textContent = f.label;
+        chip.dataset.q = f.query;
+        chip.addEventListener('click', () => handleSendQuery(f.query));
+        followUpWrap.appendChild(chip);
+      });
+      msg.appendChild(followUpWrap);
+
+      // Also refresh the top suggestion strip
+      renderSuggestions(response.followUps);
     }
 
     messagesContainer.appendChild(msg);
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    // Track in state
+    conversationState.messages.push({ role: 'assistant', text: response.text, timestamp: Date.now() });
+    if (conversationState.messages.length > 20) {
+      conversationState.messages.shift();
+    }
   }
 
   function showTypingIndicator() {
@@ -839,14 +1523,21 @@ function initAnupamAI() {
 
     showTypingIndicator();
 
-    // Natural responsive delay
     setTimeout(() => {
       removeTypingIndicator();
-      const res = processAIQuery(cleanText);
-      appendAIMessage(res);
+      try {
+        const res = processAIQuery(cleanText);
+        appendAIMessage(res);
+      } catch (err) {
+        console.error("Anupam AI query error:", err);
+        appendAIMessage({
+          text: "I experienced a brief hiccup while processing that request. Please feel free to ask again or select one of the suggested topics below!",
+          followUps: generateFollowUps("general")
+        });
+      }
       isTyping = false;
       if (sendBtn) sendBtn.disabled = false;
-    }, 450);
+    }, 420);
   }
 
   // Trigger and close listeners
@@ -857,13 +1548,19 @@ function initAnupamAI() {
   if (clearBtn) {
     clearBtn.addEventListener('click', () => {
       messagesContainer.innerHTML = '';
+      conversationState.messages = [];
+      conversationState.currentTopic = null;
+      conversationState.currentProject = null;
+      conversationState.lastIntent = null;
+      conversationState.lastEntityName = null;
       appendAIMessage({
-        text: "Conversation cleared. Feel free to ask another question about Anupam's engineering work!"
+        text: "Conversation cleared. Feel free to ask another question about Anupam's engineering projects, skills, or background!",
+        followUps: generateFollowUps("general")
       });
     });
   }
 
-  // Suggestion chips
+  // Suggestions strip delegator
   if (suggestions) {
     suggestions.addEventListener('click', (e) => {
       const chip = e.target.closest('.anupam-ai-chip');
@@ -888,6 +1585,7 @@ function initAnupamAI() {
     }
   });
 }
+
 
 // Run interactive subsystems
 if (document.readyState === 'loading') {

@@ -2532,8 +2532,160 @@ body.light-mode .card-spotlight:hover {
   background: rgba(36, 31, 26, 0.75);
   border: 1px solid var(--border);
   color: #F2EDE4;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.05rem;
   border-radius: 14px 14px 14px 2px;
+  max-width: 90%;
+  position: relative;
+}
+
+.anupam-ai-msg-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.45rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(230, 200, 160, 0.08);
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
+.anupam-ai-msg-sender {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--purple);
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.anupam-ai-copy-btn {
+  background: transparent;
+  border: 1px solid rgba(198, 138, 78, 0.2);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.68rem;
+  font-family: 'Space Grotesk', sans-serif;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.anupam-ai-copy-btn:hover {
+  color: var(--text);
+  border-color: var(--purple);
+  background: rgba(198, 138, 78, 0.12);
+}
+
+.anupam-ai-content {
+  line-height: 1.6;
+}
+
+.anupam-ai-content .ai-msg-h4 {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--purple);
+  margin: 0 0 0.35rem;
+}
+
+.anupam-ai-content strong {
+  color: #FAF6EF;
+  font-weight: 600;
+}
+
+body.light-mode .anupam-ai-content strong {
+  color: #14110E;
+}
+
+.anupam-ai-content p.ai-msg-p {
+  margin: 0 0 0.55rem;
+}
+
+.anupam-ai-content p.ai-msg-p:last-child {
+  margin-bottom: 0;
+}
+
+.anupam-ai-content ul.ai-msg-ul {
+  margin: 0.35rem 0 0.65rem 1.25rem;
+  padding: 0;
+}
+
+.anupam-ai-content ul.ai-msg-ul li {
+  margin-bottom: 0.25rem;
+}
+
+.anupam-ai-content a.ai-inline-link {
+  color: var(--purple);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+}
+
+.anupam-ai-content a.ai-inline-link:hover {
+  color: var(--blue);
+}
+
+.anupam-ai-actions-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.65rem;
+}
+
+.anupam-ai-inline-followups {
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed rgba(198, 138, 78, 0.2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.anupam-ai-inline-label {
+  font-size: 0.65rem;
+  color: var(--muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-right: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.anupam-ai-inline-chip {
+  background: rgba(198, 138, 78, 0.08);
+  border: 1px solid rgba(198, 138, 78, 0.22);
+  color: #E0AE6E;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.72rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.anupam-ai-inline-chip:hover {
+  background: rgba(198, 138, 78, 0.22);
+  border-color: var(--purple);
+  color: #FFF;
+  transform: translateY(-1px);
+}
+
+body.light-mode .anupam-ai-inline-chip {
+  background: rgba(166, 113, 58, 0.08);
+  border-color: rgba(166, 113, 58, 0.25);
+  color: #8A6332;
+}
+
+body.light-mode .anupam-ai-inline-chip:hover {
+  background: rgba(166, 113, 58, 0.18);
+  color: #211B14;
 }
 
 .anupam-ai-action-btn {
