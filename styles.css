@@ -762,7 +762,72 @@ body.light-mode #cursor-glow{background:radial-gradient(circle,rgba(166,113,58,.
   padding: 1.4rem;
   z-index: 35;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
-  transition: border-color 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease, border-color 0.3s ease;
+}
+
+.tech-universe__panel.panel-hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.96);
+  pointer-events: none;
+}
+
+/* Panel Close / Hide Button */
+.tech-universe__panel-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 9999px;
+  background: rgba(224, 174, 110, 0.08);
+  border: 1px solid rgba(224, 174, 110, 0.22);
+  color: var(--muted, #948675);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.tech-universe__panel-close:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  transform: scale(1.05);
+}
+
+/* Floating Restore Pill */
+.tech-universe__panel-restore {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  z-index: 35;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0.55rem 1.1rem;
+  border-radius: 9999px;
+  background: rgba(20, 17, 14, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(224, 174, 110, 0.3);
+  color: #F2EDE4;
+  font-family: var(--font-sans, 'Plus Jakarta Sans', sans-serif);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55), 0 0 20px rgba(198, 138, 78, 0.15);
+  transition: all 0.25s ease;
+}
+
+.tech-universe__panel-restore:hover {
+  background: linear-gradient(135deg, rgba(198, 138, 78, 0.35), rgba(124, 58, 237, 0.25));
+  border-color: rgba(224, 174, 110, 0.6);
+  color: #FFF;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(198, 138, 78, 0.3);
 }
 
 .tech-universe__panel-header {
@@ -990,6 +1055,19 @@ body.light-mode #cursor-glow{background:radial-gradient(circle,rgba(166,113,58,.
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5) !important;
   }
 
+  .tech-universe__panel.panel-hidden {
+    display: none !important;
+  }
+
+  .tech-universe__panel-restore {
+    position: relative !important;
+    bottom: auto !important;
+    right: auto !important;
+    margin: 1rem auto 0 auto !important;
+    display: inline-flex !important;
+    justify-content: center;
+  }
+
   .tech-universe__panel-title {
     font-size: 1.15rem !important;
   }
@@ -1077,6 +1155,32 @@ body.light-mode .tech-universe__panel-tech-tag {
   background: rgba(166, 113, 58, 0.08);
   border-color: rgba(166, 113, 58, 0.2);
   color: #211B14;
+}
+
+body.light-mode .tech-universe__panel-close {
+  background: rgba(166, 113, 58, 0.08);
+  border-color: rgba(166, 113, 58, 0.2);
+  color: #6B5D4D;
+}
+
+body.light-mode .tech-universe__panel-close:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #dc2626;
+}
+
+body.light-mode .tech-universe__panel-restore {
+  background: rgba(255, 253, 248, 0.96);
+  border-color: rgba(166, 113, 58, 0.3);
+  color: #211B14;
+  box-shadow: 0 10px 30px rgba(33, 27, 20, 0.12), 0 0 20px rgba(166, 113, 58, 0.1);
+}
+
+body.light-mode .tech-universe__panel-restore:hover {
+  background: #FFF;
+  border-color: rgba(166, 113, 58, 0.5);
+  color: #000;
+  box-shadow: 0 12px 35px rgba(33, 27, 20, 0.18);
 }
 
 body.light-mode .tech-universe__chip {

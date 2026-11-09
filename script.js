@@ -1936,7 +1936,10 @@ function initTechnologyUniverse() {
       selectedPlanetId = planetId;
       highlightPlanet(planetId);
       const proj = projectsData.find(p => p.id === planetId);
-      if (proj) updatePanel(proj);
+      if (proj) {
+        updatePanel(proj);
+        if (isPanelHidden) togglePanel(true);
+      }
       updateChipActive(planetId);
     });
   }
@@ -2141,6 +2144,42 @@ function initTechnologyUniverse() {
     }
   }
 
+  // Panel Hide / Restore Toggle
+  const panelCloseBtn = document.getElementById('tech-universe-panel-close');
+  const panelRestoreBtn = document.getElementById('tech-universe-panel-restore');
+  let isPanelHidden = false;
+
+  function togglePanel(show) {
+    if (!panel) return;
+    if (show === undefined) {
+      isPanelHidden = !isPanelHidden;
+    } else {
+      isPanelHidden = !show;
+    }
+
+    if (isPanelHidden) {
+      panel.classList.add('panel-hidden');
+      if (panelRestoreBtn) panelRestoreBtn.style.display = 'inline-flex';
+    } else {
+      panel.classList.remove('panel-hidden');
+      if (panelRestoreBtn) panelRestoreBtn.style.display = 'none';
+    }
+  }
+
+  if (panelCloseBtn) {
+    panelCloseBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      togglePanel(false);
+    });
+  }
+
+  if (panelRestoreBtn) {
+    panelRestoreBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      togglePanel(true);
+    });
+  }
+
   // Initial Panel Population
   const defaultProj = projectsData.find(p => p.id === selectedPlanetId) || projectsData[0];
   updatePanel(defaultProj);
@@ -2237,6 +2276,7 @@ function initTechnologyUniverse() {
       selectedPlanetId = item.data.id;
       highlightPlanet(item.data.id);
       updatePanel(item.data);
+      if (isPanelHidden) togglePanel(true);
     });
 
     // Keyboard Accessibility
