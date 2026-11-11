@@ -26,8 +26,31 @@ body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-ser
 #particles-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.5}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;transition:background .3s,backdrop-filter .3s}
-nav.scrolled{background:rgba(15,23,42,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+nav {
+  position: fixed;
+  top: 32px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0.85rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(20, 17, 14, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(224, 174, 110, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+}
+nav.scrolled {
+  background: rgba(20, 17, 14, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(224, 174, 110, 0.22);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  padding: 0.65rem 2rem;
+}
 .nav-logo{font-family:var(--font-serif);font-style:italic;font-size:1.35rem;font-weight:600;background:linear-gradient(135deg,#C68A4E,#E0AE6E);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:.01em}
 .nav-links{display:flex;gap:1.75rem;list-style:none}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .2s;position:relative}
@@ -611,7 +634,20 @@ body.light-mode::before{content:'';position:fixed;inset:0;background:
   radial-gradient(ellipse at 85% 75%,rgba(166,113,58,.08) 0%,transparent 50%);
   pointer-events:none;z-index:0}
 body.light-mode #particles-canvas{opacity:.10}
-body.light-mode nav.scrolled{background:rgba(250,246,239,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(166,113,58,.14);box-shadow:0 4px 24px rgba(166,113,58,.08)}
+body.light-mode nav {
+  background: rgba(250, 246, 239, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(166, 113, 58, 0.14);
+  box-shadow: 0 4px 20px rgba(166, 113, 58, 0.05);
+}
+body.light-mode nav.scrolled {
+  background: rgba(250, 246, 239, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(166, 113, 58, 0.22);
+  box-shadow: 0 8px 28px rgba(166, 113, 58, 0.12);
+}
 body.light-mode .nav-links a{color:#6B5D4D}
 body.light-mode .nav-links a:hover{color:var(--text)}
 body.light-mode .deck-card{background:rgba(255,253,248,.85);border:1px solid rgba(166,113,58,.16);box-shadow:0 4px 20px rgba(166,113,58,.07);backdrop-filter:blur(12px)}
@@ -3419,6 +3455,9 @@ body.light-mode .anupam-ai-input-wrap {
   nav {
     top: 32px;
     padding: 0.65rem 1.15rem;
+  }
+  nav.scrolled {
+    padding: 0.55rem 1.15rem;
   }
 
   .nav-logo {
