@@ -1758,28 +1758,143 @@ if (glow && window.matchMedia('(pointer: fine)').matches) {
   }, { passive: true });
 }
 
-// --- THEME TOGGLE (Dark / Light Mode) ---
-const themeBtn = document.getElementById('theme-toggle');
-if (themeBtn) {
-  const savedTheme = localStorage.getItem('theme') || 'light';
+// ========================================================
+// --- PREMIUM 3D THEME SWITCHER CONTROLLER ---
+// ========================================================
+function initThemeToggle() {
+  const toggleBtn = document.getElementById('theme-toggle');
+  if (!toggleBtn) return;
 
-  function applyTheme(theme) {
+  const particlesContainer = document.getElementById('theme-toggle-particles');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const savedTheme = localStorage.getItem('theme');
+  const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+  let isTransitioning = false;
+
+  function updateThemeToggleUI(theme) {
     const isLight = theme === 'light';
     document.body.classList.toggle('light-mode', isLight);
-    themeBtn.textContent = isLight ? '☀️' : '🌙';
-    themeBtn.setAttribute('aria-pressed', String(isLight));
-    themeBtn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
-    themeBtn.title = isLight ? 'Switch to dark mode' : 'Switch to light mode';
+    toggleBtn.setAttribute('aria-pressed', String(isLight));
+    toggleBtn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+    toggleBtn.title = isLight ? 'Switch to dark mode' : 'Switch to light mode';
   }
 
-  applyTheme(savedTheme);
+  function createThemeParticles(fromTheme, toTheme) {
+    if (!particlesContainer || prefersReducedMotion) return;
 
-  themeBtn.addEventListener('click', () => {
-    const nextTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
+    // Clear any previous particles
+    particlesContainer.innerHTML = '';
+
+    const isToLight = toTheme === 'light';
+    const isMobile = window.innerWidth <= 768;
+    const startX = isToLight ? (isMobile ? 12 : 14) : (isMobile ? 42 : 48);
+    const targetX = isToLight ? (isMobile ? 42 : 48) : (isMobile ? 12 : 14);
+    const centerY = isMobile ? 15 : 16;
+
+    const particleColors = isToLight 
+      ? ['#C68A4E', '#E0AE6E', '#FFF4E6', '#F5D09D', '#A6713A']
+      : ['#E0AE6E', '#8A6D4E', '#C68A4E', '#FAF6EF', '#D4AF37'];
+
+    const particleCount = 18;
+
+    for (let i = 0; i < particleCount; i++) {
+      const p = document.createElement('span');
+      p.className = 'theme-pixel-particle';
+      const size = Math.floor(Math.random() * 3) + 2.5; // 2.5px to 4.5px
+      const color = particleColors[Math.floor(Math.random() * particleColors.length)];
+
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      p.style.backgroundColor = color;
+      p.style.color = color;
+      p.style.left = startX + 'px';
+      p.style.top = centerY + 'px';
+
+      particlesContainer.appendChild(p);
+
+      // Trajectory calculation
+      const spreadX = (Math.random() - 0.5) * (isMobile ? 18 : 24);
+      const spreadY = (Math.random() - 0.5) * (isMobile ? 22 : 28);
+      const midProgressX = (targetX - startX) * (0.45 + (Math.random() * 0.2)) + spreadX;
+      const finalX = (targetX - startX) + ((Math.random() - 0.5) * 6);
+      const finalY = (Math.random() - 0.5) * 6;
+      const rot = (Math.random() - 0.5) * 120;
+
+      if (typeof p.animate === 'function') {
+        p.animate([
+          {
+            transform: 'translate3d(0, 0, 0) scale(1) rotate(0deg)',
+            opacity: 1
+          },
+          {
+            transform: `translate3d(${midProgressX}px, ${spreadY}px, 0) scale(1.35) rotate(${rot}deg)`,
+            opacity: 0.9,
+            offset: 0.45
+          },
+          {
+            transform: `translate3d(${finalX}px, ${finalY}px, 0) scale(0.6) rotate(${rot * 1.5}deg)`,
+            opacity: 0.6,
+            offset: 0.85
+          },
+          {
+            transform: `translate3d(${finalX}px, ${finalY}px, 0) scale(0) rotate(${rot * 2}deg)`,
+            opacity: 0
+          }
+        ], {
+          duration: 550,
+          delay: Math.random() * 60,
+          easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+          fill: 'forwards'
+        });
+      }
+    }
+
+    // Energy trail effect along the thumb sliding track
+    for (let t = 0; t < 4; t++) {
+      setTimeout(() => {
+        if (!particlesContainer) return;
+        const trail = document.createElement('span');
+        trail.className = 'theme-trail-particle';
+        const progress = (t + 1) / 5;
+        const currentTrailX = startX + (targetX - startX) * progress + ((Math.random() - 0.5) * 4);
+        const currentTrailY = centerY + ((Math.random() - 0.5) * 6);
+        trail.style.left = currentTrailX + 'px';
+        trail.style.top = currentTrailY + 'px';
+        particlesContainer.appendChild(trail);
+      }, t * 70 + 60);
+    }
+
+    // Auto cleanup of particle DOM nodes
+    setTimeout(() => {
+      if (particlesContainer) particlesContainer.innerHTML = '';
+    }, 650);
+  }
+
+  function applyTheme(nextTheme, animate = false) {
+    const currentTheme = document.body.classList.contains('light-mode') ? 'light' : 'dark';
+    if (animate && currentTheme !== nextTheme) {
+      createThemeParticles(currentTheme, nextTheme);
+    }
+    updateThemeToggleUI(nextTheme);
     localStorage.setItem('theme', nextTheme);
-    applyTheme(nextTheme);
+  }
+
+  // Set initial theme
+  applyTheme(initialTheme, false);
+
+  toggleBtn.addEventListener('click', () => {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    setTimeout(() => { isTransitioning = false; }, 450);
+
+    const isCurrentlyLight = document.body.classList.contains('light-mode');
+    const nextTheme = isCurrentlyLight ? 'dark' : 'light';
+    applyTheme(nextTheme, true);
   });
 }
+initThemeToggle();
 
 // --- CONTACT FORM (Web3Forms AJAX) ---
 const contactForm = document.getElementById('contact-form');
