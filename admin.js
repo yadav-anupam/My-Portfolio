@@ -368,14 +368,47 @@ function setupSettingsForm() {
 }
 
 // ========================================================
-// --- FIREBASE STORAGE UPLOAD HELPER ---
+// --- FIREBASE STORAGE UPLOAD HELPER WITH RESILIENT FALLBACK ---
 // ========================================================
-function handleStorageUpload(file, folder, progressBarEl, progressFillEl) {
+function compressImageToDataUrl(file, maxWidth = 300, maxHeight = 300, quality = 0.82) {
   return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width;
+        let h = img.height;
+        if (w > maxWidth || h > maxHeight) {
+          if (w > h) {
+            h = Math.round((h * maxWidth) / w);
+            w = maxWidth;
+          } else {
+            w = Math.round((w * maxHeight) / h);
+            h = maxHeight;
+          }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL("image/jpeg", quality);
+        resolve(dataUrl);
+      };
+      img.onerror = () => reject(new Error("Failed to process image"));
+      img.src = e.target.result;
+    };
+    reader.onerror = () => reject(new Error("Failed to read file"));
+    reader.readAsDataURL(file);
+  });
+}
+
+function handleStorageUpload(file, folder, progressBarEl, progressFillEl) {
+  return new Promise(async (resolve, reject) => {
     if (!file) return reject(new Error("No file selected"));
     
     // Strict file validation
-    const allowed = ["image/jpeg", "image/png", "image/webp"];
+    const allowed = ["image/jpeg", "image/png", "image/webp", "image/gif"];
     if (!allowed.includes(file.type)) {
       return reject(new Error("Invalid format. Only JPG, PNG, and WEBP images are allowed."));
     }
@@ -383,28 +416,59 @@ function handleStorageUpload(file, folder, progressBarEl, progressFillEl) {
       return reject(new Error("File exceeds 5MB size limit."));
     }
 
-    const safeName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
-    const storageRef = ref(storage, `${folder}/${safeName}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+    // Try Firebase Storage first
+    try {
+      if (storage) {
+        const safeName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
+        const storageRef = ref(storage, `${folder}/${safeName}`);
+        const uploadTask = uploadBytesResumable(storageRef, file);
 
-    if (progressBarEl) progressBarEl.style.display = "block";
+        if (progressBarEl) progressBarEl.style.display = "block";
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const pct = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        if (progressFillEl) progressFillEl.style.width = `${pct}%`;
-      },
-      (error) => {
-        if (progressBarEl) progressBarEl.style.display = "none";
-        reject(error);
-      },
-      async () => {
-        if (progressBarEl) progressBarEl.style.display = "none";
-        const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-        resolve(downloadUrl);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const pct = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            if (progressFillEl) progressFillEl.style.width = `${pct}%`;
+          },
+          async (error) => {
+            console.warn("Firebase Storage upload error, falling back to optimized inline data URL:", error.message);
+            if (progressBarEl) progressBarEl.style.display = "none";
+            try {
+              const maxDim = folder === "testimonials" ? 240 : 640;
+              const quality = folder === "testimonials" ? 0.85 : 0.80;
+              const dataUrl = await compressImageToDataUrl(file, maxDim, maxDim, quality);
+              resolve(dataUrl);
+            } catch (fallbackErr) {
+              reject(fallbackErr);
+            }
+          },
+          async () => {
+            if (progressBarEl) progressBarEl.style.display = "none";
+            try {
+              const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+              resolve(downloadUrl);
+            } catch (e) {
+              const maxDim = folder === "testimonials" ? 240 : 640;
+              const dataUrl = await compressImageToDataUrl(file, maxDim, maxDim, 0.82);
+              resolve(dataUrl);
+            }
+          }
+        );
+        return;
       }
-    );
+    } catch (e) {
+      console.warn("Storage exception, using fallback:", e);
+    }
+
+    // Fallback if storage instance unavailable
+    try {
+      const maxDim = folder === "testimonials" ? 240 : 640;
+      const dataUrl = await compressImageToDataUrl(file, maxDim, maxDim, 0.85);
+      resolve(dataUrl);
+    } catch (err) {
+      reject(err);
+    }
   });
 }
 
@@ -1062,7 +1126,19 @@ function setupCertHandlers() {
 
   removeBtn.addEventListener("click", () => {
     imgUrlInput.value = "";
+    previewImg.src = "";
     previewWrap.style.display = "none";
+  });
+
+  imgUrlInput.addEventListener("input", () => {
+    const val = imgUrlInput.value.trim();
+    if (val) {
+      previewImg.src = val;
+      previewWrap.style.display = "flex";
+      filenameSpan.textContent = "Custom Image Link";
+    } else {
+      previewWrap.style.display = "none";
+    }
   });
 
   const form = document.getElementById("cert-form");
@@ -1348,7 +1424,19 @@ function setupTestimonialHandlers() {
 
   removeBtn.addEventListener("click", () => {
     urlInput.value = "";
+    previewImg.src = "";
     previewWrap.style.display = "none";
+  });
+
+  urlInput.addEventListener("input", () => {
+    const val = urlInput.value.trim();
+    if (val) {
+      previewImg.src = val;
+      previewWrap.style.display = "flex";
+      filenameSpan.textContent = "Custom Image Link";
+    } else {
+      previewWrap.style.display = "none";
+    }
   });
 
   const form = document.getElementById("testimonial-form");

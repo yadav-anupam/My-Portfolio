@@ -1081,11 +1081,25 @@ async function loadCertifications() {
         const imgSrc = d.imageUrl || d.image || "Certificate_EY_Microsoft.png";
         const tags = (typeof d.tags === "string" ? d.tags.split(",") : (Array.isArray(d.skills) ? d.skills : ["Verified"]))
           .map(t => `<span class="cert-skill-tag">${t.trim()}</span>`).join("");
-        const clickAttr = d.credentialUrl ? `onclick="window.open('${d.credentialUrl}', '_blank')"` : "";
+
+        // Map known certificates to modal dialogs, or use credential link
+        const titleLower = (d.title || d.name || "").toLowerCase();
+        let modalId = "";
+        if (titleLower.includes("ey") || titleLower.includes("passport")) modalId = "modal-ey";
+        else if (titleLower.includes("anthropic") || titleLower.includes("fluency")) modalId = "modal-anth";
+        else if (titleLower.includes("linkedin") || titleLower.includes("career essentials")) modalId = "modal-ms";
+        else if (titleLower.includes("tata") || titleLower.includes("forage") || titleLower.includes("data analytics")) modalId = "modal-tata";
+
+        let clickAttr = "";
+        if (modalId) {
+          clickAttr = `onclick="openCertModal('${modalId}')"`;
+        } else if (d.credentialUrl) {
+          clickAttr = `onclick="window.open('${d.credentialUrl}', '_blank')"`;
+        }
 
         container.innerHTML += `
-<div class="cert-card fade-in" ${clickAttr} style="cursor:${d.credentialUrl ? 'pointer' : 'default'}">
-  <img class="cert-preview" src="${imgSrc}" alt="${d.title}" loading="lazy" decoding="async" width="400" height="260"/>
+<div class="cert-card fade-in visible" ${clickAttr} style="cursor:pointer">
+  <img class="cert-preview" src="${imgSrc}" alt="${d.title || d.name}" loading="lazy" decoding="async" width="400" height="260"/>
   <div class="cert-body">
     <div class="cert-issuer-badge"><span class="icon">${ribbonSvg}</span> ${d.issuer || "Verified"}</div>
     <h3 class="cert-title">${d.title || d.name}</h3>
@@ -1115,10 +1129,11 @@ async function loadTestimonials() {
         const t = docSnap.data();
         const avatarSrc = t.imageUrl || t.image;
         const avatarHtml = avatarSrc
-          ? `<img src="${avatarSrc}" alt="${t.name}" class="testi-avatar" style="object-fit:cover;">`
+          ? `<img src="${avatarSrc}" alt="${t.name || 'Author'}" class="testi-avatar" style="object-fit:cover;width:42px;height:42px;border-radius:50%;" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';">
+             <div class="testi-avatar" style="display:none;">${t.avatarEmoji || (t.name ? t.name[0] : "👤")}</div>`
           : `<div class="testi-avatar">${t.avatarEmoji || (t.name ? t.name[0] : "👤")}</div>`;
         container.innerHTML += `
-<div class="testi-card fade-in">
+<div class="testi-card fade-in visible">
   <div class="testi-quote">"</div>
   <p class="testi-text">${t.message}</p>
   <div class="testi-author">
